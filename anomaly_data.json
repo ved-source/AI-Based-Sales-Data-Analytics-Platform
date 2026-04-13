@@ -1,0 +1,2764 @@
+{
+  "summary": {
+    "total_months": 36,
+    "total_anomalies": 1,
+    "critical": 1,
+    "high": 0,
+    "spikes": 1,
+    "drops": 0,
+    "anomaly_rate_pct": 2.8,
+    "max_z_score": 2.751,
+    "future_anomalies": 2,
+    "contamination": 0.07,
+    "iqr_lo": -19736.94,
+    "iqr_hi": 115279.85,
+    "mean_sales": 49491.13,
+    "std_sales": 24882.7
+  },
+  "series": [
+    {
+      "period": "2016-01",
+      "sales": 18066.96,
+      "votes": 0,
+      "severity": "normal",
+      "direction": "pattern",
+      "z_score": -1.263,
+      "iso_score": 0.0534,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": false,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": -73.5,
+      "residual": 698.25
+    },
+    {
+      "period": "2016-02",
+      "sales": 11951.41,
+      "votes": 0,
+      "severity": "normal",
+      "direction": "pattern",
+      "z_score": -1.509,
+      "iso_score": 0.0181,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": false,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": -33.85,
+      "residual": -5324.0
+    },
+    {
+      "period": "2016-03",
+      "sales": 32339.32,
+      "votes": 0,
+      "severity": "normal",
+      "direction": "pattern",
+      "z_score": -0.689,
+      "iso_score": 0.0328,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": false,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": 170.59,
+      "residual": -1401.49
+    },
+    {
+      "period": "2016-04",
+      "sales": 34154.47,
+      "votes": 0,
+      "severity": "normal",
+      "direction": "pattern",
+      "z_score": -0.616,
+      "iso_score": 0.092,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": false,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": 5.61,
+      "residual": -252.98
+    },
+    {
+      "period": "2016-05",
+      "sales": 29959.53,
+      "votes": 0,
+      "severity": "normal",
+      "direction": "pattern",
+      "z_score": -0.785,
+      "iso_score": 0.1399,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": false,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": -12.28,
+      "residual": -698.92
+    },
+    {
+      "period": "2016-06",
+      "sales": 23599.37,
+      "votes": 0,
+      "severity": "normal",
+      "direction": "pattern",
+      "z_score": -1.041,
+      "iso_score": 0.1149,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": false,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": -21.23,
+      "residual": -2121.26
+    },
+    {
+      "period": "2016-07",
+      "sales": 28608.26,
+      "votes": 0,
+      "severity": "normal",
+      "direction": "pattern",
+      "z_score": -0.839,
+      "iso_score": 0.0961,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": false,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": 21.22,
+      "residual": -1029.81
+    },
+    {
+      "period": "2016-08",
+      "sales": 36818.34,
+      "votes": 0,
+      "severity": "normal",
+      "direction": "pattern",
+      "z_score": -0.509,
+      "iso_score": 0.106,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": false,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": 28.7,
+      "residual": 226.27
+    },
+    {
+      "period": "2016-09",
+      "sales": 63133.61,
+      "votes": 0,
+      "severity": "normal",
+      "direction": "pattern",
+      "z_score": 0.548,
+      "iso_score": 0.0377,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": false,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": 71.47,
+      "residual": 1426.79
+    },
+    {
+      "period": "2016-10",
+      "sales": 31011.74,
+      "votes": 0,
+      "severity": "normal",
+      "direction": "pattern",
+      "z_score": -0.743,
+      "iso_score": 0.1125,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": false,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": -50.88,
+      "residual": -1161.51
+    },
+    {
+      "period": "2016-11",
+      "sales": 75249.4,
+      "votes": 0,
+      "severity": "normal",
+      "direction": "pattern",
+      "z_score": 1.035,
+      "iso_score": 0.0294,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": false,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": 142.65,
+      "residual": 4118.0
+    },
+    {
+      "period": "2016-12",
+      "sales": 74543.6,
+      "votes": 0,
+      "severity": "normal",
+      "direction": "pattern",
+      "z_score": 1.007,
+      "iso_score": 0.0807,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": false,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": -0.94,
+      "residual": 4281.24
+    },
+    {
+      "period": "2017-01",
+      "sales": 18542.49,
+      "votes": 0,
+      "severity": "normal",
+      "direction": "pattern",
+      "z_score": -1.244,
+      "iso_score": 0.0579,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": false,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": -75.13,
+      "residual": -716.11
+    },
+    {
+      "period": "2017-02",
+      "sales": 22978.82,
+      "votes": 0,
+      "severity": "normal",
+      "direction": "pattern",
+      "z_score": -1.065,
+      "iso_score": 0.0594,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": false,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": 23.93,
+      "residual": 3680.31
+    },
+    {
+      "period": "2017-03",
+      "sales": 51165.06,
+      "votes": 0,
+      "severity": "normal",
+      "direction": "pattern",
+      "z_score": 0.067,
+      "iso_score": 0.1103,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": false,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": 122.66,
+      "residual": 3144.38
+    },
+    {
+      "period": "2017-04",
+      "sales": 38679.77,
+      "votes": 0,
+      "severity": "normal",
+      "direction": "pattern",
+      "z_score": -0.434,
+      "iso_score": 0.1341,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": false,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": -24.4,
+      "residual": 65.8
+    },
+    {
+      "period": "2017-05",
+      "sales": 56656.91,
+      "votes": 1,
+      "severity": "low",
+      "direction": "pattern",
+      "z_score": 0.288,
+      "iso_score": 0.1382,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": true,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": 46.48,
+      "residual": 26017.4
+    },
+    {
+      "period": "2017-06",
+      "sales": 39724.49,
+      "votes": 0,
+      "severity": "normal",
+      "direction": "pattern",
+      "z_score": -0.393,
+      "iso_score": 0.1342,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": false,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": -29.89,
+      "residual": 325.75
+    },
+    {
+      "period": "2017-07",
+      "sales": 38320.78,
+      "votes": 0,
+      "severity": "normal",
+      "direction": "pattern",
+      "z_score": -0.449,
+      "iso_score": 0.1461,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": false,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": -3.53,
+      "residual": 65.33
+    },
+    {
+      "period": "2017-08",
+      "sales": 30542.2,
+      "votes": 0,
+      "severity": "normal",
+      "direction": "pattern",
+      "z_score": -0.762,
+      "iso_score": 0.138,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": false,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": -20.3,
+      "residual": -925.08
+    },
+    {
+      "period": "2017-09",
+      "sales": 69193.39,
+      "votes": 0,
+      "severity": "normal",
+      "direction": "pattern",
+      "z_score": 0.792,
+      "iso_score": 0.0821,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": false,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": 126.55,
+      "residual": 2968.97
+    },
+    {
+      "period": "2017-10",
+      "sales": 59583.03,
+      "votes": 0,
+      "severity": "normal",
+      "direction": "pattern",
+      "z_score": 0.406,
+      "iso_score": 0.1281,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": false,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": -13.89,
+      "residual": 961.24
+    },
+    {
+      "period": "2017-11",
+      "sales": 79066.5,
+      "votes": 0,
+      "severity": "normal",
+      "direction": "pattern",
+      "z_score": 1.189,
+      "iso_score": 0.0983,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": false,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": 32.7,
+      "residual": 4293.04
+    },
+    {
+      "period": "2017-12",
+      "sales": 95739.12,
+      "votes": 1,
+      "severity": "low",
+      "direction": "pattern",
+      "z_score": 1.859,
+      "iso_score": 0.0581,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": true,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": 21.09,
+      "residual": 20627.02
+    },
+    {
+      "period": "2018-01",
+      "sales": 43476.47,
+      "votes": 1,
+      "severity": "low",
+      "direction": "pattern",
+      "z_score": -0.242,
+      "iso_score": 0.0131,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": true,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": -54.59,
+      "residual": 21885.77
+    },
+    {
+      "period": "2018-02",
+      "sales": 19921.0,
+      "votes": 1,
+      "severity": "low",
+      "direction": "pattern",
+      "z_score": -1.188,
+      "iso_score": -0.0108,
+      "stat_flag": false,
+      "iso_flag": true,
+      "dev_flag": false,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": -54.18,
+      "residual": 134.52
+    },
+    {
+      "period": "2018-03",
+      "sales": 58863.41,
+      "votes": 1,
+      "severity": "low",
+      "direction": "pattern",
+      "z_score": 0.377,
+      "iso_score": 0.0389,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": true,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": 195.48,
+      "residual": 27651.55
+    },
+    {
+      "period": "2018-04",
+      "sales": 35541.91,
+      "votes": 0,
+      "severity": "normal",
+      "direction": "pattern",
+      "z_score": -0.561,
+      "iso_score": 0.0878,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": false,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": -39.62,
+      "residual": -2863.77
+    },
+    {
+      "period": "2018-05",
+      "sales": 43825.98,
+      "votes": 0,
+      "severity": "normal",
+      "direction": "pattern",
+      "z_score": -0.228,
+      "iso_score": 0.1152,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": false,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": 23.31,
+      "residual": 9171.53
+    },
+    {
+      "period": "2018-06",
+      "sales": 48190.73,
+      "votes": 0,
+      "severity": "normal",
+      "direction": "pattern",
+      "z_score": -0.052,
+      "iso_score": 0.1548,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": false,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": 9.96,
+      "residual": 11255.09
+    },
+    {
+      "period": "2018-07",
+      "sales": 44825.1,
+      "votes": 0,
+      "severity": "normal",
+      "direction": "pattern",
+      "z_score": -0.188,
+      "iso_score": 0.1667,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": false,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": -6.98,
+      "residual": 6356.53
+    },
+    {
+      "period": "2018-08",
+      "sales": 62837.85,
+      "votes": 1,
+      "severity": "low",
+      "direction": "pattern",
+      "z_score": 0.536,
+      "iso_score": 0.1461,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": true,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": 40.18,
+      "residual": 25550.76
+    },
+    {
+      "period": "2018-09",
+      "sales": 86152.89,
+      "votes": 0,
+      "severity": "normal",
+      "direction": "pattern",
+      "z_score": 1.473,
+      "iso_score": 0.0909,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": false,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": 37.1,
+      "residual": 12715.39
+    },
+    {
+      "period": "2018-10",
+      "sales": 77448.13,
+      "votes": 0,
+      "severity": "normal",
+      "direction": "pattern",
+      "z_score": 1.124,
+      "iso_score": 0.0829,
+      "stat_flag": false,
+      "iso_flag": false,
+      "dev_flag": false,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": -10.1,
+      "residual": 5471.44
+    },
+    {
+      "period": "2018-11",
+      "sales": 117938.16,
+      "votes": 3,
+      "severity": "critical",
+      "direction": "spike",
+      "z_score": 2.751,
+      "iso_score": -0.0355,
+      "stat_flag": true,
+      "iso_flag": true,
+      "dev_flag": true,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": 52.28,
+      "residual": 43392.68
+    },
+    {
+      "period": "2018-12",
+      "sales": 83030.39,
+      "votes": 1,
+      "severity": "low",
+      "direction": "pattern",
+      "z_score": 1.348,
+      "iso_score": -0.0935,
+      "stat_flag": false,
+      "iso_flag": true,
+      "dev_flag": false,
+      "iqr_lo": -19736.94,
+      "iqr_hi": 115279.85,
+      "mom_pct": -29.6,
+      "residual": 8984.24
+    }
+  ],
+  "future_anomalies": [
+    {
+      "period": "2019-01",
+      "forecast": 20184.51,
+      "lower_90": 13578.76,
+      "upper_90": 30003.57,
+      "iso_score": -0.0688,
+      "iso_flag": true,
+      "ci_flag": false,
+      "is_anomaly": true,
+      "mom_pct": -75.69,
+      "severity": "medium"
+    },
+    {
+      "period": "2019-02",
+      "forecast": 19955.83,
+      "lower_90": 12903.14,
+      "upper_90": 30863.12,
+      "iso_score": -0.0176,
+      "iso_flag": true,
+      "ci_flag": false,
+      "is_anomaly": true,
+      "mom_pct": -1.13,
+      "severity": "medium"
+    },
+    {
+      "period": "2019-03",
+      "forecast": 42173.63,
+      "lower_90": 26209.43,
+      "upper_90": 67861.28,
+      "iso_score": 0.0532,
+      "iso_flag": false,
+      "ci_flag": false,
+      "is_anomaly": false,
+      "mom_pct": 111.33,
+      "severity": "normal"
+    },
+    {
+      "period": "2019-04",
+      "forecast": 36570.13,
+      "lower_90": 21843.72,
+      "upper_90": 61224.22,
+      "iso_score": 0.0891,
+      "iso_flag": false,
+      "ci_flag": false,
+      "is_anomaly": false,
+      "mom_pct": -13.29,
+      "severity": "normal"
+    },
+    {
+      "period": "2019-05",
+      "forecast": 35092.79,
+      "lower_90": 20146.61,
+      "upper_90": 61126.54,
+      "iso_score": 0.1367,
+      "iso_flag": false,
+      "ci_flag": false,
+      "is_anomaly": false,
+      "mom_pct": -4.04,
+      "severity": "normal"
+    },
+    {
+      "period": "2019-06",
+      "forecast": 31450.95,
+      "lower_90": 17354.06,
+      "upper_90": 56998.23,
+      "iso_score": 0.1396,
+      "iso_flag": false,
+      "ci_flag": false,
+      "is_anomaly": false,
+      "mom_pct": -10.38,
+      "severity": "normal"
+    },
+    {
+      "period": "2019-07",
+      "forecast": 32388.15,
+      "lower_90": 17176.63,
+      "upper_90": 61070.1,
+      "iso_score": 0.1264,
+      "iso_flag": false,
+      "ci_flag": false,
+      "is_anomaly": false,
+      "mom_pct": 2.98,
+      "severity": "normal"
+    },
+    {
+      "period": "2019-08",
+      "forecast": 40394.55,
+      "lower_90": 20590.24,
+      "upper_90": 79246.31,
+      "iso_score": 0.1105,
+      "iso_flag": false,
+      "ci_flag": false,
+      "is_anomaly": false,
+      "mom_pct": 24.72,
+      "severity": "normal"
+    },
+    {
+      "period": "2019-09",
+      "forecast": 69482.1,
+      "lower_90": 34040.87,
+      "upper_90": 141821.43,
+      "iso_score": 0.0572,
+      "iso_flag": false,
+      "ci_flag": false,
+      "is_anomaly": false,
+      "mom_pct": 72.01,
+      "severity": "normal"
+    },
+    {
+      "period": "2019-10",
+      "forecast": 72101.61,
+      "lower_90": 33951.4,
+      "upper_90": 153118.86,
+      "iso_score": 0.0872,
+      "iso_flag": false,
+      "ci_flag": false,
+      "is_anomaly": false,
+      "mom_pct": 3.77,
+      "severity": "normal"
+    },
+    {
+      "period": "2019-11",
+      "forecast": 74659.74,
+      "lower_90": 33789.69,
+      "upper_90": 164962.38,
+      "iso_score": 0.0669,
+      "iso_flag": false,
+      "ci_flag": false,
+      "is_anomaly": false,
+      "mom_pct": 3.55,
+      "severity": "normal"
+    },
+    {
+      "period": "2019-12",
+      "forecast": 74913.85,
+      "lower_90": 32587.01,
+      "upper_90": 172216.75,
+      "iso_score": 0.0604,
+      "iso_flag": false,
+      "ci_flag": false,
+      "is_anomaly": false,
+      "mom_pct": 0.34,
+      "severity": "normal"
+    }
+  ],
+  "group_anomalies": {
+    "category": {
+      "Furniture": {
+        "n_anomalies": 0,
+        "anomaly_periods": [],
+        "monthly": [
+          {
+            "period": "2015-01",
+            "value": 6217.277
+          },
+          {
+            "period": "2015-02",
+            "value": 1839.658
+          },
+          {
+            "period": "2015-03",
+            "value": 14243.368
+          },
+          {
+            "period": "2015-04",
+            "value": 7944.8369999999995
+          },
+          {
+            "period": "2015-05",
+            "value": 6912.787
+          },
+          {
+            "period": "2015-06",
+            "value": 13144.5816
+          },
+          {
+            "period": "2015-07",
+            "value": 10821.051
+          },
+          {
+            "period": "2015-08",
+            "value": 7125.2105
+          },
+          {
+            "period": "2015-09",
+            "value": 23816.4808
+          },
+          {
+            "period": "2015-10",
+            "value": 12304.247
+          },
+          {
+            "period": "2015-11",
+            "value": 21471.0407
+          },
+          {
+            "period": "2015-12",
+            "value": 30637.3425
+          },
+          {
+            "period": "2016-01",
+            "value": 11739.9416
+          },
+          {
+            "period": "2016-02",
+            "value": 3134.374
+          },
+          {
+            "period": "2016-03",
+            "value": 8722.6374
+          },
+          {
+            "period": "2016-04",
+            "value": 10475.6985
+          },
+          {
+            "period": "2016-05",
+            "value": 9374.950499999999
+          },
+          {
+            "period": "2016-06",
+            "value": 7540.9710000000005
+          },
+          {
+            "period": "2016-07",
+            "value": 13667.039999999999
+          },
+          {
+            "period": "2016-08",
+            "value": 9638.5922
+          },
+          {
+            "period": "2016-09",
+            "value": 25085.423
+          },
+          {
+            "period": "2016-10",
+            "value": 11664.4875
+          },
+          {
+            "period": "2016-11",
+            "value": 30197.500500000002
+          },
+          {
+            "period": "2016-12",
+            "value": 22812.2512
+          },
+          {
+            "period": "2017-01",
+            "value": 7622.743
+          },
+          {
+            "period": "2017-02",
+            "value": 3925.551
+          },
+          {
+            "period": "2017-03",
+            "value": 12272.662
+          },
+          {
+            "period": "2017-04",
+            "value": 13212.09
+          },
+          {
+            "period": "2017-05",
+            "value": 14892.575
+          },
+          {
+            "period": "2017-06",
+            "value": 12450.524
+          },
+          {
+            "period": "2017-07",
+            "value": 12569.759
+          },
+          {
+            "period": "2017-08",
+            "value": 11910.0583
+          },
+          {
+            "period": "2017-09",
+            "value": 26755.4749
+          },
+          {
+            "period": "2017-10",
+            "value": 11813.009
+          },
+          {
+            "period": "2017-11",
+            "value": 31783.6288
+          },
+          {
+            "period": "2017-12",
+            "value": 36604.965
+          },
+          {
+            "period": "2018-01",
+            "value": 5930.162
+          },
+          {
+            "period": "2018-02",
+            "value": 6774.3774
+          },
+          {
+            "period": "2018-03",
+            "value": 10893.4448
+          },
+          {
+            "period": "2018-04",
+            "value": 9065.9581
+          },
+          {
+            "period": "2018-05",
+            "value": 16957.5582
+          },
+          {
+            "period": "2018-06",
+            "value": 17032.3867
+          },
+          {
+            "period": "2018-07",
+            "value": 11375.822
+          },
+          {
+            "period": "2018-08",
+            "value": 15419.122
+          },
+          {
+            "period": "2018-09",
+            "value": 28516.706
+          },
+          {
+            "period": "2018-10",
+            "value": 21884.0682
+          },
+          {
+            "period": "2018-11",
+            "value": 37056.715000000004
+          },
+          {
+            "period": "2018-12",
+            "value": 31407.4668
+          }
+        ]
+      },
+      "Office Supplies": {
+        "n_anomalies": 1,
+        "anomaly_periods": [
+          "2017-12"
+        ],
+        "monthly": [
+          {
+            "period": "2015-01",
+            "value": 4845.14
+          },
+          {
+            "period": "2015-02",
+            "value": 1071.724
+          },
+          {
+            "period": "2015-03",
+            "value": 8602.455
+          },
+          {
+            "period": "2015-04",
+            "value": 10988.874000000002
+          },
+          {
+            "period": "2015-05",
+            "value": 7131.639999999999
+          },
+          {
+            "period": "2015-06",
+            "value": 12742.389000000001
+          },
+          {
+            "period": "2015-07",
+            "value": 15121.207999999999
+          },
+          {
+            "period": "2015-08",
+            "value": 11055.276
+          },
+          {
+            "period": "2015-09",
+            "value": 27423.298000000003
+          },
+          {
+            "period": "2015-10",
+            "value": 7211.128
+          },
+          {
+            "period": "2015-11",
+            "value": 26363.196
+          },
+          {
+            "period": "2015-12",
+            "value": 16956.492
+          },
+          {
+            "period": "2016-01",
+            "value": 1808.78
+          },
+          {
+            "period": "2016-02",
+            "value": 5368.067
+          },
+          {
+            "period": "2016-03",
+            "value": 13472.739
+          },
+          {
+            "period": "2016-04",
+            "value": 12517.818
+          },
+          {
+            "period": "2016-05",
+            "value": 8941.58
+          },
+          {
+            "period": "2016-06",
+            "value": 9623.037
+          },
+          {
+            "period": "2016-07",
+            "value": 4706.243
+          },
+          {
+            "period": "2016-08",
+            "value": 11735.108
+          },
+          {
+            "period": "2016-09",
+            "value": 19031.055
+          },
+          {
+            "period": "2016-10",
+            "value": 8642.36
+          },
+          {
+            "period": "2016-11",
+            "value": 21178.298
+          },
+          {
+            "period": "2016-12",
+            "value": 16099.322
+          },
+          {
+            "period": "2017-01",
+            "value": 5299.682
+          },
+          {
+            "period": "2017-02",
+            "value": 6794.349999999999
+          },
+          {
+            "period": "2017-03",
+            "value": 17324.545000000002
+          },
+          {
+            "period": "2017-04",
+            "value": 10577.175
+          },
+          {
+            "period": "2017-05",
+            "value": 12931.642
+          },
+          {
+            "period": "2017-06",
+            "value": 10901.81
+          },
+          {
+            "period": "2017-07",
+            "value": 12903.824
+          },
+          {
+            "period": "2017-08",
+            "value": 8959.74
+          },
+          {
+            "period": "2017-09",
+            "value": 23013.402
+          },
+          {
+            "period": "2017-10",
+            "value": 16236.65
+          },
+          {
+            "period": "2017-11",
+            "value": 20141.808
+          },
+          {
+            "period": "2017-12",
+            "value": 37332.938
+          },
+          {
+            "period": "2018-01",
+            "value": 21052.979
+          },
+          {
+            "period": "2018-02",
+            "value": 7378.172
+          },
+          {
+            "period": "2018-03",
+            "value": 14541.346
+          },
+          {
+            "period": "2018-04",
+            "value": 14214.947
+          },
+          {
+            "period": "2018-05",
+            "value": 13493.804
+          },
+          {
+            "period": "2018-06",
+            "value": 14221.101
+          },
+          {
+            "period": "2018-07",
+            "value": 10239.356
+          },
+          {
+            "period": "2018-08",
+            "value": 29799.564
+          },
+          {
+            "period": "2018-09",
+            "value": 31607.523
+          },
+          {
+            "period": "2018-10",
+            "value": 22708.4
+          },
+          {
+            "period": "2018-11",
+            "value": 31472.337
+          },
+          {
+            "period": "2018-12",
+            "value": 29638.012
+          }
+        ]
+      },
+      "Technology": {
+        "n_anomalies": 1,
+        "anomaly_periods": [
+          "2018-11"
+        ],
+        "monthly": [
+          {
+            "period": "2015-01",
+            "value": 3143.29
+          },
+          {
+            "period": "2015-02",
+            "value": 1608.51
+          },
+          {
+            "period": "2015-03",
+            "value": 32359.974000000002
+          },
+          {
+            "period": "2015-04",
+            "value": 8973.144
+          },
+          {
+            "period": "2015-05",
+            "value": 9599.876
+          },
+          {
+            "period": "2015-06",
+            "value": 8435.965
+          },
+          {
+            "period": "2015-07",
+            "value": 7839.284
+          },
+          {
+            "period": "2015-08",
+            "value": 8937.05
+          },
+          {
+            "period": "2015-09",
+            "value": 30383.748
+          },
+          {
+            "period": "2015-10",
+            "value": 11938.018
+          },
+          {
+            "period": "2015-11",
+            "value": 30073.424
+          },
+          {
+            "period": "2015-12",
+            "value": 20573.224
+          },
+          {
+            "period": "2016-01",
+            "value": 4518.236
+          },
+          {
+            "period": "2016-02",
+            "value": 3448.97
+          },
+          {
+            "period": "2016-03",
+            "value": 10143.942000000001
+          },
+          {
+            "period": "2016-04",
+            "value": 11160.952000000001
+          },
+          {
+            "period": "2016-05",
+            "value": 11643.0
+          },
+          {
+            "period": "2016-06",
+            "value": 6435.366
+          },
+          {
+            "period": "2016-07",
+            "value": 10234.976
+          },
+          {
+            "period": "2016-08",
+            "value": 15444.642
+          },
+          {
+            "period": "2016-09",
+            "value": 19017.128
+          },
+          {
+            "period": "2016-10",
+            "value": 10704.89
+          },
+          {
+            "period": "2016-11",
+            "value": 23873.601
+          },
+          {
+            "period": "2016-12",
+            "value": 35632.028
+          },
+          {
+            "period": "2017-01",
+            "value": 5620.066
+          },
+          {
+            "period": "2017-02",
+            "value": 12258.914
+          },
+          {
+            "period": "2017-03",
+            "value": 21567.852
+          },
+          {
+            "period": "2017-04",
+            "value": 14890.502
+          },
+          {
+            "period": "2017-05",
+            "value": 28832.691
+          },
+          {
+            "period": "2017-06",
+            "value": 16372.152
+          },
+          {
+            "period": "2017-07",
+            "value": 12847.2
+          },
+          {
+            "period": "2017-08",
+            "value": 9672.402
+          },
+          {
+            "period": "2017-09",
+            "value": 19424.514
+          },
+          {
+            "period": "2017-10",
+            "value": 31533.374
+          },
+          {
+            "period": "2017-11",
+            "value": 27141.059
+          },
+          {
+            "period": "2017-12",
+            "value": 21801.218
+          },
+          {
+            "period": "2018-01",
+            "value": 16493.333
+          },
+          {
+            "period": "2018-02",
+            "value": 5768.448
+          },
+          {
+            "period": "2018-03",
+            "value": 33428.621999999996
+          },
+          {
+            "period": "2018-04",
+            "value": 12261.005000000001
+          },
+          {
+            "period": "2018-05",
+            "value": 13374.62
+          },
+          {
+            "period": "2018-06",
+            "value": 16937.24
+          },
+          {
+            "period": "2018-07",
+            "value": 23209.926
+          },
+          {
+            "period": "2018-08",
+            "value": 17619.162
+          },
+          {
+            "period": "2018-09",
+            "value": 26028.659
+          },
+          {
+            "period": "2018-10",
+            "value": 32855.663
+          },
+          {
+            "period": "2018-11",
+            "value": 49409.102999999996
+          },
+          {
+            "period": "2018-12",
+            "value": 21984.91
+          }
+        ]
+      }
+    },
+    "segment": {
+      "Consumer": {
+        "n_anomalies": 1,
+        "anomaly_periods": [
+          "2015-09"
+        ],
+        "monthly": [
+          {
+            "period": "2015-01",
+            "value": 6896.629
+          },
+          {
+            "period": "2015-02",
+            "value": 3167.8540000000003
+          },
+          {
+            "period": "2015-03",
+            "value": 11869.304
+          },
+          {
+            "period": "2015-04",
+            "value": 9108.612000000001
+          },
+          {
+            "period": "2015-05",
+            "value": 12815.179
+          },
+          {
+            "period": "2015-06",
+            "value": 25651.5556
+          },
+          {
+            "period": "2015-07",
+            "value": 20032.89
+          },
+          {
+            "period": "2015-08",
+            "value": 15423.3315
+          },
+          {
+            "period": "2015-09",
+            "value": 59536.826
+          },
+          {
+            "period": "2015-10",
+            "value": 16246.697
+          },
+          {
+            "period": "2015-11",
+            "value": 46228.498
+          },
+          {
+            "period": "2015-12",
+            "value": 35979.4245
+          },
+          {
+            "period": "2016-01",
+            "value": 14274.9836
+          },
+          {
+            "period": "2016-02",
+            "value": 9269.018
+          },
+          {
+            "period": "2016-03",
+            "value": 17418.89
+          },
+          {
+            "period": "2016-04",
+            "value": 22626.4055
+          },
+          {
+            "period": "2016-05",
+            "value": 20792.079
+          },
+          {
+            "period": "2016-06",
+            "value": 12824.504
+          },
+          {
+            "period": "2016-07",
+            "value": 19791.747
+          },
+          {
+            "period": "2016-08",
+            "value": 20509.845
+          },
+          {
+            "period": "2016-09",
+            "value": 38734.313
+          },
+          {
+            "period": "2016-10",
+            "value": 17128.8685
+          },
+          {
+            "period": "2016-11",
+            "value": 32423.668700000002
+          },
+          {
+            "period": "2016-12",
+            "value": 39561.971
+          },
+          {
+            "period": "2017-01",
+            "value": 6026.649
+          },
+          {
+            "period": "2017-02",
+            "value": 15800.227
+          },
+          {
+            "period": "2017-03",
+            "value": 24844.991
+          },
+          {
+            "period": "2017-04",
+            "value": 14004.976
+          },
+          {
+            "period": "2017-05",
+            "value": 32174.635000000002
+          },
+          {
+            "period": "2017-06",
+            "value": 23339.851
+          },
+          {
+            "period": "2017-07",
+            "value": 22631.847
+          },
+          {
+            "period": "2017-08",
+            "value": 13312.3898
+          },
+          {
+            "period": "2017-09",
+            "value": 38495.1276
+          },
+          {
+            "period": "2017-10",
+            "value": 10112.89
+          },
+          {
+            "period": "2017-11",
+            "value": 41104.3928
+          },
+          {
+            "period": "2017-12",
+            "value": 49294.989
+          },
+          {
+            "period": "2018-01",
+            "value": 23075.641
+          },
+          {
+            "period": "2018-02",
+            "value": 5208.941
+          },
+          {
+            "period": "2018-03",
+            "value": 35041.522
+          },
+          {
+            "period": "2018-04",
+            "value": 9034.924
+          },
+          {
+            "period": "2018-05",
+            "value": 20624.6094
+          },
+          {
+            "period": "2018-06",
+            "value": 20095.3077
+          },
+          {
+            "period": "2018-07",
+            "value": 18552.061
+          },
+          {
+            "period": "2018-08",
+            "value": 31346.104
+          },
+          {
+            "period": "2018-09",
+            "value": 43759.903
+          },
+          {
+            "period": "2018-10",
+            "value": 22865.4482
+          },
+          {
+            "period": "2018-11",
+            "value": 49566.4848
+          },
+          {
+            "period": "2018-12",
+            "value": 49433.5258
+          }
+        ]
+      },
+      "Corporate": {
+        "n_anomalies": 2,
+        "anomaly_periods": [
+          "2017-12",
+          "2018-11"
+        ],
+        "monthly": [
+          {
+            "period": "2015-01",
+            "value": 1701.528
+          },
+          {
+            "period": "2015-02",
+            "value": 1183.6680000000001
+          },
+          {
+            "period": "2015-03",
+            "value": 10952.175
+          },
+          {
+            "period": "2015-04",
+            "value": 13743.239000000001
+          },
+          {
+            "period": "2015-05",
+            "value": 9142.0
+          },
+          {
+            "period": "2015-06",
+            "value": 3970.9139999999998
+          },
+          {
+            "period": "2015-07",
+            "value": 10032.988
+          },
+          {
+            "period": "2015-08",
+            "value": 7451.773999999999
+          },
+          {
+            "period": "2015-09",
+            "value": 15507.745
+          },
+          {
+            "period": "2015-10",
+            "value": 12637.678
+          },
+          {
+            "period": "2015-11",
+            "value": 20900.2307
+          },
+          {
+            "period": "2015-12",
+            "value": 20573.556
+          },
+          {
+            "period": "2016-01",
+            "value": 3275.346
+          },
+          {
+            "period": "2016-02",
+            "value": 2565.257
+          },
+          {
+            "period": "2016-03",
+            "value": 10394.1344
+          },
+          {
+            "period": "2016-04",
+            "value": 4121.044
+          },
+          {
+            "period": "2016-05",
+            "value": 5454.9395
+          },
+          {
+            "period": "2016-06",
+            "value": 8466.481
+          },
+          {
+            "period": "2016-07",
+            "value": 7191.7
+          },
+          {
+            "period": "2016-08",
+            "value": 11455.7592
+          },
+          {
+            "period": "2016-09",
+            "value": 15268.208999999999
+          },
+          {
+            "period": "2016-10",
+            "value": 8253.183
+          },
+          {
+            "period": "2016-11",
+            "value": 27299.644800000002
+          },
+          {
+            "period": "2016-12",
+            "value": 15929.901
+          },
+          {
+            "period": "2017-01",
+            "value": 9485.124
+          },
+          {
+            "period": "2017-02",
+            "value": 2866.884
+          },
+          {
+            "period": "2017-03",
+            "value": 13675.657
+          },
+          {
+            "period": "2017-04",
+            "value": 16177.376
+          },
+          {
+            "period": "2017-05",
+            "value": 18121.438000000002
+          },
+          {
+            "period": "2017-06",
+            "value": 7717.406
+          },
+          {
+            "period": "2017-07",
+            "value": 12227.739
+          },
+          {
+            "period": "2017-08",
+            "value": 12943.4705
+          },
+          {
+            "period": "2017-09",
+            "value": 17802.8123
+          },
+          {
+            "period": "2017-10",
+            "value": 32130.545
+          },
+          {
+            "period": "2017-11",
+            "value": 26493.18
+          },
+          {
+            "period": "2017-12",
+            "value": 35335.686
+          },
+          {
+            "period": "2018-01",
+            "value": 12221.232
+          },
+          {
+            "period": "2018-02",
+            "value": 7959.258
+          },
+          {
+            "period": "2018-03",
+            "value": 16565.6828
+          },
+          {
+            "period": "2018-04",
+            "value": 14803.0146
+          },
+          {
+            "period": "2018-05",
+            "value": 14239.8348
+          },
+          {
+            "period": "2018-06",
+            "value": 15081.852
+          },
+          {
+            "period": "2018-07",
+            "value": 16525.599
+          },
+          {
+            "period": "2018-08",
+            "value": 25678.444
+          },
+          {
+            "period": "2018-09",
+            "value": 23209.159
+          },
+          {
+            "period": "2018-10",
+            "value": 24877.168
+          },
+          {
+            "period": "2018-11",
+            "value": 44357.9862
+          },
+          {
+            "period": "2018-12",
+            "value": 20524.432
+          }
+        ]
+      },
+      "Home Office": {
+        "n_anomalies": 3,
+        "anomaly_periods": [
+          "2015-03",
+          "2018-10",
+          "2018-11"
+        ],
+        "monthly": [
+          {
+            "period": "2015-01",
+            "value": 5607.55
+          },
+          {
+            "period": "2015-02",
+            "value": 168.37
+          },
+          {
+            "period": "2015-03",
+            "value": 32384.318
+          },
+          {
+            "period": "2015-04",
+            "value": 5055.004
+          },
+          {
+            "period": "2015-05",
+            "value": 1687.124
+          },
+          {
+            "period": "2015-06",
+            "value": 4700.465999999999
+          },
+          {
+            "period": "2015-07",
+            "value": 3715.665
+          },
+          {
+            "period": "2015-08",
+            "value": 4242.431
+          },
+          {
+            "period": "2015-09",
+            "value": 6578.9558
+          },
+          {
+            "period": "2015-10",
+            "value": 2569.018
+          },
+          {
+            "period": "2015-11",
+            "value": 10778.932
+          },
+          {
+            "period": "2015-12",
+            "value": 11614.078
+          },
+          {
+            "period": "2016-01",
+            "value": 516.628
+          },
+          {
+            "period": "2016-02",
+            "value": 117.136
+          },
+          {
+            "period": "2016-03",
+            "value": 4526.294
+          },
+          {
+            "period": "2016-04",
+            "value": 7407.019
+          },
+          {
+            "period": "2016-05",
+            "value": 3712.5119999999997
+          },
+          {
+            "period": "2016-06",
+            "value": 2308.389
+          },
+          {
+            "period": "2016-07",
+            "value": 1624.812
+          },
+          {
+            "period": "2016-08",
+            "value": 4852.738
+          },
+          {
+            "period": "2016-09",
+            "value": 9131.083999999999
+          },
+          {
+            "period": "2016-10",
+            "value": 5629.686
+          },
+          {
+            "period": "2016-11",
+            "value": 15526.086000000001
+          },
+          {
+            "period": "2016-12",
+            "value": 19051.7292
+          },
+          {
+            "period": "2017-01",
+            "value": 3030.718
+          },
+          {
+            "period": "2017-02",
+            "value": 4311.704
+          },
+          {
+            "period": "2017-03",
+            "value": 12644.411
+          },
+          {
+            "period": "2017-04",
+            "value": 8497.415
+          },
+          {
+            "period": "2017-05",
+            "value": 6360.835
+          },
+          {
+            "period": "2017-06",
+            "value": 8667.229000000001
+          },
+          {
+            "period": "2017-07",
+            "value": 3461.197
+          },
+          {
+            "period": "2017-08",
+            "value": 4286.34
+          },
+          {
+            "period": "2017-09",
+            "value": 12895.451
+          },
+          {
+            "period": "2017-10",
+            "value": 17339.597999999998
+          },
+          {
+            "period": "2017-11",
+            "value": 11468.923
+          },
+          {
+            "period": "2017-12",
+            "value": 11108.446
+          },
+          {
+            "period": "2018-01",
+            "value": 8179.601
+          },
+          {
+            "period": "2018-02",
+            "value": 6752.7984
+          },
+          {
+            "period": "2018-03",
+            "value": 7256.208
+          },
+          {
+            "period": "2018-04",
+            "value": 11703.9715
+          },
+          {
+            "period": "2018-05",
+            "value": 8961.538
+          },
+          {
+            "period": "2018-06",
+            "value": 13013.568
+          },
+          {
+            "period": "2018-07",
+            "value": 9747.444
+          },
+          {
+            "period": "2018-08",
+            "value": 5813.3
+          },
+          {
+            "period": "2018-09",
+            "value": 19183.826
+          },
+          {
+            "period": "2018-10",
+            "value": 29705.515000000003
+          },
+          {
+            "period": "2018-11",
+            "value": 24013.684
+          },
+          {
+            "period": "2018-12",
+            "value": 13072.431
+          }
+        ]
+      }
+    },
+    "region": {
+      "Central": {
+        "n_anomalies": 1,
+        "anomaly_periods": [
+          "2015-09"
+        ],
+        "monthly": [
+          {
+            "period": "2015-01",
+            "value": 1533.966
+          },
+          {
+            "period": "2015-02",
+            "value": 1233.174
+          },
+          {
+            "period": "2015-03",
+            "value": 5827.602
+          },
+          {
+            "period": "2015-04",
+            "value": 3712.34
+          },
+          {
+            "period": "2015-05",
+            "value": 4044.522
+          },
+          {
+            "period": "2015-06",
+            "value": 9374.1066
+          },
+          {
+            "period": "2015-07",
+            "value": 6740.574
+          },
+          {
+            "period": "2015-08",
+            "value": 3022.183
+          },
+          {
+            "period": "2015-09",
+            "value": 34254.8658
+          },
+          {
+            "period": "2015-10",
+            "value": 8965.757
+          },
+          {
+            "period": "2015-11",
+            "value": 13904.4562
+          },
+          {
+            "period": "2015-12",
+            "value": 10306.974
+          },
+          {
+            "period": "2016-01",
+            "value": 2510.5116000000003
+          },
+          {
+            "period": "2016-02",
+            "value": 2527.586
+          },
+          {
+            "period": "2016-03",
+            "value": 6281.2184
+          },
+          {
+            "period": "2016-04",
+            "value": 11642.055
+          },
+          {
+            "period": "2016-05",
+            "value": 8623.903
+          },
+          {
+            "period": "2016-06",
+            "value": 3713.187
+          },
+          {
+            "period": "2016-07",
+            "value": 7605.567
+          },
+          {
+            "period": "2016-08",
+            "value": 9301.4512
+          },
+          {
+            "period": "2016-09",
+            "value": 7578.52
+          },
+          {
+            "period": "2016-10",
+            "value": 7000.486
+          },
+          {
+            "period": "2016-11",
+            "value": 18903.086
+          },
+          {
+            "period": "2016-12",
+            "value": 16737.6012
+          },
+          {
+            "period": "2017-01",
+            "value": 5942.156
+          },
+          {
+            "period": "2017-02",
+            "value": 1115.728
+          },
+          {
+            "period": "2017-03",
+            "value": 12602.997
+          },
+          {
+            "period": "2017-04",
+            "value": 7462.352
+          },
+          {
+            "period": "2017-05",
+            "value": 11743.965
+          },
+          {
+            "period": "2017-06",
+            "value": 6553.148
+          },
+          {
+            "period": "2017-07",
+            "value": 7953.284000000001
+          },
+          {
+            "period": "2017-08",
+            "value": 6982.5548
+          },
+          {
+            "period": "2017-09",
+            "value": 17270.0974
+          },
+          {
+            "period": "2017-10",
+            "value": 25801.96
+          },
+          {
+            "period": "2017-11",
+            "value": 16910.3168
+          },
+          {
+            "period": "2017-12",
+            "value": 25335.321
+          },
+          {
+            "period": "2018-01",
+            "value": 21195.756
+          },
+          {
+            "period": "2018-02",
+            "value": 3334.8224
+          },
+          {
+            "period": "2018-03",
+            "value": 15504.5788
+          },
+          {
+            "period": "2018-04",
+            "value": 3383.1236
+          },
+          {
+            "period": "2018-05",
+            "value": 11396.8862
+          },
+          {
+            "period": "2018-06",
+            "value": 8494.4412
+          },
+          {
+            "period": "2018-07",
+            "value": 8870.844000000001
+          },
+          {
+            "period": "2018-08",
+            "value": 6252.994
+          },
+          {
+            "period": "2018-09",
+            "value": 17342.997
+          },
+          {
+            "period": "2018-10",
+            "value": 11812.8482
+          },
+          {
+            "period": "2018-11",
+            "value": 15154.978
+          },
+          {
+            "period": "2018-12",
+            "value": 18883.0708
+          }
+        ]
+      },
+      "East": {
+        "n_anomalies": 1,
+        "anomaly_periods": [
+          "2018-11"
+        ],
+        "monthly": [
+          {
+            "period": "2015-01",
+            "value": 436.174
+          },
+          {
+            "period": "2015-02",
+            "value": 199.77599999999998
+          },
+          {
+            "period": "2015-03",
+            "value": 5458.176
+          },
+          {
+            "period": "2015-04",
+            "value": 3054.906
+          },
+          {
+            "period": "2015-05",
+            "value": 7250.103
+          },
+          {
+            "period": "2015-06",
+            "value": 10759.155999999999
+          },
+          {
+            "period": "2015-07",
+            "value": 3403.296
+          },
+          {
+            "period": "2015-08",
+            "value": 4582.447999999999
+          },
+          {
+            "period": "2015-09",
+            "value": 25292.789
+          },
+          {
+            "period": "2015-10",
+            "value": 8945.124
+          },
+          {
+            "period": "2015-11",
+            "value": 33573.195
+          },
+          {
+            "period": "2015-12",
+            "value": 24697.676
+          },
+          {
+            "period": "2016-01",
+            "value": 4563.876
+          },
+          {
+            "period": "2016-02",
+            "value": 6463.133
+          },
+          {
+            "period": "2016-03",
+            "value": 3467.5370000000003
+          },
+          {
+            "period": "2016-04",
+            "value": 7778.796
+          },
+          {
+            "period": "2016-05",
+            "value": 7309.268
+          },
+          {
+            "period": "2016-06",
+            "value": 7442.988
+          },
+          {
+            "period": "2016-07",
+            "value": 11715.598
+          },
+          {
+            "period": "2016-08",
+            "value": 9383.782000000001
+          },
+          {
+            "period": "2016-09",
+            "value": 29401.007
+          },
+          {
+            "period": "2016-10",
+            "value": 6302.03
+          },
+          {
+            "period": "2016-11",
+            "value": 34724.761
+          },
+          {
+            "period": "2016-12",
+            "value": 24672.407
+          },
+          {
+            "period": "2017-01",
+            "value": 4860.087
+          },
+          {
+            "period": "2017-02",
+            "value": 3149.821
+          },
+          {
+            "period": "2017-03",
+            "value": 16764.857
+          },
+          {
+            "period": "2017-04",
+            "value": 17769.696
+          },
+          {
+            "period": "2017-05",
+            "value": 22258.463
+          },
+          {
+            "period": "2017-06",
+            "value": 11188.446
+          },
+          {
+            "period": "2017-07",
+            "value": 8524.197
+          },
+          {
+            "period": "2017-08",
+            "value": 8691.783
+          },
+          {
+            "period": "2017-09",
+            "value": 20198.524
+          },
+          {
+            "period": "2017-10",
+            "value": 15065.465
+          },
+          {
+            "period": "2017-11",
+            "value": 22636.619
+          },
+          {
+            "period": "2017-12",
+            "value": 27403.58
+          },
+          {
+            "period": "2018-01",
+            "value": 5383.284000000001
+          },
+          {
+            "period": "2018-02",
+            "value": 4968.522
+          },
+          {
+            "period": "2018-03",
+            "value": 7691.016
+          },
+          {
+            "period": "2018-04",
+            "value": 9251.28
+          },
+          {
+            "period": "2018-05",
+            "value": 6119.369
+          },
+          {
+            "period": "2018-06",
+            "value": 14917.427
+          },
+          {
+            "period": "2018-07",
+            "value": 12321.823
+          },
+          {
+            "period": "2018-08",
+            "value": 20741.946
+          },
+          {
+            "period": "2018-09",
+            "value": 31520.154
+          },
+          {
+            "period": "2018-10",
+            "value": 32295.24
+          },
+          {
+            "period": "2018-11",
+            "value": 45633.639
+          },
+          {
+            "period": "2018-12",
+            "value": 19285.486
+          }
+        ]
+      },
+      "South": {
+        "n_anomalies": 2,
+        "anomaly_periods": [
+          "2015-03",
+          "2018-11"
+        ],
+        "monthly": [
+          {
+            "period": "2015-01",
+            "value": 9296.844000000001
+          },
+          {
+            "period": "2015-02",
+            "value": 2028.986
+          },
+          {
+            "period": "2015-03",
+            "value": 32911.121
+          },
+          {
+            "period": "2015-04",
+            "value": 12069.252
+          },
+          {
+            "period": "2015-05",
+            "value": 5779.24
+          },
+          {
+            "period": "2015-06",
+            "value": 4560.251
+          },
+          {
+            "period": "2015-07",
+            "value": 1829.1200000000001
+          },
+          {
+            "period": "2015-08",
+            "value": 6769.9565
+          },
+          {
+            "period": "2015-09",
+            "value": 7175.335
+          },
+          {
+            "period": "2015-10",
+            "value": 4813.754
+          },
+          {
+            "period": "2015-11",
+            "value": 7385.072999999999
+          },
+          {
+            "period": "2015-12",
+            "value": 8755.973
+          },
+          {
+            "period": "2016-01",
+            "value": 4965.834
+          },
+          {
+            "period": "2016-02",
+            "value": 1156.514
+          },
+          {
+            "period": "2016-03",
+            "value": 10322.095
+          },
+          {
+            "period": "2016-04",
+            "value": 5718.3335
+          },
+          {
+            "period": "2016-05",
+            "value": 1983.704
+          },
+          {
+            "period": "2016-06",
+            "value": 7354.249
+          },
+          {
+            "period": "2016-07",
+            "value": 2197.268
+          },
+          {
+            "period": "2016-08",
+            "value": 5584.75
+          },
+          {
+            "period": "2016-09",
+            "value": 13591.507
+          },
+          {
+            "period": "2016-10",
+            "value": 4085.7275
+          },
+          {
+            "period": "2016-11",
+            "value": 7795.8205
+          },
+          {
+            "period": "2016-12",
+            "value": 5320.28
+          },
+          {
+            "period": "2017-01",
+            "value": 4082.426
+          },
+          {
+            "period": "2017-02",
+            "value": 15613.104000000001
+          },
+          {
+            "period": "2017-03",
+            "value": 4238.174
+          },
+          {
+            "period": "2017-04",
+            "value": 2965.71
+          },
+          {
+            "period": "2017-05",
+            "value": 11960.233
+          },
+          {
+            "period": "2017-06",
+            "value": 3455.885
+          },
+          {
+            "period": "2017-07",
+            "value": 6562.419
+          },
+          {
+            "period": "2017-08",
+            "value": 3050.0105
+          },
+          {
+            "period": "2017-09",
+            "value": 12023.451
+          },
+          {
+            "period": "2017-10",
+            "value": 3090.914
+          },
+          {
+            "period": "2017-11",
+            "value": 15596.555
+          },
+          {
+            "period": "2017-12",
+            "value": 10897.022
+          },
+          {
+            "period": "2018-01",
+            "value": 4815.59
+          },
+          {
+            "period": "2018-02",
+            "value": 2182.872
+          },
+          {
+            "period": "2018-03",
+            "value": 6643.719999999999
+          },
+          {
+            "period": "2018-04",
+            "value": 9447.753499999999
+          },
+          {
+            "period": "2018-05",
+            "value": 10943.741
+          },
+          {
+            "period": "2018-06",
+            "value": 8933.92
+          },
+          {
+            "period": "2018-07",
+            "value": 2864.898
+          },
+          {
+            "period": "2018-08",
+            "value": 10371.534
+          },
+          {
+            "period": "2018-09",
+            "value": 10182.52
+          },
+          {
+            "period": "2018-10",
+            "value": 12136.951000000001
+          },
+          {
+            "period": "2018-11",
+            "value": 28431.331
+          },
+          {
+            "period": "2018-12",
+            "value": 15209.737
+          }
+        ]
+      },
+      "West": {
+        "n_anomalies": 0,
+        "anomaly_periods": [],
+        "monthly": [
+          {
+            "period": "2015-01",
+            "value": 2938.723
+          },
+          {
+            "period": "2015-02",
+            "value": 1057.9560000000001
+          },
+          {
+            "period": "2015-03",
+            "value": 11008.898
+          },
+          {
+            "period": "2015-04",
+            "value": 9070.357
+          },
+          {
+            "period": "2015-05",
+            "value": 6570.438
+          },
+          {
+            "period": "2015-06",
+            "value": 9629.422
+          },
+          {
+            "period": "2015-07",
+            "value": 21808.553
+          },
+          {
+            "period": "2015-08",
+            "value": 12742.949
+          },
+          {
+            "period": "2015-09",
+            "value": 14900.537
+          },
+          {
+            "period": "2015-10",
+            "value": 8728.758
+          },
+          {
+            "period": "2015-11",
+            "value": 23044.9365
+          },
+          {
+            "period": "2015-12",
+            "value": 24406.4355
+          },
+          {
+            "period": "2016-01",
+            "value": 6026.736000000001
+          },
+          {
+            "period": "2016-02",
+            "value": 1804.1779999999999
+          },
+          {
+            "period": "2016-03",
+            "value": 12268.467999999999
+          },
+          {
+            "period": "2016-04",
+            "value": 9015.284
+          },
+          {
+            "period": "2016-05",
+            "value": 12042.655499999999
+          },
+          {
+            "period": "2016-06",
+            "value": 5088.95
+          },
+          {
+            "period": "2016-07",
+            "value": 7089.826
+          },
+          {
+            "period": "2016-08",
+            "value": 12548.359
+          },
+          {
+            "period": "2016-09",
+            "value": 12562.572
+          },
+          {
+            "period": "2016-10",
+            "value": 13623.494
+          },
+          {
+            "period": "2016-11",
+            "value": 13825.732
+          },
+          {
+            "period": "2016-12",
+            "value": 27813.313
+          },
+          {
+            "period": "2017-01",
+            "value": 3657.822
+          },
+          {
+            "period": "2017-02",
+            "value": 3100.162
+          },
+          {
+            "period": "2017-03",
+            "value": 17559.031
+          },
+          {
+            "period": "2017-04",
+            "value": 10482.009
+          },
+          {
+            "period": "2017-05",
+            "value": 10694.247
+          },
+          {
+            "period": "2017-06",
+            "value": 18527.007
+          },
+          {
+            "period": "2017-07",
+            "value": 15280.883
+          },
+          {
+            "period": "2017-08",
+            "value": 11817.852
+          },
+          {
+            "period": "2017-09",
+            "value": 19701.3185
+          },
+          {
+            "period": "2017-10",
+            "value": 15624.694
+          },
+          {
+            "period": "2017-11",
+            "value": 23923.005
+          },
+          {
+            "period": "2017-12",
+            "value": 32103.198
+          },
+          {
+            "period": "2018-01",
+            "value": 12081.844
+          },
+          {
+            "period": "2018-02",
+            "value": 9434.781
+          },
+          {
+            "period": "2018-03",
+            "value": 29024.097999999998
+          },
+          {
+            "period": "2018-04",
+            "value": 13459.753
+          },
+          {
+            "period": "2018-05",
+            "value": 15365.986
+          },
+          {
+            "period": "2018-06",
+            "value": 15844.9395
+          },
+          {
+            "period": "2018-07",
+            "value": 20767.539
+          },
+          {
+            "period": "2018-08",
+            "value": 25471.374
+          },
+          {
+            "period": "2018-09",
+            "value": 27107.217
+          },
+          {
+            "period": "2018-10",
+            "value": 21203.092
+          },
+          {
+            "period": "2018-11",
+            "value": 28718.207
+          },
+          {
+            "period": "2018-12",
+            "value": 29652.095
+          }
+        ]
+      }
+    }
+  },
+  "confirmed_list": [
+    {
+      "period": "2018-11",
+      "sales": 117938.16,
+      "votes": 3,
+      "severity": "critical",
+      "direction": "spike",
+      "z_score": 2.751,
+      "iso_score": -0.0355,
+      "mom_pct": 52.28,
+      "yoy_pct": 49.16,
+      "residual": 43392.68
+    }
+  ]
+}

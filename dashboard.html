@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sales Analysis Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=cabinet-grotesk@700,800&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:        #0f0f0f;
+  --surf:      #171717;
+  --surf2:     #1e1e1e;
+  --surf3:     #262626;
+  --bdr:       rgba(255,255,255,0.07);
+  --text:      #e8e6e1;
+  --muted:     #8a8784;
+  --faint:     #4a4948;
+  --primary:   #4f98a3;
+  --pri-dk:    #01696f;
+  --success:   #6daa45;
+  --warning:   #e8af34;
+  --error:     #dd6974;
+  --orange:    #fdab43;
+  --purple:    #a86fdf;
+  --blue:      #5591c7;
+  --font-b:    'Satoshi', system-ui, sans-serif;
+  --font-d:    'Cabinet Grotesk', system-ui, sans-serif;
+  --r-sm: 6px; --r-md: 10px; --r-lg: 16px; --r-xl: 22px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.45);
+  --trans: 160ms cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;}
+body{font-family:var(--font-b);background:var(--bg);color:var(--text);font-size:15px;line-height:1.6;min-height:100dvh;}
+img,svg{display:block;max-width:100%;}
+button{cursor:pointer;background:none;border:none;font:inherit;color:inherit;}
+table{border-collapse:collapse;width:100%;}
+
+/* ── UPLOAD SCREEN ── */
+#upload-screen{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:100dvh;padding:2rem;gap:2rem;
+}
+.upload-logo{
+  font-family:var(--font-d);font-size:1.5rem;font-weight:800;color:var(--primary);
+  display:flex;align-items:center;gap:0.5rem;
+}
+.upload-logo svg{width:32px;height:32px;}
+.upload-card{
+  background:var(--surf);border:1px solid var(--bdr);border-radius:var(--r-xl);
+  padding:2.5rem 2rem;max-width:520px;width:100%;text-align:center;
+}
+.upload-card h2{font-family:var(--font-d);font-size:1.4rem;font-weight:800;margin-bottom:0.5rem;}
+.upload-card p{color:var(--muted);font-size:0.9rem;margin-bottom:1.5rem;}
+.drop-zone{
+  border:2px dashed var(--faint);border-radius:var(--r-lg);padding:2.5rem 1rem;
+  cursor:pointer;transition:border-color var(--trans),background var(--trans);
+  display:flex;flex-direction:column;align-items:center;gap:0.75rem;
+}
+.drop-zone:hover,.drop-zone.drag-over{border-color:var(--primary);background:rgba(79,152,163,0.05);}
+.drop-zone svg{width:40px;height:40px;color:var(--faint);}
+.drop-zone span{font-size:0.85rem;color:var(--muted);}
+.drop-zone strong{color:var(--primary);}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:var(--primary);color:#fff;border-radius:var(--r-md);
+  padding:0.6rem 1.4rem;font-size:0.9rem;font-weight:600;
+  transition:background var(--trans);margin-top:1rem;
+}
+.btn-primary:hover{background:var(--pri-dk);}
+.upload-steps{
+  display:flex;flex-direction:column;gap:0.5rem;
+  background:var(--surf2);border-radius:var(--r-lg);padding:1.25rem;
+  max-width:520px;width:100%;
+}
+.upload-steps h4{font-size:0.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:0.25rem;}
+.step{display:flex;align-items:flex-start;gap:0.75rem;font-size:0.85rem;}
+.step-num{
+  min-width:22px;height:22px;border-radius:50%;
+  background:var(--surf3);color:var(--primary);
+  font-size:0.75rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;
+}
+.step span{color:var(--muted);}
+.step code{
+  font-family:monospace;font-size:0.8rem;
+  background:rgba(255,255,255,0.05);border-radius:4px;
+  padding:0.1rem 0.4rem;color:var(--text);
+}
+
+/* ── DASHBOARD ── */
+#dashboard{display:none;}
+.topnav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(15,15,15,0.92);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--bdr);
+  padding:0 1.5rem;display:flex;align-items:center;gap:1.5rem;height:52px;
+}
+.nav-brand{font-family:var(--font-d);font-size:1rem;font-weight:800;color:var(--primary);white-space:nowrap;}
+.nav-links{display:flex;gap:0.25rem;overflow-x:auto;}
+.nav-links a{
+  color:var(--muted);text-decoration:none;font-size:0.82rem;
+  padding:0.3rem 0.6rem;border-radius:var(--r-sm);
+  transition:color var(--trans),background var(--trans);white-space:nowrap;
+}
+.nav-links a:hover{color:var(--text);background:var(--surf2);}
+.nav-spacer{flex:1;}
+.nav-reset{
+  font-size:0.8rem;color:var(--muted);padding:0.3rem 0.75rem;
+  border:1px solid var(--bdr);border-radius:var(--r-sm);
+  transition:all var(--trans);
+}
+.nav-reset:hover{color:var(--text);border-color:var(--primary);}
+.container{max-width:1280px;margin:0 auto;padding:2rem 1.5rem 4rem;}
+.page-header{margin-bottom:2.5rem;}
+.page-title{font-family:var(--font-d);font-size:clamp(1.5rem,3vw,2rem);font-weight:800;}
+.page-meta{color:var(--muted);font-size:0.85rem;margin-top:0.25rem;}
+.page-meta span{color:var(--primary);font-weight:600;}
+
+/* SECTION */
+.section{margin-bottom:3.5rem;}
+.section-title{
+  font-family:var(--font-d);font-size:1.05rem;font-weight:700;
+  color:var(--primary);border-bottom:1px solid var(--bdr);
+  padding-bottom:0.5rem;margin-bottom:1.5rem;
+  display:flex;align-items:center;gap:0.5rem;
+}
+.section-sub{
+  font-size:0.92rem;font-weight:600;color:var(--text);
+  margin:1.5rem 0 0.75rem;
+}
+
+/* KPI GRID */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem;}
+.kpi-card{
+  background:var(--surf);border:1px solid var(--bdr);border-radius:var(--r-lg);
+  padding:1.1rem;display:flex;flex-direction:column;gap:0.3rem;
+  transition:box-shadow var(--trans);
+}
+.kpi-card:hover{box-shadow:var(--shadow);}
+.kpi-icon{font-size:1.3rem;}
+.kpi-value{
+  font-family:var(--font-d);font-size:1.25rem;font-weight:800;
+  color:var(--text);font-variant-numeric:tabular-nums;word-break:break-all;
+}
+.kpi-label{font-size:0.73rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;}
+
+/* CHART GRID */
+.chart-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem;}
+.chart-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-bottom:1.5rem;}
+.chart-full{margin-bottom:1.5rem;}
+@media(max-width:900px){.chart-grid-2,.chart-grid-3{grid-template-columns:1fr;}}
+.chart-card{
+  background:var(--surf);border:1px solid var(--bdr);border-radius:var(--r-lg);padding:1.25rem;
+}
+.chart-card h4{
+  font-size:0.78rem;font-weight:600;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.05em;margin-bottom:1rem;
+}
+.chart-card canvas{max-height:300px;}
+
+/* TABLES */
+.table-wrap{overflow-x:auto;border-radius:var(--r-md);border:1px solid var(--bdr);margin-bottom:1rem;}
+table{font-size:0.83rem;}
+thead tr{background:var(--surf3);}
+th{padding:.55rem .85rem;text-align:left;font-weight:600;color:var(--muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;}
+td{padding:.5rem .85rem;border-top:1px solid var(--bdr);color:var(--text);}
+tbody tr:hover{background:var(--surf2);}
+.num{font-variant-numeric:tabular-nums;text-align:right;}
+
+/* STAT BLOCKS */
+.stats-2col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+@media(max-width:700px){.stats-2col{grid-template-columns:1fr;}}
+.stat-block{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--r-lg);padding:1.25rem;}
+.stat-block h4{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.75rem;font-weight:600;}
+
+/* BADGES */
+.badge{display:inline-block;padding:.15rem .55rem;border-radius:99px;font-size:.72rem;font-weight:600;letter-spacing:.03em;}
+.badge-identifier{background:rgba(79,152,163,.15);color:var(--primary);}
+.badge-time{background:rgba(232,175,52,.15);color:var(--warning);}
+.badge-numeric_feature,.badge-numeric-feature{background:rgba(109,170,69,.15);color:var(--success);}
+.badge-categorical_feature,.badge-categorical-feature{background:rgba(168,111,223,.15);color:var(--purple);}
+.badge-high_cardinality_string,.badge-high-cardinality-string{background:rgba(253,171,67,.15);color:var(--orange);}
+.badge-text{background:rgba(221,105,116,.15);color:var(--error);}
+.badge-numeric_category,.badge-numeric-category{background:rgba(85,145,199,.15);color:var(--blue);}
+.badge-other{background:var(--surf3);color:var(--muted);}
+
+/* PILL */
+.info-pill{
+  display:inline-flex;align-items:center;gap:.4rem;
+  background:var(--surf3);border-radius:99px;
+  padding:.3rem .9rem;font-size:.85rem;margin-top:.5rem;
+}
+.info-pill .val{color:var(--primary);font-weight:700;}
+
+/* SUCCESS STATE */
+.no-missing{text-align:center;color:var(--success);padding:.75rem;}
+
+/* BREAKDOWN TABS */
+.bd-tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;}
+.bd-tab{
+  padding:.35rem .85rem;border-radius:99px;font-size:.8rem;font-weight:600;
+  border:1px solid var(--bdr);color:var(--muted);
+  transition:all var(--trans);cursor:pointer;
+}
+.bd-tab:hover{color:var(--text);border-color:var(--primary);}
+.bd-tab.active{background:var(--primary);color:#fff;border-color:var(--primary);}
+.bd-panel{display:none;}
+.bd-panel.active{display:block;}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════ UPLOAD SCREEN ══ -->
+<div id="upload-screen">
+  <div class="upload-logo">
+    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect width="32" height="32" rx="8" fill="#4f98a3" fill-opacity=".15"/>
+      <path d="M8 22h16M8 17h10M8 12h6" stroke="#4f98a3" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="22" cy="13" r="4" stroke="#4f98a3" stroke-width="2"/>
+      <path d="M22 11v4M20 13h4" stroke="#4f98a3" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    DataAgent
+  </div>
+
+  <div class="upload-card">
+    <h2>Sales Analysis Dashboard</h2>
+    <p>Upload your <strong>report_data.json</strong> to instantly visualize your sales data with comprehensive summary and breakdown analysis.</p>
+    <div class="drop-zone" id="drop-zone" role="button" tabindex="0" aria-label="Upload report_data.json">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="17 8 12 3 7 8"/>
+        <line x1="12" y1="3" x2="12" y2="15"/>
+      </svg>
+      <span>Drag &amp; drop <strong>report_data.json</strong> here</span>
+      <span style="font-size:.75rem;color:var(--faint)">or click to browse</span>
+    </div>
+    <input type="file" id="file-input" accept=".json" style="display:none" aria-label="Choose report_data.json"/>
+    <button class="btn-primary" onclick="document.getElementById('file-input').click()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      Choose File
+    </button>
+  </div>
+
+  <div class="upload-steps">
+    <h4>How to generate report_data.json</h4>
+    <div class="step"><div class="step-num">1</div><div><span>Analyze your CSV schema:</span><br/><code>python schema_analyzer.py --csv-path data.csv --output schema.json</code></div></div>
+    <div class="step"><div class="step-num">2</div><div><span>Compute summary + breakdowns:</span><br/><code>python analysis_engine.py --csv-path data.csv --schema-path schema.json --output report_data.json</code></div></div>
+    <div class="step"><div class="step-num">3</div><div><span>Upload <strong>report_data.json</strong> above — done.</span></div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ DASHBOARD ══ -->
+<div id="dashboard">
+  <nav class="topnav">
+    <div class="nav-brand">DataAgent</div>
+    <div class="nav-links">
+      <a href="#summary">Summary</a>
+      <a href="#distributions">Distributions</a>
+      <a href="#trends">Trends</a>
+      <a href="#breakdown">Breakdown</a>
+      <a href="#schema">Schema</a>
+    </div>
+    <div class="nav-spacer"></div>
+    <button class="nav-reset" onclick="resetDashboard()">Upload New</button>
+  </nav>
+
+  <div class="container">
+    <div class="page-header">
+      <div class="page-title" id="page-title">Sales Analysis</div>
+      <div class="page-meta" id="page-meta"></div>
+    </div>
+
+    <!-- ── SUMMARY ── -->
+    <div class="section" id="summary">
+      <div class="section-title">📊 Summary Overview</div>
+      <div class="kpi-grid" id="kpi-grid"></div>
+      <div class="stats-2col" style="margin-top:1.5rem;">
+        <div class="stat-block">
+          <h4 id="pct-table-title">Percentile Distribution</h4>
+          <div class="table-wrap"><table id="pct-table">
+            <thead><tr><th>Percentile</th><th>Value</th></tr></thead>
+            <tbody></tbody>
+          </table></div>
+        </div>
+        <div class="stat-block">
+          <h4>Distribution Shape</h4>
+          <div class="table-wrap"><table id="shape-table">
+            <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+            <tbody></tbody>
+          </table></div>
+          <div id="lead-pill"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── DISTRIBUTIONS ── -->
+    <div class="section" id="distributions">
+      <div class="section-title">🔬 Distributions</div>
+      <div class="chart-grid-2">
+        <div class="chart-card"><h4 id="hist-title">Frequency Distribution</h4><canvas id="histChart"></canvas></div>
+        <div class="chart-card"><h4 id="cat0-title">Category Breakdown</h4><canvas id="cat0Chart"></canvas></div>
+      </div>
+      <div class="chart-grid-3" id="cat-charts-row"></div>
+    </div>
+
+    <!-- ── TRENDS ── -->
+    <div class="section" id="trends">
+      <div class="section-title">📈 Time Trends</div>
+      <div id="trends-content">
+        <div class="chart-full chart-card"><h4 id="monthly-title">Monthly Trend</h4><canvas id="monthlyChart" style="max-height:260px;"></canvas></div>
+        <div class="chart-grid-2">
+          <div class="chart-card"><h4 id="avg-title">Monthly Avg per Line</h4><canvas id="monthlyAvgChart"></canvas></div>
+          <div class="chart-card"><h4>Monthly Order Volume</h4><canvas id="volChart"></canvas></div>
+        </div>
+        <div class="chart-full chart-card"><h4>Yearly Totals</h4><canvas id="yearlyChart" style="max-height:220px;"></canvas></div>
+      </div>
+      <div id="no-time-msg" style="display:none;color:var(--muted);font-size:.9rem;padding:1rem 0;">No time columns detected in this dataset.</div>
+    </div>
+
+    <!-- ── BREAKDOWN ── -->
+    <div class="section" id="breakdown">
+      <div class="section-title">🔍 Breakdown Analysis</div>
+      <div class="chart-grid-2" id="top-entity-charts"></div>
+      <div id="crosstab-chart-wrap" class="chart-full chart-card" style="display:none;margin-bottom:1.5rem;">
+        <h4 id="crosstab-title">Cross-Tab Stacked Breakdown</h4>
+        <canvas id="crChart" style="max-height:280px;"></canvas>
+      </div>
+      <div id="lead-table-wrap" style="display:none;">
+        <h3 class="section-sub" id="lead-table-title">Lead Time Breakdown</h3>
+        <div class="table-wrap"><table id="lead-table">
+          <thead><tr></tr></thead>
+          <tbody></tbody>
+        </table></div>
+      </div>
+      <div class="divider" style="height:1px;background:var(--bdr);margin:2rem 0;"></div>
+      <h3 class="section-sub">Group-By Detailed Tables</h3>
+      <div class="bd-tabs" id="bd-tabs"></div>
+      <div id="bd-panels"></div>
+      <div class="divider" style="height:1px;background:var(--bdr);margin:2rem 0;"></div>
+      <div id="top-entity-tables"></div>
+    </div>
+
+    <!-- ── SCHEMA ── -->
+    <div class="section" id="schema">
+      <div class="section-title">🗂️ Dataset Schema</div>
+      <div class="table-wrap"><table id="schema-table">
+        <thead><tr>
+          <th>Column</th><th>Role</th><th>Dtype</th><th>Unique</th><th>Missing %</th><th>Target?</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table></div>
+      <h3 class="section-sub">Missing Values</h3>
+      <div class="table-wrap"><table id="missing-table">
+        <thead><tr><th>Column</th><th>Missing Count</th><th>Missing %</th></tr></thead>
+        <tbody></tbody>
+      </table></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── palette & chart defaults ────────────────────────────────────────────────
+const PAL = ["#4f98a3","#6daa45","#e8af34","#fdab43","#a86fdf","#dd6974","#5591c7","#bb653b","#01696f","#437a22","#d19900","#a13544","#4f98a3","#6daa45","#e8af34"];
+const GRID  = { color: "rgba(255,255,255,0.06)" };
+const TICK  = { color: "#8a8784", font: { size: 11 } };
+const TIP   = { backgroundColor:"#1e1e1e", titleColor:"#e8e6e1", bodyColor:"#8a8784", borderColor:"rgba(255,255,255,0.1)", borderWidth:1, padding:10 };
+
+function baseOpts(isMoney=true) {
+  return {
+    responsive: true, maintainAspectRatio: true,
+    plugins: { legend:{ display:false }, tooltip: TIP },
+    scales: {
+      x: { grid: GRID, ticks: TICK },
+      y: { grid: GRID, ticks: { ...TICK, callback: v => isMoney ? "$"+fmtNum(v) : fmtNum(v) } },
+    }
+  };
+}
+function hBarOpts(isMoney=true) {
+  const o = baseOpts(isMoney);
+  o.indexAxis = "y";
+  return o;
+}
+
+const activeCharts = {};
+function makeChart(id, type, data, opts) {
+  if (activeCharts[id]) activeCharts[id].destroy();
+  const ctx = document.getElementById(id);
+  if (!ctx) return;
+  activeCharts[id] = new Chart(ctx, { type, data, options: opts });
+}
+
+// ── formatting ──────────────────────────────────────────────────────────────
+function fmtNum(v) {
+  if (v === null || v === undefined) return "N/A";
+  if (Math.abs(v) >= 1e9) return (v/1e9).toFixed(2)+"B";
+  if (Math.abs(v) >= 1e6) return (v/1e6).toFixed(2)+"M";
+  if (Math.abs(v) >= 1e3) return (v/1e3).toFixed(1)+"K";
+  return Number(v).toLocaleString(undefined,{maximumFractionDigits:2});
+}
+function fmtMoney(v) { return v===null||v===undefined ? "N/A" : "$"+fmtNum(v); }
+function titleCase(s) { return s.replace(/_/g," ").replace(/\b\w/g, c=>c.toUpperCase()); }
+function fmtBadgeClass(role) { return "badge badge-"+role.replace(/_/g,"-"); }
+
+// ── upload handling ──────────────────────────────────────────────────────────
+const dropZone  = document.getElementById("drop-zone");
+const fileInput = document.getElementById("file-input");
+
+dropZone.addEventListener("click",  () => fileInput.click());
+dropZone.addEventListener("keydown", e => { if(e.key==="Enter"||e.key===" ") fileInput.click(); });
+dropZone.addEventListener("dragover", e => { e.preventDefault(); dropZone.classList.add("drag-over"); });
+dropZone.addEventListener("dragleave", () => dropZone.classList.remove("drag-over"));
+dropZone.addEventListener("drop", e => {
+  e.preventDefault(); dropZone.classList.remove("drag-over");
+  const f = e.dataTransfer.files[0];
+  if (f) readFile(f);
+});
+fileInput.addEventListener("change", () => { if(fileInput.files[0]) readFile(fileInput.files[0]); });
+
+function readFile(file) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      renderDashboard(data);
+    } catch(err) {
+      alert("Invalid JSON file: " + err.message);
+    }
+  };
+  reader.readAsText(file);
+}
+
+function resetDashboard() {
+  document.getElementById("upload-screen").style.display = "flex";
+  document.getElementById("dashboard").style.display    = "none";
+  fileInput.value = "";
+  Object.values(activeCharts).forEach(c => c.destroy());
+  Object.keys(activeCharts).forEach(k => delete activeCharts[k]);
+}
+
+// ── RENDER ───────────────────────────────────────────────────────────────────
+function renderDashboard(data) {
+  const { schema, summary, breakdown } = data;
+
+  document.getElementById("upload-screen").style.display = "none";
+  document.getElementById("dashboard").style.display    = "block";
+
+  const tgt = summary.target_label;
+  document.getElementById("page-title").textContent = tgt + " Analysis Dashboard";
+
+  const meta = [];
+  if (schema) meta.push(`${(schema.n_rows||0).toLocaleString()} rows`);
+  if (schema) meta.push(`${schema.n_columns||0} columns`);
+  if (summary.kpis.date_from) meta.push(`${summary.kpis.date_from} → ${summary.kpis.date_to}`);
+  const metaEl = document.getElementById("page-meta");
+  metaEl.innerHTML = meta.map(m=>`<span>${m}</span>`).join(" &nbsp;·&nbsp; ");
+
+  renderKPIs(summary);
+  renderPercentiles(summary);
+  renderShapeStats(summary);
+  renderDistributions(summary, breakdown, schema);
+  renderTrends(summary, breakdown);
+  renderBreakdown(breakdown);
+  renderSchema(schema, summary);
+}
+
+// ── KPIs ────────────────────────────────────────────────────────────────────
+function renderKPIs(summary) {
+  const { kpis, target_label } = summary;
+  const iconMap = {
+    total_target:"💰", mean:"📊", median:"📈", std:"📉",
+    min:"⬇️", max:"⬆️", unique_orders:"🧾", unique_customers:"👥",
+    unique_products:"📦", total_rows:"🗃️", date_from:"📅", date_to:"📅",
+  };
+  const labelMap = {
+    total_target:`Total ${target_label}`, mean:`Mean ${target_label}`,
+    median:`Median ${target_label}`, std:"Std Deviation", min:"Min", max:"Max",
+    unique_orders:"Unique Orders", unique_customers:"Unique Customers",
+    unique_products:"Unique Products", total_rows:"Total Rows",
+    date_from:"Date From", date_to:"Date To",
+  };
+  const grid = document.getElementById("kpi-grid");
+  grid.innerHTML = "";
+  const isMoney = (k) => ["total_target","mean","median","std","min","max"].includes(k);
+  for (const [k, v] of Object.entries(kpis)) {
+    if (v === null || v === undefined) continue;
+    const card = document.createElement("div");
+    card.className = "kpi-card";
+    const valStr = isMoney(k) ? fmtMoney(v) : (typeof v==="number" ? v.toLocaleString() : v);
+    card.innerHTML = `<div class="kpi-icon">${iconMap[k]||"📌"}</div>
+      <div class="kpi-value">${valStr}</div>
+      <div class="kpi-label">${labelMap[k]||titleCase(k)}</div>`;
+    grid.appendChild(card);
+  }
+}
+
+// ── PERCENTILES ─────────────────────────────────────────────────────────────
+function renderPercentiles(summary) {
+  document.getElementById("pct-table-title").textContent = `Percentiles — ${summary.target_label}`;
+  const tbody = document.querySelector("#pct-table tbody");
+  tbody.innerHTML = "";
+  summary.percentiles.forEach(p => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${p.percentile}</td><td class="num">${fmtMoney(p.value)}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+// ── SHAPE STATS ─────────────────────────────────────────────────────────────
+function renderShapeStats(summary) {
+  const { shape_stats, lead_corr } = summary;
+  const tbody = document.querySelector("#shape-table tbody");
+  tbody.innerHTML = "";
+  const labels = { skewness:"Skewness", kurtosis:"Kurtosis", variance:"Variance", cv_percent:"CV (%)" };
+  for (const [k, v] of Object.entries(shape_stats)) {
+    if (v === null) continue;
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${labels[k]||titleCase(k)}</td><td class="num">${v}</td>`;
+    tbody.appendChild(tr);
+  }
+  const pill = document.getElementById("lead-pill");
+  if (lead_corr !== null && lead_corr !== undefined) {
+    pill.innerHTML = `<div class="info-pill">Lead-time vs ${summary.target_label} correlation: <span class="val">${lead_corr}</span></div>`;
+  }
+}
+
+// ── DISTRIBUTIONS ────────────────────────────────────────────────────────────
+function renderDistributions(summary, breakdown, schema) {
+  // Histogram
+  document.getElementById("hist-title").textContent = `${summary.target_label} — Frequency Distribution`;
+  makeChart("histChart","bar",{
+    labels: summary.hist_labels,
+    datasets:[{data:summary.hist_counts,backgroundColor:"#4f98a3",borderRadius:4}]
+  },{
+    responsive:true, maintainAspectRatio:true,
+    plugins:{legend:{display:false},tooltip:TIP},
+    scales:{
+      x:{grid:GRID,ticks:{...TICK,maxRotation:45}},
+      y:{grid:GRID,ticks:{...TICK,callback:v=>v.toLocaleString()}}
+    }
+  });
+
+  // First categorical col → donut
+  const catCols = breakdown.breakdown_cols || [];
+  if (catCols.length > 0) {
+    const first = catCols[0];
+    document.getElementById("cat0-title").textContent = `By ${titleCase(first)}`;
+    const rows = breakdown.breakdowns[first] || [];
+    makeChart("cat0Chart","doughnut",{
+      labels: rows.map(r=>String(r[first])),
+      datasets:[{data:rows.map(r=>r.total_target),backgroundColor:PAL,borderWidth:0}]
+    },{
+      responsive:true,
+      plugins:{
+        legend:{position:"bottom",labels:{color:"#8a8784",padding:14,font:{size:11}}},
+        tooltip:TIP
+      }
+    });
+  } else {
+    document.getElementById("cat0-title").textContent = "No categorical columns found";
+  }
+
+  // Next few cat cols → small bar charts in row of 3
+  const row = document.getElementById("cat-charts-row");
+  row.innerHTML = "";
+  catCols.slice(1, 4).forEach((cat, i) => {
+    const rows = breakdown.breakdowns[cat] || [];
+    const id = "catSmall_" + i;
+    const card = document.createElement("div");
+    card.className = "chart-card";
+    card.innerHTML = `<h4>By ${titleCase(cat)}</h4><canvas id="${id}"></canvas>`;
+    row.appendChild(card);
+    // defer so canvas is in DOM
+    setTimeout(() => {
+      makeChart(id,"bar",{
+        labels: rows.map(r=>String(r[cat])),
+        datasets:[{data:rows.map(r=>r.total_target),backgroundColor:PAL,borderRadius:6}]
+      }, baseOpts(true));
+    }, 0);
+  });
+}
+
+// ── TRENDS ───────────────────────────────────────────────────────────────────
+function renderTrends(summary, breakdown) {
+  const hasTrends = summary.monthly && summary.monthly.length > 0;
+  document.getElementById("trends-content").style.display = hasTrends ? "block" : "none";
+  document.getElementById("no-time-msg").style.display    = hasTrends ? "none"  : "block";
+  if (!hasTrends) return;
+
+  const tgt = summary.target_label;
+  document.getElementById("monthly-title").textContent = `Monthly Total ${tgt}`;
+  document.getElementById("avg-title").textContent     = `Monthly Avg ${tgt} per Line`;
+
+  const mLabels = summary.monthly.map(r=>r.period);
+  const mSales  = summary.monthly.map(r=>r.total_target);
+  const mAvg    = summary.monthly.map(r=>r.avg_value);
+
+  makeChart("monthlyChart","line",{
+    labels:mLabels,
+    datasets:[{data:mSales,borderColor:"#4f98a3",backgroundColor:"rgba(79,152,163,0.1)",fill:true,tension:0.4,pointRadius:3,pointHoverRadius:6}]
+  },{
+    responsive:true,maintainAspectRatio:true,
+    plugins:{legend:{display:false},tooltip:TIP},
+    scales:{x:{grid:GRID,ticks:{...TICK,maxRotation:45}},y:{grid:GRID,ticks:{...TICK,callback:v=>"$"+fmtNum(v)}}}
+  });
+
+  makeChart("monthlyAvgChart","line",{
+    labels:mLabels,
+    datasets:[{data:mAvg,borderColor:"#e8af34",backgroundColor:"rgba(232,175,52,0.08)",fill:true,tension:0.4,pointRadius:3}]
+  }, baseOpts(true));
+
+  const vol = breakdown.order_volume || [];
+  makeChart("volChart","bar",{
+    labels:vol.map(r=>r.period),
+    datasets:[{data:vol.map(r=>r.num_orders),backgroundColor:"rgba(168,111,223,0.7)",borderRadius:4}]
+  },{
+    responsive:true,maintainAspectRatio:true,
+    plugins:{legend:{display:false},tooltip:TIP},
+    scales:{
+      x:{grid:GRID,ticks:{...TICK,maxRotation:45}},
+      y:{grid:GRID,ticks:{...TICK,callback:v=>v.toLocaleString()}}
+    }
+  });
+
+  const yLabels = summary.yearly.map(r=>String(r.year));
+  const ySales  = summary.yearly.map(r=>r.total_target);
+  makeChart("yearlyChart","bar",{
+    labels:yLabels,
+    datasets:[{data:ySales,backgroundColor:PAL,borderRadius:8}]
+  }, baseOpts(true));
+}
+
+// ── BREAKDOWN ────────────────────────────────────────────────────────────────
+function renderBreakdown(breakdown) {
+  const tgt = breakdown.target_label;
+
+  // Top entity charts (customers, products, cities etc.)
+  const entityWrap = document.getElementById("top-entity-charts");
+  entityWrap.innerHTML = "";
+  const entityColors = { customer_name:"#6daa45", product_name:"#a86fdf", city:"#fdab43" };
+  Object.entries(breakdown.top_entities || {}).forEach(([role, obj]) => {
+    const rows = obj.rows || [];
+    const col  = obj.col;
+    const id   = "top_" + role;
+    const card = document.createElement("div");
+    card.className = "chart-card";
+    card.innerHTML = `<h4>Top 10 by ${titleCase(col)}</h4><canvas id="${id}" style="max-height:300px;"></canvas>`;
+    entityWrap.appendChild(card);
+    setTimeout(() => {
+      makeChart(id,"bar",{
+        labels:rows.map(r=>String(r[col])),
+        datasets:[{data:rows.map(r=>r.total_target),backgroundColor:entityColors[role]||"#4f98a3",borderRadius:4}]
+      },{
+        indexAxis:"y",responsive:true,maintainAspectRatio:true,
+        plugins:{legend:{display:false},tooltip:TIP},
+        scales:{
+          x:{grid:GRID,ticks:{...TICK,callback:v=>"$"+fmtNum(v)}},
+          y:{grid:{display:false},ticks:{...TICK,font:{size:10}}}
+        }
+      });
+    },0);
+  });
+
+  // Crosstab stacked chart
+  const ct = breakdown.crosstab;
+  const crWrap = document.getElementById("crosstab-chart-wrap");
+  if (ct && breakdown.stacked_datasets && breakdown.stacked_datasets.length > 0) {
+    crWrap.style.display = "block";
+    document.getElementById("crosstab-title").textContent =
+      `${titleCase(ct.col_a)} × ${titleCase(ct.col_b)} — Stacked ${tgt}`;
+    makeChart("crChart","bar",{
+      labels: ct.categories.map(String),
+      datasets: breakdown.stacked_datasets.map((ds,i)=>({
+        label: String(ds.label), data: ds.data, backgroundColor: PAL[i%PAL.length]
+      }))
+    },{
+      responsive:true, maintainAspectRatio:true,
+      plugins:{
+        legend:{position:"bottom",labels:{color:"#8a8784",padding:14,font:{size:11}}},
+        tooltip:TIP
+      },
+      scales:{
+        x:{stacked:true,grid:GRID,ticks:TICK},
+        y:{stacked:true,grid:GRID,ticks:{...TICK,callback:v=>"$"+fmtNum(v)}}
+      }
+    });
+  } else { crWrap.style.display = "none"; }
+
+  // Lead by group table
+  const ltWrap = document.getElementById("lead-table-wrap");
+  const lb = breakdown.lead_by_group || [];
+  if (lb.length > 0) {
+    ltWrap.style.display = "block";
+    const cols = Object.keys(lb[0]);
+    const thead = document.querySelector("#lead-table thead tr");
+    thead.innerHTML = cols.map(c=>`<th>${titleCase(c)}</th>`).join("");
+    const tbody = document.querySelector("#lead-table tbody");
+    tbody.innerHTML = "";
+    lb.forEach(row => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = cols.map(c=>`<td>${row[c]??""}</td>`).join("");
+      tbody.appendChild(tr);
+    });
+    // title uses the first col as group name
+    document.getElementById("lead-table-title").textContent = `Lead Time by ${titleCase(cols[0])} (days)`;
+  } else { ltWrap.style.display = "none"; }
+
+  // Group-by tabs + panels
+  const tabs   = document.getElementById("bd-tabs");
+  const panels = document.getElementById("bd-panels");
+  tabs.innerHTML = ""; panels.innerHTML = "";
+  const catCols = breakdown.breakdown_cols || [];
+  catCols.forEach((cat, i) => {
+    const rows = breakdown.breakdowns[cat] || [];
+    const tabId   = "bd-tab-" + i;
+    const panelId = "bd-panel-" + i;
+
+    const tab = document.createElement("button");
+    tab.className = "bd-tab" + (i===0?" active":"");
+    tab.textContent = titleCase(cat);
+    tab.setAttribute("aria-controls", panelId);
+    tab.onclick = () => {
+      document.querySelectorAll(".bd-tab").forEach(t=>t.classList.remove("active"));
+      document.querySelectorAll(".bd-panel").forEach(p=>p.classList.remove("active"));
+      tab.classList.add("active");
+      document.getElementById(panelId).classList.add("active");
+    };
+    tabs.appendChild(tab);
+
+    const panel = document.createElement("div");
+    panel.className = "bd-panel" + (i===0?" active":"");
+    panel.id = panelId;
+    if (rows.length === 0) { panel.innerHTML = "<p style='color:var(--muted);font-size:.85rem;'>No data.</p>"; }
+    else {
+      const cols = Object.keys(rows[0]);
+      const moneyKeys = new Set(["total_target","avg_value","median_value","max_value","std_value"]);
+      const pctKeys   = new Set(["pct_of_total"]);
+      let html = `<div class="table-wrap"><table><thead><tr>`;
+      html += cols.map(c=>`<th>${titleCase(c)}</th>`).join("");
+      html += `</tr></thead><tbody>`;
+      rows.forEach(row => {
+        html += "<tr>" + cols.map(c => {
+          const v = row[c];
+          if (v === null || v === undefined) return `<td>—</td>`;
+          if (moneyKeys.has(c)) return `<td class="num">${fmtMoney(v)}</td>`;
+          if (pctKeys.has(c))   return `<td class="num">${Number(v).toFixed(1)}%</td>`;
+          if (typeof v==="number") return `<td class="num">${Number(v).toLocaleString()}</td>`;
+          return `<td>${v}</td>`;
+        }).join("") + "</tr>";
+      });
+      html += `</tbody></table></div>`;
+      panel.innerHTML = html;
+    }
+    panels.appendChild(panel);
+  });
+
+  // Top entity tables
+  const etWrap = document.getElementById("top-entity-tables");
+  etWrap.innerHTML = "";
+  Object.entries(breakdown.top_entities || {}).forEach(([role, obj]) => {
+    const rows = obj.rows || [];
+    const col  = obj.col;
+    if (!rows.length) return;
+    let html = `<h3 class="section-sub">Top ${rows.length} by ${titleCase(col)}</h3>`;
+    html += `<div class="table-wrap"><table><thead><tr><th>#</th><th>${titleCase(col)}</th><th>Total ${tgt}</th></tr></thead><tbody>`;
+    rows.forEach((r,i) => {
+      html += `<tr><td>${i+1}</td><td>${r[col]}</td><td class="num">${fmtMoney(r.total_target)}</td></tr>`;
+    });
+    html += `</tbody></table></div>`;
+    etWrap.innerHTML += html;
+  });
+}
+
+// ── SCHEMA ───────────────────────────────────────────────────────────────────
+function renderSchema(schema, summary) {
+  if (!schema) return;
+  const stbody = document.querySelector("#schema-table tbody");
+  stbody.innerHTML = "";
+  (schema.columns || []).forEach(c => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${c.name}</td>
+      <td><span class="${fmtBadgeClass(c.role)}">${c.role}</span></td>
+      <td>${c.dtype_clean||""}</td>
+      <td class="num">${(c.n_unique||0).toLocaleString()}</td>
+      <td class="num">${c.missing_ratio!==undefined?(c.missing_ratio*100).toFixed(1)+"%":"—"}</td>
+      <td style="text-align:center">${c.candidate_target?"✅":""}</td>
+    `;
+    stbody.appendChild(tr);
+  });
+
+  const mtbody = document.querySelector("#missing-table tbody");
+  mtbody.innerHTML = "";
+  const missing = summary.missing || [];
+  if (missing.length === 0) {
+    mtbody.innerHTML = `<tr><td colspan="3" class="no-missing">No missing values detected</td></tr>`;
+  } else {
+    missing.forEach(m => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td>${m.name}</td><td class="num">${m.missing.toLocaleString()}</td><td class="num">${m.missing_percent}%</td>`;
+      mtbody.appendChild(tr);
+    });
+  }
+}
+</script>
+</body>
+</html>

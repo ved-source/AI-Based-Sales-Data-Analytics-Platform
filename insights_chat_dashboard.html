@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sales Insights & Chat</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<style>
+body{font-family:system-ui,-apple-system,sans-serif;background:#0f1012;color:#e5e5e7;margin:0}
+main{max-width:1100px;margin:0 auto;padding:1.5rem}
+h1{font-size:1.6rem;margin-bottom:.3rem}
+small{color:#9b9ba0}
+section{margin-top:1.5rem;padding:1rem 1.2rem;border-radius:.75rem;background:#15161a;border:1px solid #25262c}
+button,input[type=file]{font-family:inherit;font-size:.9rem}
+#files{margin-top:.5rem;color:#c0c0c5;font-size:.8rem;white-space:pre-wrap}
+#insights{white-space:pre-wrap;font-size:.9rem;line-height:1.5;margin-top:.5rem}
+#chat-log{height:260px;overflow-y:auto;border-radius:.5rem;border:1px solid #25262c;padding:.6rem;background:#101117;font-size:.85rem;white-space:pre-wrap}
+.msg-user{color:#c0e4ff;margin-bottom:.4rem}
+.msg-bot{color:#f1f1f1;margin-bottom:.7rem}
+textarea{width:100%;resize:vertical;min-height:60px;border-radius:.5rem;border:1px solid #25262c;background:#101117;color:#f1f1f1;padding:.5rem;font-size:.9rem}
+.btn{border-radius:999px;border:none;padding:.4rem 1.1rem;background:#2563eb;color:#fff;cursor:pointer}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.row{display:flex;gap:.6rem;align-items:center;margin-top:.6rem;flex-wrap:wrap}
+label{font-size:.86rem}
+.badge{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid #3b82f6;font-size:.7rem;color:#bfdbfe;margin-left:.3rem}
+iframe{width:100%;border:none;border-radius:.75rem;height:340px;margin-top:.7rem;background:#000}
+</style>
+</head>
+<body>
+<main>
+  <h1>Sales Insights + LLM Chat</h1>
+  <small>Upload pipeline outputs → LLM analyses → insights + interactive Q&A.</small>
+
+  <section>
+    <h2 style="font-size:1rem;margin:0 0 .4rem">1. Upload JSON outputs <span class="badge">report / forecast / anomaly / schema</span></h2>
+    <input id="fileInput" type="file" multiple accept=".json">
+    <div class="row">
+      <button id="uploadBtn" class="btn">Upload to backend</button>
+      <span id="uploadStatus" style="font-size:.8rem;color:#a1a1aa"></span>
+    </div>
+    <div id="files"></div>
+  </section>
+
+  <section>
+    <h2 style="font-size:1rem;margin:0 0 .4rem">2. Generate insights & recommendations</h2>
+    <div class="row">
+      <button id="analyzeBtn" class="btn">Run LLM analysis</button>
+      <span id="analyzeStatus" style="font-size:.8rem;color:#a1a1aa"></span>
+    </div>
+    <div id="insights"></div>
+  </section>
+
+  <section>
+    <h2 style="font-size:1rem;margin:0 0 .4rem">3. Ask questions about your sales</h2>
+    <div id="chat-log"></div>
+    <textarea id="chatInput" placeholder="Ask about anomalies, forecast risk, drivers, etc."></textarea>
+    <div class="row">
+      <button id="sendBtn" class="btn">Send</button>
+      <span id="chatStatus" style="font-size:.8rem;color:#a1a1aa"></span>
+    </div>
+  </section>
+
+  <!-- Optional: embed previous dashboards if served as files in same folder -->
+  <section>
+    <h2 style="font-size:1rem;margin:0 0 .4rem">4. Visual dashboards (optional)</h2>
+    <small>Place these HTML files in the same folder and open them here.</small>
+    <div style="margin-top:.5rem">
+      <label>Forecast dashboard:</label>
+      <iframe src="forecast_dashboard.html"></iframe>
+      <label>Anomaly dashboard:</label>
+      <iframe src="anomaly_dashboard.html"></iframe>
+    </div>
+  </section>
+</main>
+
+<script>
+const API = "http://localhost:8000";   // backend base
+
+const fileInput = document.getElementById("fileInput");
+const uploadBtn = document.getElementById("uploadBtn");
+const uploadStatus = document.getElementById("uploadStatus");
+const filesDiv = document.getElementById("files");
+
+const analyzeBtn = document.getElementById("analyzeBtn");
+const analyzeStatus = document.getElementById("analyzeStatus");
+const insightsDiv = document.getElementById("insights");
+
+const chatLog = document.getElementById("chat-log");
+const chatInput = document.getElementById("chatInput");
+const sendBtn = document.getElementById("sendBtn");
+const chatStatus = document.getElementById("chatStatus");
+
+uploadBtn.onclick = async () => {
+  const files = fileInput.files;
+  if (!files.length) { alert("Select at least one JSON file."); return; }
+  const fd = new FormData();
+  for (let f of files) fd.append("files", f);
+  uploadBtn.disabled = true;
+  uploadStatus.textContent = "Uploading...";
+  try {
+    const res = await fetch(API + "/upload", { method: "POST", body: fd });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    uploadStatus.textContent = "Uploaded: " + data.files.join(", ");
+    filesDiv.textContent = "Loaded files: " + data.files.join("  •  ");
+  } catch (e) {
+    uploadStatus.textContent = "Error: " + e.message;
+  } finally {
+    uploadBtn.disabled = false;
+  }
+};
+
+analyzeBtn.onclick = async () => {
+  analyzeBtn.disabled = true;
+  analyzeStatus.textContent = "Analysing with LLM...";
+  insightsDiv.textContent = "";
+  try {
+    const res = await fetch(API + "/analyze", { method: "POST" });
+    const data = await res.json();
+    if (data.error === "no_files") {
+      analyzeStatus.textContent = "Upload JSON files first.";
+    } else if (data.insights) {
+      analyzeStatus.textContent = "Done.";
+      insightsDiv.textContent = data.insights;
+    } else {
+      analyzeStatus.textContent = "Unexpected response.";
+    }
+  } catch (e) {
+    analyzeStatus.textContent = "Error: " + e.message;
+  } finally {
+    analyzeBtn.disabled = false;
+  }
+};
+
+function appendMsg(cls, text) {
+  const div = document.createElement("div");
+  div.className = cls;
+  div.textContent = text;
+  chatLog.appendChild(div);
+  chatLog.scrollTop = chatLog.scrollHeight;
+}
+
+sendBtn.onclick = async () => {
+  const msg = chatInput.value.trim();
+  if (!msg) return;
+  appendMsg("msg-user", "You: " + msg);
+  chatInput.value = "";
+  sendBtn.disabled = true;
+  chatStatus.textContent = "Thinking...";
+  try {
+    const res = await fetch(API + "/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: msg })
+    });
+    const data = await res.json();
+    if (data.error === "no_files") {
+      appendMsg("msg-bot", "Bot: Upload JSON files and run analysis first.");
+    } else {
+      appendMsg("msg-bot", "Bot: " + (data.answer || "[no answer]"));
+    }
+  } catch (e) {
+    appendMsg("msg-bot", "Bot error: " + e.message);
+  } finally {
+    sendBtn.disabled = false;
+    chatStatus.textContent = "";
+  }
+};
+</script>
+</body>
+</html>

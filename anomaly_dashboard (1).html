@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<title>Anomaly Detection Dashboard</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<style>
+:root{--bg:#0f0f0e;--surface:#161614;--surface2:#1d1c1a;--border:#2e2d2b;--divider:#242321;--text:#d4d3d0;--muted:#7a7977;--faint:#4a4947;--primary:#4f98a3;--primary-hi:rgba(79,152,163,.1);--success:#6daa45;--error:#d163a7;--gold:#e8af34;--orange:#f07a35;--critical:#e84545;--radius:.75rem;--radiusfull:9999px}
+[data-theme="light"]{--bg:#f4f3ef;--surface:#faf9f6;--surface2:#efecea;--border:#d4d1ca;--divider:#dcd9d5;--text:#28251d;--muted:#7a7974;--faint:#bab9b4;--primary:#01696f;--primary-hi:rgba(1,105,111,.08);--success:#437a22;--gold:#c98f00;--critical:#c0392b;--orange:#d07000}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:52px;-webkit-font-smoothing:antialiased}
+body{font-family:system-ui,-apple-system,sans-serif;font-size:14px;color:var(--text);background:var(--bg);min-height:100vh}
+button{cursor:pointer;background:none;border:none;font-family:inherit}
+table{border-collapse:collapse;width:100%}
+a{text-decoration:none}
+#upload-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;padding:2rem}
+.logo{font-size:1.2rem;font-weight:800;color:var(--critical)}
+.u-card{background:var(--surface);border:1px solid var(--border);border-radius:1rem;padding:2rem;max-width:420px;width:100%}
+.u-title{font-size:1rem;font-weight:700;margin-bottom:.4rem}
+.u-sub{font-size:.8rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.7}
+.u-sub code{background:var(--surface2);padding:1px 5px;border-radius:4px;font-family:monospace}
+.drop-zone{border:1.5px dashed var(--border);border-radius:.75rem;padding:2.5rem 1.5rem;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:.6rem;text-align:center;transition:border-color .15s,background .15s}
+.drop-zone:hover,.drop-zone.over{border-color:var(--critical);background:rgba(232,69,69,.06)}
+.dz-title{font-weight:600}
+.dz-sub{font-size:.78rem;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;background:var(--critical);color:#fff;border-radius:var(--radiusfull);padding:.4rem 1.4rem;font-size:.85rem;font-weight:600;margin-top:1rem;border:none;cursor:pointer}
+.btn:hover{opacity:.88}
+#dashboard{display:none}
+.topbar{position:sticky;top:0;z-index:30;height:50px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;background:var(--surface);border-bottom:1px solid var(--border)}
+.brand{font-weight:800;font-size:.95rem;color:var(--critical)}
+.nav{display:flex;gap:2px}
+.nav a{color:var(--muted);font-size:.78rem;padding:.2rem .65rem;border-radius:.4rem;transition:color .15s,background .15s}
+.nav a:hover{color:var(--text);background:var(--surface2)}
+.topbar-right{display:flex;align-items:center;gap:.6rem}
+.icon-btn{display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:.4rem;color:var(--muted);border:1px solid var(--border);background:var(--surface);cursor:pointer;font-size:.85rem}
+.icon-btn:hover{color:var(--text);background:var(--surface2)}
+.page{max-width:1280px;margin:0 auto;padding:1.5rem 1.5rem 5rem}
+.page-title{font-size:clamp(1.4rem,2vw,1.9rem);font-weight:800;letter-spacing:-.03em;margin-bottom:.2rem}
+.page-meta{font-size:.78rem;color:var(--muted);margin-bottom:1.5rem}
+.sec{margin-bottom:2.5rem}
+.sec-hd{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--critical);border-bottom:1px solid var(--divider);padding-bottom:.5rem;margin-bottom:1.1rem}
+.sec-sub{font-size:.8rem;font-weight:700;color:var(--text);margin:1.4rem 0 .6rem}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.75rem}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:.9rem 1rem;display:flex;flex-direction:column;gap:.2rem}
+.kpi-lbl{font-size:.6rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.kpi-val{font-size:1.2rem;font-weight:800;font-variant-numeric:tabular-nums}
+.kpi-hint{font-size:.6rem;color:var(--faint)}
+.kpi-alert{border-color:rgba(232,69,69,.35);background:rgba(232,69,69,.05)}
+.kpi-warn{border-color:rgba(240,122,53,.35);background:rgba(240,122,53,.05)}
+.kpi-good{border-color:rgba(109,170,69,.35);background:rgba(109,170,69,.05)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
+@media(max-width:800px){.g2,.g3{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem}
+.card h4{font-size:.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:1rem}
+.card canvas{max-height:300px}
+.tbl-wrap{overflow-x:auto;border-radius:.5rem;border:1px solid var(--divider)}
+.tbl-wrap table{font-size:.78rem}
+thead tr{background:var(--surface2)}
+th{padding:.4rem .75rem;text-align:left;font-weight:600;color:var(--muted);font-size:.62rem;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
+td{padding:.4rem .75rem;border-top:1px solid var(--divider);font-variant-numeric:tabular-nums}
+tbody tr:hover{background:var(--surface2)}
+.nr{text-align:right}
+.note{background:var(--primary-hi);border:1px solid rgba(79,152,163,.2);border-radius:.5rem;padding:.75rem 1rem;font-size:.78rem;color:var(--muted);line-height:1.7;margin-bottom:1rem}
+.note b{color:var(--text)}
+.alert-note{background:rgba(232,69,69,.07);border:1px solid rgba(232,69,69,.2);border-radius:.5rem;padding:.75rem 1rem;font-size:.78rem;color:var(--muted);line-height:1.7;margin-bottom:1rem}
+.alert-note b{color:var(--critical)}
+.badge{display:inline-block;padding:2px 8px;border-radius:var(--radiusfull);font-size:.65rem;font-weight:700;text-transform:uppercase}
+.b-critical{background:rgba(232,69,69,.15);color:var(--critical)}
+.b-high{background:rgba(240,122,53,.15);color:var(--orange)}
+.b-medium{background:rgba(232,175,52,.15);color:var(--gold)}
+.b-low{background:rgba(109,170,69,.12);color:var(--success)}
+.b-normal{background:rgba(109,170,69,.12);color:var(--success)}
+.fdot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:4px;vertical-align:middle}
+.fd-yes{background:var(--critical)}
+.fd-no{background:var(--faint)}
+</style>
+</head>
+<body>
+
+<div id="upload-screen">
+  <div class="logo">&#9888; Anomaly Detection</div>
+  <div class="u-card">
+    <div class="u-title">Sales Anomaly Dashboard</div>
+    <div class="u-sub">Upload <code>anomaly_data.json</code> produced by <code>ml_anomaly.py</code>. Runs entirely in your browser, no server needed.</div>
+    <div class="drop-zone" id="dz">
+      <div style="font-size:2rem">&#128196;</div>
+      <span class="dz-title">Drop anomaly_data.json here</span>
+      <span class="dz-sub">or click to browse</span>
+    </div>
+    <button class="btn" id="choose-btn">Choose file</button>
+    <input type="file" id="file-input" accept=".json" style="display:none">
+  </div>
+</div>
+
+<div id="dashboard">
+  <nav class="topbar">
+    <div style="display:flex;align-items:center;gap:1rem">
+      <div class="brand">&#9888; Anomaly Detection</div>
+      <nav class="nav">
+        <a href="#sec-kpi">Summary</a>
+        <a href="#sec-timeline">Timeline</a>
+        <a href="#sec-scores">Scores</a>
+        <a href="#sec-future">Future</a>
+        <a href="#sec-groups">Groups</a>
+        <a href="#sec-table">All Months</a>
+      </nav>
+    </div>
+    <div class="topbar-right">
+      <button class="icon-btn" id="theme-btn">&#9790;</button>
+      <button class="icon-btn" id="reupload-btn">&#8679;</button>
+    </div>
+  </nav>
+
+  <div class="page">
+    <div class="page-title">Sales Anomaly Analysis</div>
+    <div class="page-meta" id="page-meta">-</div>
+
+    <div class="sec" id="sec-kpi">
+      <div class="sec-hd">Detection Summary</div>
+      <div class="alert-note" id="alert-banner"></div>
+      <div class="kpi-grid" id="kpi-grid"></div>
+    </div>
+
+    <div class="sec" id="sec-timeline">
+      <div class="sec-hd">Anomaly Timeline</div>
+      <div class="note"><b>How to read:</b> Blue line is monthly sales. Red dots = confirmed anomalies (2 or more detection methods agree). Orange dashed lines = IQR normal bounds. Hover any point for full details.</div>
+      <div class="card"><h4>Monthly sales with anomaly markers and IQR bounds</h4><canvas id="timelineChart" style="max-height:360px"></canvas></div>
+      <div class="g2" style="margin-top:1rem">
+        <div class="card"><h4>Month-over-month % change</h4><canvas id="momChart" style="max-height:260px"></canvas></div>
+        <div class="card"><h4>Detection votes per month (2+ = confirmed anomaly)</h4><canvas id="votesChart" style="max-height:260px"></canvas></div>
+      </div>
+    </div>
+
+    <div class="sec" id="sec-scores">
+      <div class="sec-hd">Detection Method Scores</div>
+      <div class="g2">
+        <div class="card"><h4>Z-score per month (threshold: 2.5)</h4><canvas id="zChart" style="max-height:280px"></canvas></div>
+        <div class="card"><h4>Isolation Forest score (lower = more anomalous)</h4><canvas id="isoChart" style="max-height:280px"></canvas></div>
+      </div>
+      <div style="margin-top:1rem">
+        <div class="card"><h4>|Z-score| vs Isolation Forest score scatter - red = confirmed anomaly</h4><canvas id="scatterChart" style="max-height:300px"></canvas></div>
+      </div>
+    </div>
+
+    <div class="sec" id="sec-future">
+      <div class="sec-hd">Future Forecast Anomaly Prediction</div>
+      <div class="note" id="future-note"></div>
+      <div class="card"><h4>12-month forecast with anomaly predictions and 90% confidence interval</h4><canvas id="futureChart" style="max-height:320px"></canvas></div>
+      <div class="sec-sub">Future months detail</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Period</th><th class="nr">Forecast</th><th class="nr">Lower 90%</th>
+              <th class="nr">Upper 90%</th><th class="nr">ISO Score</th>
+              <th class="nr">MoM %</th><th>ISO Flag</th><th>CI Flag</th><th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="future-tbl"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sec" id="sec-groups">
+      <div class="sec-hd">Group-Level Anomaly Breakdown</div>
+      <div id="group-panels"></div>
+    </div>
+
+    <div class="sec" id="sec-table">
+      <div class="sec-hd">All Months - Full Detail</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Period</th><th class="nr">Sales</th><th class="nr">Z-Score</th>
+              <th class="nr">ISO Score</th><th class="nr">MoM %</th>
+              <th>Stat</th><th>ISO</th><th>Dev</th>
+              <th>Votes</th><th>Direction</th><th>Severity</th>
+            </tr>
+          </thead>
+          <tbody id="main-tbl"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  function fmt(v) {
+    v = Number(v);
+    if (isNaN(v)) return "$0";
+    return "$" + v.toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+  }
+  function fp(v) { return Number(v).toFixed(2) + "%"; }
+  function fr(v) { return Number(v).toFixed(4); }
+
+  var PAL = ["#4f98a3","#6daa45","#e8af34","#fdab43","#a86fdf","#dd6974","#5591c7","#bb653b"];
+  var CRIT = "#e84545", HIGH = "#f07a35", GOLD = "#e8af34", GOOD = "#6daa45";
+
+  function gc()  { return document.documentElement.dataset.theme === "dark" ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.05)"; }
+  function tkc() { return document.documentElement.dataset.theme === "dark" ? "#7a7977" : "#7a7974"; }
+  function tto() {
+    if (document.documentElement.dataset.theme === "dark") {
+      return { backgroundColor: "#1c1b19", titleColor: "#d4d3d0", bodyColor: "#9a9997", borderColor: "#333230", borderWidth: 1, padding: 10 };
+    }
+    return { backgroundColor: "#f9f8f5", titleColor: "#28251d", bodyColor: "#7a7974", borderColor: "#d4d1ca", borderWidth: 1, padding: 10 };
+  }
+
+  var charts = {};
+  function mkChart(id, type, data, opts) {
+    if (charts[id]) { charts[id].destroy(); }
+    var el = document.getElementById(id);
+    if (!el) return;
+    charts[id] = new Chart(el, { type: type, data: data, options: opts });
+  }
+
+  function badge(sev) {
+    var cls = { critical: "b-critical", high: "b-high", medium: "b-medium", low: "b-low", normal: "b-normal" }[sev] || "b-normal";
+    return "<span class='badge " + cls + "'>" + sev + "</span>";
+  }
+  function fdot(val) {
+    return "<span class='fdot " + (val ? "fd-yes" : "fd-no") + "'></span>" + (val ? "Yes" : "No");
+  }
+
+  var dz = document.getElementById("dz");
+  var fi = document.getElementById("file-input");
+  var cb = document.getElementById("choose-btn");
+
+  dz.addEventListener("click", function () { fi.click(); });
+  cb.addEventListener("click", function () { fi.click(); });
+  dz.addEventListener("dragover", function (e) { e.preventDefault(); dz.classList.add("over"); });
+  dz.addEventListener("dragleave", function () { dz.classList.remove("over"); });
+  dz.addEventListener("drop", function (e) {
+    e.preventDefault(); dz.classList.remove("over");
+    if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
+  });
+  fi.addEventListener("change", function () { if (fi.files[0]) loadFile(fi.files[0]); });
+  document.getElementById("reupload-btn").addEventListener("click", function () {
+    document.getElementById("dashboard").style.display = "none";
+    document.getElementById("upload-screen").style.display = "flex";
+  });
+
+  function loadFile(f) {
+    var rd = new FileReader();
+    rd.onload = function (e) {
+      try { render(JSON.parse(e.target.result)); }
+      catch (err) { alert("Could not parse file: " + err.message); }
+    };
+    rd.readAsText(f);
+  }
+
+  function render(D) {
+    document.getElementById("upload-screen").style.display = "none";
+    document.getElementById("dashboard").style.display = "block";
+
+    var S = D.summary || {};
+    var series = D.series || [];
+    var future = D.future_anomalies || [];
+
+    document.getElementById("page-meta").textContent =
+      "Total months: " + (S.total_months || 0) +
+      "  |  Anomaly rate: " + (S.anomaly_rate_pct || 0) + "%" +
+      "  |  Normal range: " + fmt(S.iqr_lo) + " to " + fmt(S.iqr_hi) +
+      "  |  Mean sales: " + fmt(S.mean_sales);
+
+    var nAnom = S.total_anomalies || 0;
+    var bannerHtml = nAnom === 0
+      ? "No confirmed anomalies detected across " + S.total_months + " months. Sales behaviour is consistent with historical norms."
+      : "<b>" + nAnom + " confirmed anomal" + (nAnom > 1 ? "ies" : "y") + " detected</b> across " + S.total_months + " months (" + S.anomaly_rate_pct + "% of history). " +
+        (S.critical ? "<b style='color:var(--critical)'>" + S.critical + " critical</b>. " : "") +
+        (S.spikes ? "<b>" + S.spikes + " spike" + (S.spikes > 1 ? "s" : "") + "</b> (unexpected surges). " : "") +
+        (S.drops ? "<b>" + S.drops + " drop" + (S.drops > 1 ? "s" : "") + "</b> (unexpected crashes). " : "") +
+        (S.future_anomalies ? "<b>" + S.future_anomalies + " future month" + (S.future_anomalies > 1 ? "s" : "") + "</b> flagged as anomalous in forecast." : "");
+    document.getElementById("alert-banner").innerHTML = bannerHtml;
+
+    var kpis = [
+      { l: "Total Anomalies", v: nAnom,                     h: "Confirmed by 2+ methods",       c: nAnom > 0 ? "kpi-alert" : "kpi-good" },
+      { l: "Critical",        v: S.critical || 0,            h: "All 3 methods agree",           c: (S.critical || 0) > 0 ? "kpi-alert" : "kpi-good" },
+      { l: "High",            v: S.high || 0,                h: "Exactly 2 methods agree",       c: (S.high || 0) > 0 ? "kpi-warn" : "kpi-good" },
+      { l: "Spikes",          v: S.spikes || 0,              h: "Unexpected surges",             c: (S.spikes || 0) > 0 ? "kpi-warn" : "kpi-good" },
+      { l: "Drops",           v: S.drops || 0,               h: "Unexpected crashes",            c: (S.drops || 0) > 0 ? "kpi-alert" : "kpi-good" },
+      { l: "Anomaly Rate",    v: (S.anomaly_rate_pct || 0) + "%", h: "% of historical months",  c: (S.anomaly_rate_pct || 0) > 15 ? "kpi-alert" : "kpi-good" },
+      { l: "Max Z-Score",     v: S.max_z_score || 0,         h: "|z| > 2.5 = statistical flag", c: (S.max_z_score || 0) > 3 ? "kpi-alert" : "kpi-good" },
+      { l: "Future Flags",    v: S.future_anomalies || 0,    h: "Anomalous forecast months",     c: (S.future_anomalies || 0) > 0 ? "kpi-warn" : "kpi-good" },
+      { l: "Mean Sales",      v: fmt(S.mean_sales),          h: "Avg monthly sales",             c: "" },
+      { l: "Std Dev",         v: fmt(S.std_sales),           h: "Sales variability",             c: "" },
+      { l: "IQR Lower",       v: fmt(S.iqr_lo),              h: "Normal floor",                  c: "" },
+      { l: "IQR Upper",       v: fmt(S.iqr_hi),              h: "Normal ceiling",                c: "" }
+    ];
+    document.getElementById("kpi-grid").innerHTML = kpis.map(function (k) {
+      return "<div class='kpi " + k.c + "'><div class='kpi-lbl'>" + k.l + "</div><div class='kpi-val'>" + k.v + "</div><div class='kpi-hint'>" + k.h + "</div></div>";
+    }).join("");
+
+    var labels = series.map(function (r) { return r.period; });
+    var sales  = series.map(function (r) { return r.sales; });
+    var iqrLo  = series.map(function (r) { return r.iqr_lo; });
+    var iqrHi  = series.map(function (r) { return r.iqr_hi; });
+
+    var ptColors = series.map(function (r) {
+      if (r.severity === "critical") return CRIT;
+      if (r.severity === "high")     return HIGH;
+      if (r.votes === 1)             return GOLD;
+      return "rgba(79,152,163,.8)";
+    });
+    var ptRadius = series.map(function (r) { return r.votes >= 2 ? 8 : r.votes === 1 ? 5 : 3; });
+
+    mkChart("timelineChart", "line", {
+      labels: labels,
+      datasets: [
+        { label: "IQR Upper",     data: iqrHi,  borderColor: "transparent",          backgroundColor: "rgba(240,122,53,.1)", fill: "+1", pointRadius: 0, tension: 0 },
+        { label: "IQR Lower",     data: iqrLo,  borderColor: "rgba(240,122,53,.3)",   backgroundColor: "transparent", fill: false, pointRadius: 0, tension: 0, borderDash: [4, 4], borderWidth: 1.5 },
+        { label: "Monthly Sales", data: sales,  borderColor: "rgba(79,152,163,.9)",   backgroundColor: "rgba(79,152,163,.06)", fill: false, tension: .35,
+          pointRadius: ptRadius, pointBackgroundColor: ptColors, pointBorderColor: ptColors, pointHoverRadius: 10, borderWidth: 2 }
+      ]
+    }, {
+      responsive: true,
+      plugins: {
+        legend: { position: "bottom", labels: { color: tkc(), font: { size: 11 }, filter: function (l) { return l.text !== "IQR Upper"; } } },
+        tooltip: {
+          callbacks: {
+            label: function (c) {
+              if (c.dataset.label !== "Monthly Sales") return null;
+              var r = series[c.dataIndex];
+              return [
+                "Sales: " + fmt(c.raw),
+                "Severity: " + r.severity,
+                "Votes: " + r.votes + "/3",
+                "Z-score: " + r.z_score,
+                "MoM: " + r.mom_pct + "%",
+                "Stat flag: "  + (r.stat_flag ? "YES" : "no"),
+                "ISO flag: "   + (r.iso_flag  ? "YES" : "no"),
+                "Dev flag: "   + (r.dev_flag  ? "YES" : "no")
+              ];
+            }
+          }
+        }
+      },
+      scales: {
+        x: { grid: { color: gc() }, ticks: { color: tkc(), font: { size: 11 }, maxRotation: 45 } },
+        y: { grid: { color: gc() }, ticks: { color: tkc(), font: { size: 11 }, callback: function (v) { return fmt(v); } } }
+      }
+    });
+
+    mkChart("momChart", "bar", {
+      labels: labels,
+      datasets: [{
+        label: "MoM %",
+        data: series.map(function (r) { return r.mom_pct; }),
+        backgroundColor: series.map(function (r) {
+          if (r.votes >= 2) return r.mom_pct > 0 ? CRIT : HIGH;
+          return r.mom_pct > 0 ? "rgba(109,170,69,.6)" : "rgba(232,175,52,.6)";
+        }),
+        borderRadius: 3
+      }]
+    }, {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: function (c) { var r = series[c.dataIndex]; return ["MoM: " + c.raw.toFixed(1) + "%", "Severity: " + r.severity]; } } }
+      },
+      scales: {
+        x: { grid: { color: gc() }, ticks: { color: tkc(), font: { size: 9 }, maxRotation: 45 } },
+        y: { grid: { color: gc() }, ticks: { color: tkc(), font: { size: 11 }, callback: function (v) { return v + "%"; } } }
+      }
+    });
+
+    mkChart("votesChart", "bar", {
+      labels: labels,
+      datasets: [{
+        label: "Votes",
+        data: series.map(function (r) { return r.votes; }),
+        backgroundColor: series.map(function (r) {
+          return r.votes >= 3 ? CRIT : r.votes === 2 ? HIGH : r.votes === 1 ? GOLD : "rgba(79,152,163,.3)";
+        }),
+        borderRadius: 4
+      }]
+    }, {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: function (c) { var r = series[c.dataIndex]; return ["Votes: " + c.raw + "/3", "Severity: " + r.severity, "Direction: " + r.direction]; } } }
+      },
+      scales: {
+        x: { grid: { color: gc() }, ticks: { color: tkc(), font: { size: 9 }, maxRotation: 45 } },
+        y: { grid: { color: gc() }, ticks: { color: tkc(), font: { size: 11 } }, max: 3, min: 0 }
+      }
+    });
+
+    mkChart("zChart", "bar", {
+      labels: labels,
+      datasets: [
+        { label: "Z-score", data: series.map(function (r) { return r.z_score; }),
+          backgroundColor: series.map(function (r) { return Math.abs(r.z_score) > 2.5 ? CRIT : Math.abs(r.z_score) > 1.5 ? HIGH : "rgba(79,152,163,.5)"; }),
+          borderRadius: 3 },
+        { label: "+2.5 line", data: labels.map(function () { return 2.5; }),  type: "line", borderColor: "rgba(232,69,69,.4)", borderDash: [4, 4], pointRadius: 0, borderWidth: 1.5 },
+        { label: "-2.5 line", data: labels.map(function () { return -2.5; }), type: "line", borderColor: "rgba(232,69,69,.4)", borderDash: [4, 4], pointRadius: 0, borderWidth: 1.5 }
+      ]
+    }, {
+      responsive: true,
+      plugins: { legend: { position: "bottom", labels: { color: tkc(), font: { size: 10 }, boxWidth: 10 } }, tooltip: tto() },
+      scales: {
+        x: { grid: { color: gc() }, ticks: { color: tkc(), font: { size: 9 }, maxRotation: 45 } },
+        y: { grid: { color: gc() }, ticks: { color: tkc(), font: { size: 11 } } }
+      }
+    });
+
+    mkChart("isoChart", "bar", {
+      labels: labels,
+      datasets: [{
+        label: "ISO Score",
+        data: series.map(function (r) { return r.iso_score; }),
+        backgroundColor: series.map(function (r) { return r.iso_flag ? CRIT : "rgba(79,152,163,.5)"; }),
+        borderRadius: 3
+      }]
+    }, {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: function (c) { var r = series[c.dataIndex]; return ["ISO: " + c.raw, "Flagged: " + (r.iso_flag ? "YES" : "no")]; } } }
+      },
+      scales: {
+        x: { grid: { color: gc() }, ticks: { color: tkc(), font: { size: 9 }, maxRotation: 45 } },
+        y: { grid: { color: gc() }, ticks: { color: tkc(), font: { size: 11 } }, title: { display: true, text: "Score (lower = more anomalous)", color: tkc() } }
+      }
+    });
+
+    var normalPts  = series.filter(function (r) { return r.votes < 2; });
+    var anomPts    = series.filter(function (r) { return r.votes >= 2; });
+    mkChart("scatterChart", "scatter", {
+      datasets: [
+        { label: "Normal",  data: normalPts.map(function (r) { return { x: Math.abs(r.z_score), y: r.iso_score, p: r.period }; }), backgroundColor: "rgba(79,152,163,.5)", pointRadius: 5, pointHoverRadius: 8 },
+        { label: "Anomaly", data: anomPts.map(function (r)   { return { x: Math.abs(r.z_score), y: r.iso_score, p: r.period }; }), backgroundColor: CRIT,                   pointRadius: 8, pointHoverRadius: 11 }
+      ]
+    }, {
+      responsive: true,
+      plugins: {
+        legend: { position: "bottom", labels: { color: tkc(), font: { size: 11 } } },
+        tooltip: { callbacks: { label: function (c) { return [c.raw.p, "|Z|: " + c.raw.x.toFixed(3), "ISO: " + c.raw.y.toFixed(4)]; } } }
+      },
+      scales: {
+        x: { grid: { color: gc() }, ticks: { color: tkc(), font: { size: 11 } }, title: { display: true, text: "|Z-Score|", color: tkc() } },
+        y: { grid: { color: gc() }, ticks: { color: tkc(), font: { size: 11 } }, title: { display: true, text: "ISO Score", color: tkc() } }
+      }
+    });
+
+    var nFuture = future.filter(function (r) { return r.is_anomaly; }).length;
+    document.getElementById("future-note").innerHTML = nFuture === 0
+      ? "No anomalies predicted in the 12-month forecast. All months fall within normal confidence bounds."
+      : "<b>" + nFuture + " future month" + (nFuture > 1 ? "s" : "") + " flagged as anomalous</b> by the Isolation Forest trained on historical data. These months show unusual momentum or fall outside the 90% CI.";
+
+    mkChart("futureChart", "line", {
+      labels: future.map(function (r) { return r.period; }),
+      datasets: [
+        { label: "Upper 90%", data: future.map(function (r) { return r.upper_90; }), borderColor: "transparent", backgroundColor: "rgba(79,152,163,.1)", fill: "+1", pointRadius: 0 },
+        { label: "Lower 90%", data: future.map(function (r) { return r.lower_90; }), borderColor: "rgba(79,152,163,.25)", backgroundColor: "transparent", fill: false, pointRadius: 0, borderDash: [3, 3], borderWidth: 1 },
+        { label: "Forecast",  data: future.map(function (r) { return r.forecast; }),
+          borderColor: "rgba(79,152,163,.9)", fill: false, tension: .35, borderWidth: 2,
+          pointRadius:          future.map(function (r) { return r.is_anomaly ? 9 : 4; }),
+          pointBackgroundColor: future.map(function (r) { return r.is_anomaly ? CRIT : "rgba(79,152,163,.8)"; }),
+          pointBorderColor:     future.map(function (r) { return r.is_anomaly ? CRIT : "transparent"; }) }
+      ]
+    }, {
+      responsive: true,
+      plugins: {
+        legend: { position: "bottom", labels: { color: tkc(), font: { size: 11 }, filter: function (l) { return l.text !== "Upper 90%"; } } },
+        tooltip: {
+          callbacks: {
+            label: function (c) {
+              if (c.dataset.label !== "Forecast") return null;
+              var r = future[c.dataIndex];
+              return ["Forecast: " + fmt(c.raw), "Status: " + (r.is_anomaly ? "ANOMALY" : "Normal"), "ISO: " + r.iso_score, "MoM: " + r.mom_pct + "%"];
+            }
+          }
+        }
+      },
+      scales: {
+        x: { grid: { color: gc() }, ticks: { color: tkc(), font: { size: 11 } } },
+        y: { grid: { color: gc() }, ticks: { color: tkc(), font: { size: 11 }, callback: function (v) { return fmt(v); } } }
+      }
+    });
+
+    document.getElementById("future-tbl").innerHTML = future.map(function (r) {
+      var rowStyle = r.is_anomaly ? " style='background:rgba(232,69,69,.05)'" : "";
+      return "<tr" + rowStyle + ">" +
+        "<td><b>" + r.period + "</b></td>" +
+        "<td class='nr'>" + fmt(r.forecast) + "</td>" +
+        "<td class='nr'>" + fmt(r.lower_90) + "</td>" +
+        "<td class='nr'>" + fmt(r.upper_90) + "</td>" +
+        "<td class='nr' style='color:" + (r.iso_score < 0 ? "var(--critical)" : "var(--success)") + "'>" + fr(r.iso_score) + "</td>" +
+        "<td class='nr' style='color:" + (Math.abs(r.mom_pct) > 15 ? "var(--orange)" : "") + "'>" + r.mom_pct + "%</td>" +
+        "<td>" + fdot(r.iso_flag) + "</td>" +
+        "<td>" + fdot(r.ci_flag) + "</td>" +
+        "<td>" + badge(r.severity) + "</td>" +
+        "</tr>";
+    }).join("");
+
+    var grpData = D.group_anomalies || {};
+    var gpEl = document.getElementById("group-panels");
+    gpEl.innerHTML = "";
+    var grpKeys = Object.keys(grpData);
+    if (!grpKeys.length) {
+      gpEl.innerHTML = "<div class='note'>No group-level data in this file.</div>";
+    }
+    grpKeys.forEach(function (grpKey) {
+      var grp = grpData[grpKey];
+      var vals = Object.keys(grp);
+      var secDiv = document.createElement("div");
+      var subTitle = document.createElement("div");
+      subTitle.className = "sec-sub";
+      subTitle.textContent = "By " + grpKey.replace(/_/g, " ");
+      secDiv.appendChild(subTitle);
+      var grid = document.createElement("div");
+      grid.className = "g3";
+      vals.forEach(function (v, vi) {
+        var d = grp[v];
+        var cid = "grp_" + vi + "_" + grpKey;
+        var card = document.createElement("div");
+        card.className = "card";
+        var anomCount = d.n_anomalies || 0;
+        card.innerHTML = "<h4>" + v + " <span style='color:var(--critical);font-size:.7rem'>" +
+          anomCount + " anomal" + (anomCount === 1 ? "y" : "ies") +
+          "</span></h4><canvas id='" + cid + "' style='max-height:160px'></canvas>";
+        grid.appendChild(card);
+        (function (cid2, d2, vi2) {
+          setTimeout(function () {
+            var monthly = d2.monthly || [];
+            var aperiods = d2.anomaly_periods || [];
+            mkChart(cid2, "line", {
+              labels: monthly.map(function (r) { return r.period; }),
+              datasets: [{
+                label: v,
+                data: monthly.map(function (r) { return r.value; }),
+                borderColor: PAL[vi2 % PAL.length],
+                backgroundColor: "transparent",
+                tension: .35, borderWidth: 1.5,
+                pointRadius: monthly.map(function (r) { return aperiods.indexOf(r.period) >= 0 ? 7 : 2; }),
+                pointBackgroundColor: monthly.map(function (r) { return aperiods.indexOf(r.period) >= 0 ? CRIT : PAL[vi2 % PAL.length]; })
+              }]
+            }, {
+              responsive: true,
+              plugins: {
+                legend: { display: false },
+                tooltip: { callbacks: { label: function (c) { return fmt(c.raw); } } }
+              },
+              scales: {
+                x: { grid: { color: gc() }, ticks: { color: tkc(), font: { size: 8 }, maxRotation: 45, maxTicksLimit: 8 } },
+                y: { grid: { color: gc() }, ticks: { color: tkc(), font: { size: 9 }, callback: function (vv) { return fmt(vv); } } }
+              }
+            });
+          }, 0);
+        }(cid, d, vi));
+      });
+      secDiv.appendChild(grid);
+      gpEl.appendChild(secDiv);
+    });
+
+    document.getElementById("main-tbl").innerHTML = series.map(function (r) {
+      var rowStyle = r.votes >= 3 ? " style='background:rgba(232,69,69,.06)'" : r.votes === 2 ? " style='background:rgba(240,122,53,.04)'" : "";
+      return "<tr" + rowStyle + ">" +
+        "<td><b>" + r.period + "</b></td>" +
+        "<td class='nr'>" + fmt(r.sales) + "</td>" +
+        "<td class='nr' style='color:" + (Math.abs(r.z_score) > 2.5 ? "var(--critical)" : Math.abs(r.z_score) > 1.5 ? "var(--orange)" : "") + "'>" + r.z_score + "</td>" +
+        "<td class='nr' style='color:" + (r.iso_score < 0 ? "var(--critical)" : "") + "'>" + fr(r.iso_score) + "</td>" +
+        "<td class='nr' style='color:" + (Math.abs(r.mom_pct) > 15 ? "var(--orange)" : "") + "'>" + r.mom_pct + "%</td>" +
+        "<td>" + fdot(r.stat_flag) + "</td>" +
+        "<td>" + fdot(r.iso_flag)  + "</td>" +
+        "<td>" + fdot(r.dev_flag)  + "</td>" +
+        "<td style='font-weight:700;color:" + (r.votes >= 2 ? "var(--critical)" : r.votes === 1 ? "var(--orange)" : "var(--success)") + "'>" + r.votes + "/3</td>" +
+        "<td style='color:" + (r.direction === "spike" ? "var(--critical)" : r.direction === "drop" ? "var(--orange)" : "var(--muted)") + "'>" + r.direction + "</td>" +
+        "<td>" + badge(r.severity) + "</td>" +
+        "</tr>";
+    }).join("");
+  }
+
+  (function () {
+    var btn   = document.getElementById("theme-btn");
+    var root  = document.documentElement;
+    var theme = matchMedia("(prefers-color-scheme:dark)").matches ? "dark" : "light";
+    root.setAttribute("data-theme", theme);
+    function applyTheme() {
+      btn.textContent = theme === "dark" ? "☀" : "☾";
+      Object.keys(charts).forEach(function (k) {
+        var c = charts[k]; if (!c || !c.options) return;
+        var sc = c.options.scales;
+        if (sc) {
+          Object.keys(sc).forEach(function (ax) {
+            if (sc[ax].grid)  sc[ax].grid.color  = gc();
+            if (sc[ax].ticks) sc[ax].ticks.color = tkc();
+          });
+        }
+        c.update("none");
+      });
+    }
+    applyTheme();
+    btn.addEventListener("click", function () {
+      theme = theme === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", theme);
+      applyTheme();
+    });
+  }());
+
+}());
+</script>
+</body>
+</html>

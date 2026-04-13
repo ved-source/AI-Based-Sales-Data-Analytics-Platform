@@ -1,0 +1,363 @@
+{
+  "n_rows": 9800,
+  "n_columns": 18,
+  "columns": [
+    {
+      "name": "row_id",
+      "original_name": "Row ID",
+      "role": "identifier",
+      "dtype_clean": "int64",
+      "dtype_raw": "int64",
+      "n_unique": 9800,
+      "unique_ratio": 1.0,
+      "n_missing": 0,
+      "missing_ratio": 0.0,
+      "avg_length": null,
+      "sample_values": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "candidate_target": false
+    },
+    {
+      "name": "order_id",
+      "original_name": "Order ID",
+      "role": "identifier",
+      "dtype_clean": "object",
+      "dtype_raw": "object",
+      "n_unique": 4922,
+      "unique_ratio": 0.502245,
+      "n_missing": 0,
+      "missing_ratio": 0.0,
+      "avg_length": 14.0,
+      "sample_values": [
+        "CA-2017-152156",
+        "CA-2017-138688",
+        "US-2016-108966",
+        "CA-2015-115812",
+        "CA-2018-114412"
+      ],
+      "candidate_target": false
+    },
+    {
+      "name": "order_date",
+      "original_name": "Order Date",
+      "role": "time",
+      "dtype_clean": "object",
+      "dtype_raw": "object",
+      "n_unique": 1230,
+      "unique_ratio": 0.12551,
+      "n_missing": 0,
+      "missing_ratio": 0.0,
+      "avg_length": 10.0,
+      "sample_values": [
+        "08/11/2017",
+        "12/06/2017",
+        "11/10/2016",
+        "09/06/2015",
+        "15/04/2018"
+      ],
+      "candidate_target": false
+    },
+    {
+      "name": "ship_date",
+      "original_name": "Ship Date",
+      "role": "time",
+      "dtype_clean": "object",
+      "dtype_raw": "object",
+      "n_unique": 1326,
+      "unique_ratio": 0.135306,
+      "n_missing": 0,
+      "missing_ratio": 0.0,
+      "avg_length": 10.0,
+      "sample_values": [
+        "11/11/2017",
+        "16/06/2017",
+        "18/10/2016",
+        "14/06/2015",
+        "20/04/2018"
+      ],
+      "candidate_target": false
+    },
+    {
+      "name": "ship_mode",
+      "original_name": "Ship Mode",
+      "role": "categorical_feature",
+      "dtype_clean": "object",
+      "dtype_raw": "object",
+      "n_unique": 4,
+      "unique_ratio": 0.000408,
+      "n_missing": 0,
+      "missing_ratio": 0.0,
+      "avg_length": 12.823,
+      "sample_values": [
+        "Second Class",
+        "Standard Class",
+        "First Class",
+        "Same Day"
+      ],
+      "candidate_target": false
+    },
+    {
+      "name": "customer_id",
+      "original_name": "Customer ID",
+      "role": "high_cardinality_string",
+      "dtype_clean": "object",
+      "dtype_raw": "object",
+      "n_unique": 793,
+      "unique_ratio": 0.080918,
+      "n_missing": 0,
+      "missing_ratio": 0.0,
+      "avg_length": 8.0,
+      "sample_values": [
+        "CG-12520",
+        "DV-13045",
+        "SO-20335",
+        "BH-11710",
+        "AA-10480"
+      ],
+      "candidate_target": false
+    },
+    {
+      "name": "customer_name",
+      "original_name": "Customer Name",
+      "role": "high_cardinality_string",
+      "dtype_clean": "object",
+      "dtype_raw": "object",
+      "n_unique": 793,
+      "unique_ratio": 0.080918,
+      "n_missing": 0,
+      "missing_ratio": 0.0,
+      "avg_length": 12.963,
+      "sample_values": [
+        "Claire Gute",
+        "Darrin Van Huff",
+        "Sean O'Donnell",
+        "Brosina Hoffman",
+        "Andrew Allen"
+      ],
+      "candidate_target": false
+    },
+    {
+      "name": "segment",
+      "original_name": "Segment",
+      "role": "categorical_feature",
+      "dtype_clean": "object",
+      "dtype_raw": "object",
+      "n_unique": 3,
+      "unique_ratio": 0.000306,
+      "n_missing": 0,
+      "missing_ratio": 0.0,
+      "avg_length": 8.8358,
+      "sample_values": [
+        "Consumer",
+        "Corporate",
+        "Home Office"
+      ],
+      "candidate_target": false
+    },
+    {
+      "name": "country",
+      "original_name": "Country",
+      "role": "categorical_feature",
+      "dtype_clean": "object",
+      "dtype_raw": "object",
+      "n_unique": 1,
+      "unique_ratio": 0.000102,
+      "n_missing": 0,
+      "missing_ratio": 0.0,
+      "avg_length": 13.0,
+      "sample_values": [
+        "United States"
+      ],
+      "candidate_target": false
+    },
+    {
+      "name": "city",
+      "original_name": "City",
+      "role": "high_cardinality_string",
+      "dtype_clean": "object",
+      "dtype_raw": "object",
+      "n_unique": 529,
+      "unique_ratio": 0.05398,
+      "n_missing": 0,
+      "missing_ratio": 0.0,
+      "avg_length": 9.3179,
+      "sample_values": [
+        "Henderson",
+        "Los Angeles",
+        "Fort Lauderdale",
+        "Concord",
+        "Seattle"
+      ],
+      "candidate_target": false
+    },
+    {
+      "name": "state",
+      "original_name": "State",
+      "role": "categorical_feature",
+      "dtype_clean": "object",
+      "dtype_raw": "object",
+      "n_unique": 49,
+      "unique_ratio": 0.005,
+      "n_missing": 0,
+      "missing_ratio": 0.0,
+      "avg_length": 8.4944,
+      "sample_values": [
+        "Kentucky",
+        "California",
+        "Florida",
+        "North Carolina",
+        "Washington"
+      ],
+      "candidate_target": false
+    },
+    {
+      "name": "postal_code",
+      "original_name": "Postal Code",
+      "role": "numeric_feature",
+      "dtype_clean": "float64",
+      "dtype_raw": "float64",
+      "n_unique": 626,
+      "unique_ratio": 0.063878,
+      "n_missing": 11,
+      "missing_ratio": 0.001122,
+      "avg_length": null,
+      "sample_values": [
+        42420.0,
+        90036.0,
+        33311.0,
+        90032.0,
+        28027.0
+      ],
+      "candidate_target": false
+    },
+    {
+      "name": "region",
+      "original_name": "Region",
+      "role": "categorical_feature",
+      "dtype_clean": "object",
+      "dtype_raw": "object",
+      "n_unique": 4,
+      "unique_ratio": 0.000408,
+      "n_missing": 0,
+      "missing_ratio": 0.0,
+      "avg_length": 4.8601,
+      "sample_values": [
+        "South",
+        "West",
+        "Central",
+        "East"
+      ],
+      "candidate_target": false
+    },
+    {
+      "name": "product_id",
+      "original_name": "Product ID",
+      "role": "high_cardinality_string",
+      "dtype_clean": "object",
+      "dtype_raw": "object",
+      "n_unique": 1861,
+      "unique_ratio": 0.189898,
+      "n_missing": 0,
+      "missing_ratio": 0.0,
+      "avg_length": 15.0,
+      "sample_values": [
+        "FUR-BO-10001798",
+        "FUR-CH-10000454",
+        "OFF-LA-10000240",
+        "FUR-TA-10000577",
+        "OFF-ST-10000760"
+      ],
+      "candidate_target": false
+    },
+    {
+      "name": "category",
+      "original_name": "Category",
+      "role": "categorical_feature",
+      "dtype_clean": "object",
+      "dtype_raw": "object",
+      "n_unique": 3,
+      "unique_ratio": 0.000306,
+      "n_missing": 0,
+      "missing_ratio": 0.0,
+      "avg_length": 12.8028,
+      "sample_values": [
+        "Furniture",
+        "Office Supplies",
+        "Technology"
+      ],
+      "candidate_target": false
+    },
+    {
+      "name": "sub_category",
+      "original_name": "Sub-Category",
+      "role": "categorical_feature",
+      "dtype_clean": "object",
+      "dtype_raw": "object",
+      "n_unique": 17,
+      "unique_ratio": 0.001735,
+      "n_missing": 0,
+      "missing_ratio": 0.0,
+      "avg_length": 7.1867,
+      "sample_values": [
+        "Bookcases",
+        "Chairs",
+        "Labels",
+        "Tables",
+        "Storage"
+      ],
+      "candidate_target": false
+    },
+    {
+      "name": "product_name",
+      "original_name": "Product Name",
+      "role": "text",
+      "dtype_clean": "object",
+      "dtype_raw": "object",
+      "n_unique": 1849,
+      "unique_ratio": 0.188673,
+      "n_missing": 0,
+      "missing_ratio": 0.0,
+      "avg_length": 36.9057,
+      "sample_values": [
+        "Bush Somerset Collection Bookcase",
+        "Hon Deluxe Fabric Upholstered Stacking Chairs, Rounded Back",
+        "Self-Adhesive Address Labels for Typewriters by Universal",
+        "Bretford CR4500 Series Slim Rectangular Table",
+        "Eldon Fold 'N Roll Cart System"
+      ],
+      "candidate_target": false
+    },
+    {
+      "name": "sales",
+      "original_name": "Sales",
+      "role": "numeric_feature",
+      "dtype_clean": "float64",
+      "dtype_raw": "float64",
+      "n_unique": 5757,
+      "unique_ratio": 0.587449,
+      "n_missing": 0,
+      "missing_ratio": 0.0,
+      "avg_length": null,
+      "sample_values": [
+        261.96,
+        731.94,
+        14.62,
+        957.5775,
+        22.368
+      ],
+      "candidate_target": true
+    }
+  ],
+  "candidate_targets": [
+    "sales"
+  ],
+  "candidate_time_columns": [
+    "order_date",
+    "ship_date"
+  ]
+}

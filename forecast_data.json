@@ -1,0 +1,1656 @@
+{
+  "metrics": {
+    "mae": 14619.44,
+    "medae": 10213.31,
+    "rmse": 18954.14,
+    "mape": 22.88,
+    "smape": 27.75,
+    "wape": 24.3,
+    "r2": 0.4607,
+    "r2_log": 0.3651,
+    "mase": 0.8732,
+    "best_W": 0.95
+  },
+  "cv_folds": [
+    {
+      "mae": 18393.42,
+      "medae": 19385.03,
+      "rmse": 20119.93,
+      "mape": 35.86,
+      "smape": 44.94,
+      "wape": 37.67,
+      "r2": -6.1547,
+      "r2_log": -8.436,
+      "mase": 1.1075,
+      "fold": 1,
+      "train_size": 14,
+      "dates": [
+        "2017-03",
+        "2017-04",
+        "2017-05"
+      ],
+      "actual": [
+        51165.06,
+        38679.77,
+        56656.91
+      ],
+      "predicted": [
+        31780.03,
+        30732.19,
+        28809.26
+      ],
+      "best_w": 0.9
+    },
+    {
+      "mae": 4463.16,
+      "medae": 2629.1,
+      "rmse": 5938.53,
+      "mape": 13.76,
+      "smape": 12.32,
+      "wape": 12.33,
+      "r2": -1.1622,
+      "r2_log": -1.0705,
+      "mase": 0.2601,
+      "fold": 2,
+      "train_size": 17,
+      "dates": [
+        "2017-06",
+        "2017-07",
+        "2017-08"
+      ],
+      "actual": [
+        39724.49,
+        38320.78,
+        30542.2
+      ],
+      "predicted": [
+        37095.39,
+        39173.66,
+        40449.72
+      ],
+      "best_w": 0.1
+    },
+    {
+      "mae": 19170.96,
+      "medae": 21656.95,
+      "rmse": 19910.43,
+      "mape": 28.28,
+      "smape": 33.68,
+      "wape": 27.67,
+      "r2": -5.2655,
+      "r2_log": -9.1564,
+      "mase": 1.2114,
+      "fold": 3,
+      "train_size": 20,
+      "dates": [
+        "2017-09",
+        "2017-10",
+        "2017-11"
+      ],
+      "actual": [
+        69193.39,
+        59583.03,
+        79066.5
+      ],
+      "predicted": [
+        57487.53,
+        35432.98,
+        57409.55
+      ],
+      "best_w": 0.9
+    },
+    {
+      "mae": 20256.68,
+      "medae": 19422.82,
+      "rmse": 24890.73,
+      "mape": 33.23,
+      "smape": 40.51,
+      "wape": 38.19,
+      "r2": 0.3828,
+      "r2_log": 0.487,
+      "mase": 1.2096,
+      "fold": 4,
+      "train_size": 23,
+      "dates": [
+        "2017-12",
+        "2018-01",
+        "2018-02"
+      ],
+      "actual": [
+        95739.12,
+        43476.47,
+        19921.0
+      ],
+      "predicted": [
+        57365.19,
+        24053.65,
+        22894.28
+      ],
+      "best_w": 0.1
+    },
+    {
+      "mae": 11312.0,
+      "medae": 4796.86,
+      "rmse": 14717.27,
+      "mape": 21.83,
+      "smape": 26.01,
+      "wape": 24.55,
+      "r2": -1.3244,
+      "r2_log": -1.5336,
+      "mase": 0.6136,
+      "fold": 5,
+      "train_size": 26,
+      "dates": [
+        "2018-03",
+        "2018-04",
+        "2018-05"
+      ],
+      "actual": [
+        58863.41,
+        35541.91,
+        43825.98
+      ],
+      "predicted": [
+        34238.01,
+        31028.18,
+        39029.12
+      ],
+      "best_w": 0.1
+    },
+    {
+      "mae": 7219.55,
+      "medae": 7278.64,
+      "rmse": 7400.36,
+      "mape": 14.52,
+      "smape": 15.79,
+      "wape": 13.9,
+      "r2": 0.1044,
+      "r2_log": -0.3203,
+      "mase": 0.3804,
+      "fold": 6,
+      "train_size": 29,
+      "dates": [
+        "2018-06",
+        "2018-07",
+        "2018-08"
+      ],
+      "actual": [
+        48190.73,
+        44825.1,
+        62837.85
+      ],
+      "predicted": [
+        39010.12,
+        37546.47,
+        57638.45
+      ],
+      "best_w": 0.9
+    },
+    {
+      "mae": 23875.74,
+      "medae": 16016.64,
+      "rmse": 26927.15,
+      "mape": 24.01,
+      "smape": 27.75,
+      "wape": 25.44,
+      "r2": -1.3943,
+      "r2_log": -1.8302,
+      "mase": 1.3283,
+      "fold": 7,
+      "train_size": 32,
+      "dates": [
+        "2018-09",
+        "2018-10",
+        "2018-11"
+      ],
+      "actual": [
+        86152.89,
+        77448.13,
+        117938.15
+      ],
+      "predicted": [
+        70136.25,
+        63288.59,
+        76487.12
+      ],
+      "best_w": 0.9
+    }
+  ],
+  "cv_summary": {
+    "mean_mae": 14955.93,
+    "std_mae": 6766.22,
+    "mean_mape": 24.5,
+    "std_mape": 7.95,
+    "mean_smape": 28.71,
+    "mean_r2": -2.1163,
+    "mean_mase": 0.873
+  },
+  "historical": [
+    {
+      "period": "2015-01",
+      "sales": 14205.71
+    },
+    {
+      "period": "2015-02",
+      "sales": 4519.89
+    },
+    {
+      "period": "2015-03",
+      "sales": 55205.8
+    },
+    {
+      "period": "2015-04",
+      "sales": 27906.85
+    },
+    {
+      "period": "2015-05",
+      "sales": 23644.3
+    },
+    {
+      "period": "2015-06",
+      "sales": 34322.94
+    },
+    {
+      "period": "2015-07",
+      "sales": 33781.54
+    },
+    {
+      "period": "2015-08",
+      "sales": 27117.54
+    },
+    {
+      "period": "2015-09",
+      "sales": 81623.53
+    },
+    {
+      "period": "2015-10",
+      "sales": 31453.39
+    },
+    {
+      "period": "2015-11",
+      "sales": 77907.66
+    },
+    {
+      "period": "2015-12",
+      "sales": 68167.06
+    },
+    {
+      "period": "2016-01",
+      "sales": 18066.96
+    },
+    {
+      "period": "2016-02",
+      "sales": 11951.41
+    },
+    {
+      "period": "2016-03",
+      "sales": 32339.32
+    },
+    {
+      "period": "2016-04",
+      "sales": 34154.47
+    },
+    {
+      "period": "2016-05",
+      "sales": 29959.53
+    },
+    {
+      "period": "2016-06",
+      "sales": 23599.37
+    },
+    {
+      "period": "2016-07",
+      "sales": 28608.26
+    },
+    {
+      "period": "2016-08",
+      "sales": 36818.34
+    },
+    {
+      "period": "2016-09",
+      "sales": 63133.61
+    },
+    {
+      "period": "2016-10",
+      "sales": 31011.74
+    },
+    {
+      "period": "2016-11",
+      "sales": 75249.4
+    },
+    {
+      "period": "2016-12",
+      "sales": 74543.6
+    },
+    {
+      "period": "2017-01",
+      "sales": 18542.49
+    },
+    {
+      "period": "2017-02",
+      "sales": 22978.81
+    },
+    {
+      "period": "2017-03",
+      "sales": 51165.06
+    },
+    {
+      "period": "2017-04",
+      "sales": 38679.77
+    },
+    {
+      "period": "2017-05",
+      "sales": 56656.91
+    },
+    {
+      "period": "2017-06",
+      "sales": 39724.49
+    },
+    {
+      "period": "2017-07",
+      "sales": 38320.78
+    },
+    {
+      "period": "2017-08",
+      "sales": 30542.2
+    },
+    {
+      "period": "2017-09",
+      "sales": 69193.39
+    },
+    {
+      "period": "2017-10",
+      "sales": 59583.03
+    },
+    {
+      "period": "2017-11",
+      "sales": 79066.5
+    },
+    {
+      "period": "2017-12",
+      "sales": 95739.12
+    },
+    {
+      "period": "2018-01",
+      "sales": 43476.47
+    },
+    {
+      "period": "2018-02",
+      "sales": 19921.0
+    },
+    {
+      "period": "2018-03",
+      "sales": 58863.41
+    },
+    {
+      "period": "2018-04",
+      "sales": 35541.91
+    },
+    {
+      "period": "2018-05",
+      "sales": 43825.98
+    },
+    {
+      "period": "2018-06",
+      "sales": 48190.73
+    },
+    {
+      "period": "2018-07",
+      "sales": 44825.1
+    },
+    {
+      "period": "2018-08",
+      "sales": 62837.85
+    },
+    {
+      "period": "2018-09",
+      "sales": 86152.89
+    },
+    {
+      "period": "2018-10",
+      "sales": 77448.13
+    },
+    {
+      "period": "2018-11",
+      "sales": 117938.15
+    },
+    {
+      "period": "2018-12",
+      "sales": 83030.39
+    }
+  ],
+  "backtest": [
+    {
+      "period": "2016-01",
+      "actual": 18066.96,
+      "predicted": 17368.71,
+      "split": "train"
+    },
+    {
+      "period": "2016-02",
+      "actual": 11951.41,
+      "predicted": 17275.41,
+      "split": "train"
+    },
+    {
+      "period": "2016-03",
+      "actual": 32339.32,
+      "predicted": 33740.81,
+      "split": "train"
+    },
+    {
+      "period": "2016-04",
+      "actual": 34154.47,
+      "predicted": 34407.45,
+      "split": "train"
+    },
+    {
+      "period": "2016-05",
+      "actual": 29959.53,
+      "predicted": 30658.45,
+      "split": "train"
+    },
+    {
+      "period": "2016-06",
+      "actual": 23599.37,
+      "predicted": 25720.63,
+      "split": "train"
+    },
+    {
+      "period": "2016-07",
+      "actual": 28608.26,
+      "predicted": 29638.07,
+      "split": "train"
+    },
+    {
+      "period": "2016-08",
+      "actual": 36818.34,
+      "predicted": 36592.07,
+      "split": "train"
+    },
+    {
+      "period": "2016-09",
+      "actual": 63133.61,
+      "predicted": 61706.82,
+      "split": "train"
+    },
+    {
+      "period": "2016-10",
+      "actual": 31011.74,
+      "predicted": 32173.25,
+      "split": "train"
+    },
+    {
+      "period": "2016-11",
+      "actual": 75249.4,
+      "predicted": 71131.4,
+      "split": "train"
+    },
+    {
+      "period": "2016-12",
+      "actual": 74543.6,
+      "predicted": 70262.36,
+      "split": "train"
+    },
+    {
+      "period": "2017-01",
+      "actual": 18542.49,
+      "predicted": 19258.6,
+      "split": "train"
+    },
+    {
+      "period": "2017-02",
+      "actual": 22978.81,
+      "predicted": 19298.5,
+      "split": "train"
+    },
+    {
+      "period": "2017-03",
+      "actual": 51165.06,
+      "predicted": 48020.68,
+      "split": "train"
+    },
+    {
+      "period": "2017-04",
+      "actual": 38679.77,
+      "predicted": 38613.97,
+      "split": "train"
+    },
+    {
+      "period": "2017-05",
+      "actual": 56656.91,
+      "predicted": 30639.51,
+      "split": "train"
+    },
+    {
+      "period": "2017-06",
+      "actual": 39724.49,
+      "predicted": 39398.74,
+      "split": "train"
+    },
+    {
+      "period": "2017-07",
+      "actual": 38320.78,
+      "predicted": 38255.45,
+      "split": "train"
+    },
+    {
+      "period": "2017-08",
+      "actual": 30542.2,
+      "predicted": 31467.28,
+      "split": "train"
+    },
+    {
+      "period": "2017-09",
+      "actual": 69193.39,
+      "predicted": 66224.42,
+      "split": "train"
+    },
+    {
+      "period": "2017-10",
+      "actual": 59583.03,
+      "predicted": 58621.79,
+      "split": "train"
+    },
+    {
+      "period": "2017-11",
+      "actual": 79066.5,
+      "predicted": 74773.46,
+      "split": "train"
+    },
+    {
+      "period": "2017-12",
+      "actual": 95739.12,
+      "predicted": 75112.1,
+      "split": "train"
+    },
+    {
+      "period": "2018-01",
+      "actual": 43476.47,
+      "predicted": 21590.7,
+      "split": "test"
+    },
+    {
+      "period": "2018-02",
+      "actual": 19921.0,
+      "predicted": 19786.48,
+      "split": "test"
+    },
+    {
+      "period": "2018-03",
+      "actual": 58863.41,
+      "predicted": 31211.86,
+      "split": "test"
+    },
+    {
+      "period": "2018-04",
+      "actual": 35541.91,
+      "predicted": 38405.68,
+      "split": "test"
+    },
+    {
+      "period": "2018-05",
+      "actual": 43825.98,
+      "predicted": 34654.45,
+      "split": "test"
+    },
+    {
+      "period": "2018-06",
+      "actual": 48190.73,
+      "predicted": 36935.64,
+      "split": "test"
+    },
+    {
+      "period": "2018-07",
+      "actual": 44825.1,
+      "predicted": 38468.57,
+      "split": "test"
+    },
+    {
+      "period": "2018-08",
+      "actual": 62837.85,
+      "predicted": 37287.09,
+      "split": "test"
+    },
+    {
+      "period": "2018-09",
+      "actual": 86152.89,
+      "predicted": 73437.5,
+      "split": "test"
+    },
+    {
+      "period": "2018-10",
+      "actual": 77448.13,
+      "predicted": 71976.69,
+      "split": "test"
+    },
+    {
+      "period": "2018-11",
+      "actual": 117938.15,
+      "predicted": 74545.47,
+      "split": "test"
+    },
+    {
+      "period": "2018-12",
+      "actual": 83030.39,
+      "predicted": 74046.15,
+      "split": "test"
+    }
+  ],
+  "test_dates": [
+    "2018-01",
+    "2018-02",
+    "2018-03",
+    "2018-04",
+    "2018-05",
+    "2018-06",
+    "2018-07",
+    "2018-08",
+    "2018-09",
+    "2018-10",
+    "2018-11",
+    "2018-12"
+  ],
+  "test_actual": [
+    43476.47,
+    19921.0,
+    58863.41,
+    35541.91,
+    43825.98,
+    48190.73,
+    44825.1,
+    62837.85,
+    86152.89,
+    77448.13,
+    117938.15,
+    83030.39
+  ],
+  "test_predicted": [
+    21590.7,
+    19786.48,
+    31211.86,
+    38405.68,
+    34654.45,
+    36935.64,
+    38468.57,
+    37287.09,
+    73437.5,
+    71976.69,
+    74545.47,
+    74046.15
+  ],
+  "future_forecast": [
+    {
+      "period": "2019-01",
+      "forecast": 20184.51,
+      "lower_90": 13578.76,
+      "upper_90": 30003.57
+    },
+    {
+      "period": "2019-02",
+      "forecast": 19955.83,
+      "lower_90": 12903.14,
+      "upper_90": 30863.12
+    },
+    {
+      "period": "2019-03",
+      "forecast": 42173.63,
+      "lower_90": 26209.43,
+      "upper_90": 67861.28
+    },
+    {
+      "period": "2019-04",
+      "forecast": 36570.13,
+      "lower_90": 21843.72,
+      "upper_90": 61224.22
+    },
+    {
+      "period": "2019-05",
+      "forecast": 35092.79,
+      "lower_90": 20146.61,
+      "upper_90": 61126.54
+    },
+    {
+      "period": "2019-06",
+      "forecast": 31450.95,
+      "lower_90": 17354.06,
+      "upper_90": 56998.23
+    },
+    {
+      "period": "2019-07",
+      "forecast": 32388.15,
+      "lower_90": 17176.63,
+      "upper_90": 61070.1
+    },
+    {
+      "period": "2019-08",
+      "forecast": 40394.55,
+      "lower_90": 20590.24,
+      "upper_90": 79246.31
+    },
+    {
+      "period": "2019-09",
+      "forecast": 69482.1,
+      "lower_90": 34040.87,
+      "upper_90": 141821.43
+    },
+    {
+      "period": "2019-10",
+      "forecast": 72101.61,
+      "lower_90": 33951.4,
+      "upper_90": 153118.86
+    },
+    {
+      "period": "2019-11",
+      "forecast": 74659.74,
+      "lower_90": 33789.69,
+      "upper_90": 164962.38
+    },
+    {
+      "period": "2019-12",
+      "forecast": 74913.85,
+      "lower_90": 32587.01,
+      "upper_90": 172216.75
+    }
+  ],
+  "cat_forecasts": {
+    "Furniture": [
+      {
+        "period": "2019-01",
+        "forecast": 9285.03,
+        "lower_90": 6219.22,
+        "upper_90": 13861.9
+      },
+      {
+        "period": "2019-02",
+        "forecast": 6087.79,
+        "lower_90": 3948.89,
+        "upper_90": 9384.93
+      },
+      {
+        "period": "2019-03",
+        "forecast": 12599.79,
+        "lower_90": 7915.44,
+        "upper_90": 20055.98
+      },
+      {
+        "period": "2019-04",
+        "forecast": 12662.0,
+        "lower_90": 7703.55,
+        "upper_90": 20811.61
+      },
+      {
+        "period": "2019-05",
+        "forecast": 16876.56,
+        "lower_90": 9943.85,
+        "upper_90": 28642.19
+      },
+      {
+        "period": "2019-06",
+        "forecast": 18434.43,
+        "lower_90": 10519.1,
+        "upper_90": 32305.27
+      },
+      {
+        "period": "2019-07",
+        "forecast": 13173.0,
+        "lower_90": 7279.52,
+        "upper_90": 23837.18
+      },
+      {
+        "period": "2019-08",
+        "forecast": 17118.05,
+        "lower_90": 9161.25,
+        "upper_90": 31984.79
+      },
+      {
+        "period": "2019-09",
+        "forecast": 28504.22,
+        "lower_90": 14773.92,
+        "upper_90": 54994.06
+      },
+      {
+        "period": "2019-10",
+        "forecast": 30092.53,
+        "lower_90": 15105.08,
+        "upper_90": 59949.71
+      },
+      {
+        "period": "2019-11",
+        "forecast": 26582.0,
+        "lower_90": 12921.92,
+        "upper_90": 54681.34
+      },
+      {
+        "period": "2019-12",
+        "forecast": 32476.89,
+        "lower_90": 15289.54,
+        "upper_90": 68983.72
+      }
+    ],
+    "Office Supplies": [
+      {
+        "period": "2019-01",
+        "forecast": 6697.32,
+        "lower_90": 3278.65,
+        "upper_90": 13679.6
+      },
+      {
+        "period": "2019-02",
+        "forecast": 6427.55,
+        "lower_90": 2971.78,
+        "upper_90": 13900.55
+      },
+      {
+        "period": "2019-03",
+        "forecast": 12924.31,
+        "lower_90": 5644.2,
+        "upper_90": 29592.92
+      },
+      {
+        "period": "2019-04",
+        "forecast": 12746.92,
+        "lower_90": 5257.56,
+        "upper_90": 30902.79
+      },
+      {
+        "period": "2019-05",
+        "forecast": 13780.85,
+        "lower_90": 5368.38,
+        "upper_90": 35373.56
+      },
+      {
+        "period": "2019-06",
+        "forecast": 14696.49,
+        "lower_90": 5407.15,
+        "upper_90": 39941.76
+      },
+      {
+        "period": "2019-07",
+        "forecast": 11716.24,
+        "lower_90": 4071.11,
+        "upper_90": 33714.63
+      },
+      {
+        "period": "2019-08",
+        "forecast": 17049.8,
+        "lower_90": 5595.64,
+        "upper_90": 51946.16
+      },
+      {
+        "period": "2019-09",
+        "forecast": 21372.23,
+        "lower_90": 6624.86,
+        "upper_90": 68943.31
+      },
+      {
+        "period": "2019-10",
+        "forecast": 18109.2,
+        "lower_90": 5301.54,
+        "upper_90": 61852.27
+      },
+      {
+        "period": "2019-11",
+        "forecast": 27141.02,
+        "lower_90": 7504.71,
+        "upper_90": 98149.51
+      },
+      {
+        "period": "2019-12",
+        "forecast": 26223.84,
+        "lower_90": 6848.38,
+        "upper_90": 100408.42
+      }
+    ],
+    "Technology": [
+      {
+        "period": "2019-01",
+        "forecast": 12663.78,
+        "lower_90": 8731.58,
+        "upper_90": 18366.62
+      },
+      {
+        "period": "2019-02",
+        "forecast": 12601.32,
+        "lower_90": 8433.88,
+        "upper_90": 18827.77
+      },
+      {
+        "period": "2019-03",
+        "forecast": 18978.98,
+        "lower_90": 12330.27,
+        "upper_90": 29212.52
+      },
+      {
+        "period": "2019-04",
+        "forecast": 17284.9,
+        "lower_90": 10900.53,
+        "upper_90": 27408.2
+      },
+      {
+        "period": "2019-05",
+        "forecast": 17138.39,
+        "lower_90": 10491.39,
+        "upper_90": 27996.3
+      },
+      {
+        "period": "2019-06",
+        "forecast": 15469.57,
+        "lower_90": 9192.25,
+        "upper_90": 26033.17
+      },
+      {
+        "period": "2019-07",
+        "forecast": 11491.93,
+        "lower_90": 6628.44,
+        "upper_90": 19923.37
+      },
+      {
+        "period": "2019-08",
+        "forecast": 14846.04,
+        "lower_90": 8312.23,
+        "upper_90": 26515.12
+      },
+      {
+        "period": "2019-09",
+        "forecast": 30369.8,
+        "lower_90": 16506.06,
+        "upper_90": 55877.25
+      },
+      {
+        "period": "2019-10",
+        "forecast": 28028.94,
+        "lower_90": 14787.33,
+        "upper_90": 53127.2
+      },
+      {
+        "period": "2019-11",
+        "forecast": 17895.1,
+        "lower_90": 9164.14,
+        "upper_90": 34943.41
+      },
+      {
+        "period": "2019-12",
+        "forecast": 23639.24,
+        "lower_90": 11751.12,
+        "upper_90": 47553.08
+      }
+    ]
+  },
+  "seg_forecasts": {
+    "Consumer": [
+      {
+        "period": "2019-01",
+        "forecast": 5929.84,
+        "lower_90": 2844.06,
+        "upper_90": 12362.48
+      },
+      {
+        "period": "2019-02",
+        "forecast": 14441.52,
+        "lower_90": 6531.75,
+        "upper_90": 31928.32
+      },
+      {
+        "period": "2019-03",
+        "forecast": 13831.89,
+        "lower_90": 5898.89,
+        "upper_90": 32431.6
+      },
+      {
+        "period": "2019-04",
+        "forecast": 18892.27,
+        "lower_90": 7597.3,
+        "upper_90": 46977.36
+      },
+      {
+        "period": "2019-05",
+        "forecast": 19663.27,
+        "lower_90": 7456.02,
+        "upper_90": 51854.0
+      },
+      {
+        "period": "2019-06",
+        "forecast": 21790.68,
+        "lower_90": 7791.12,
+        "upper_90": 60942.22
+      },
+      {
+        "period": "2019-07",
+        "forecast": 9011.02,
+        "lower_90": 3037.54,
+        "upper_90": 26727.77
+      },
+      {
+        "period": "2019-08",
+        "forecast": 18958.06,
+        "lower_90": 6026.51,
+        "upper_90": 59633.22
+      },
+      {
+        "period": "2019-09",
+        "forecast": 35648.13,
+        "lower_90": 10685.81,
+        "upper_90": 118917.58
+      },
+      {
+        "period": "2019-10",
+        "forecast": 18861.67,
+        "lower_90": 5330.88,
+        "upper_90": 66729.72
+      },
+      {
+        "period": "2019-11",
+        "forecast": 39154.62,
+        "lower_90": 10435.37,
+        "upper_90": 146904.77
+      },
+      {
+        "period": "2019-12",
+        "forecast": 36734.38,
+        "lower_90": 9231.47,
+        "upper_90": 146166.65
+      }
+    ],
+    "Corporate": [
+      {
+        "period": "2019-01",
+        "forecast": 10157.73,
+        "lower_90": 6343.96,
+        "upper_90": 16263.83
+      },
+      {
+        "period": "2019-02",
+        "forecast": 8345.58,
+        "lower_90": 5019.48,
+        "upper_90": 13875.23
+      },
+      {
+        "period": "2019-03",
+        "forecast": 17485.65,
+        "lower_90": 10128.56,
+        "upper_90": 30186.18
+      },
+      {
+        "period": "2019-04",
+        "forecast": 17187.26,
+        "lower_90": 9587.78,
+        "upper_90": 30809.64
+      },
+      {
+        "period": "2019-05",
+        "forecast": 17976.49,
+        "lower_90": 9657.45,
+        "upper_90": 33460.91
+      },
+      {
+        "period": "2019-06",
+        "forecast": 8831.86,
+        "lower_90": 4569.11,
+        "upper_90": 17070.66
+      },
+      {
+        "period": "2019-07",
+        "forecast": 15855.76,
+        "lower_90": 7900.1,
+        "upper_90": 31822.05
+      },
+      {
+        "period": "2019-08",
+        "forecast": 16746.57,
+        "lower_90": 8035.59,
+        "upper_90": 34899.52
+      },
+      {
+        "period": "2019-09",
+        "forecast": 26903.98,
+        "lower_90": 12432.68,
+        "upper_90": 58218.1
+      },
+      {
+        "period": "2019-10",
+        "forecast": 29837.62,
+        "lower_90": 13278.85,
+        "upper_90": 67043.69
+      },
+      {
+        "period": "2019-11",
+        "forecast": 28292.61,
+        "lower_90": 12125.9,
+        "upper_90": 66011.6
+      },
+      {
+        "period": "2019-12",
+        "forecast": 33079.94,
+        "lower_90": 13653.84,
+        "upper_90": 80142.66
+      }
+    ],
+    "Home Office": [
+      {
+        "period": "2019-01",
+        "forecast": 8510.03,
+        "lower_90": 5595.11,
+        "upper_90": 12943.27
+      },
+      {
+        "period": "2019-02",
+        "forecast": 6239.52,
+        "lower_90": 3966.87,
+        "upper_90": 9813.86
+      },
+      {
+        "period": "2019-03",
+        "forecast": 11715.59,
+        "lower_90": 7202.95,
+        "upper_90": 19055.01
+      },
+      {
+        "period": "2019-04",
+        "forecast": 8130.85,
+        "lower_90": 4833.94,
+        "upper_90": 13675.9
+      },
+      {
+        "period": "2019-05",
+        "forecast": 8042.48,
+        "lower_90": 4623.64,
+        "upper_90": 13988.74
+      },
+      {
+        "period": "2019-06",
+        "forecast": 9229.25,
+        "lower_90": 5130.92,
+        "upper_90": 16600.49
+      },
+      {
+        "period": "2019-07",
+        "forecast": 5390.58,
+        "lower_90": 2897.78,
+        "upper_90": 10027.07
+      },
+      {
+        "period": "2019-08",
+        "forecast": 6617.14,
+        "lower_90": 3439.86,
+        "upper_90": 12728.31
+      },
+      {
+        "period": "2019-09",
+        "forecast": 13713.41,
+        "lower_90": 6894.1,
+        "upper_90": 27277.07
+      },
+      {
+        "period": "2019-10",
+        "forecast": 14046.76,
+        "lower_90": 6828.72,
+        "upper_90": 28893.24
+      },
+      {
+        "period": "2019-11",
+        "forecast": 12856.22,
+        "lower_90": 6043.71,
+        "upper_90": 27346.58
+      },
+      {
+        "period": "2019-12",
+        "forecast": 12703.33,
+        "lower_90": 5774.8,
+        "upper_90": 27943.16
+      }
+    ]
+  },
+  "reg_forecasts": {
+    "Central": [
+      {
+        "period": "2019-01",
+        "forecast": 18745.84,
+        "lower_90": 13127.64,
+        "upper_90": 26768.25
+      },
+      {
+        "period": "2019-02",
+        "forecast": 5196.78,
+        "lower_90": 3536.8,
+        "upper_90": 7635.65
+      },
+      {
+        "period": "2019-03",
+        "forecast": 16566.91,
+        "lower_90": 10958.89,
+        "upper_90": 25044.47
+      },
+      {
+        "period": "2019-04",
+        "forecast": 9495.27,
+        "lower_90": 6104.41,
+        "upper_90": 14769.37
+      },
+      {
+        "period": "2019-05",
+        "forecast": 7442.26,
+        "lower_90": 4650.02,
+        "upper_90": 11910.82
+      },
+      {
+        "period": "2019-06",
+        "forecast": 9089.18,
+        "lower_90": 5519.53,
+        "upper_90": 14967.0
+      },
+      {
+        "period": "2019-07",
+        "forecast": 7824.18,
+        "lower_90": 4617.77,
+        "upper_90": 13256.53
+      },
+      {
+        "period": "2019-08",
+        "forecast": 9553.4,
+        "lower_90": 5479.98,
+        "upper_90": 16654.13
+      },
+      {
+        "period": "2019-09",
+        "forecast": 17605.0,
+        "lower_90": 9815.11,
+        "upper_90": 31576.82
+      },
+      {
+        "period": "2019-10",
+        "forecast": 21466.12,
+        "lower_90": 11631.57,
+        "upper_90": 39615.11
+      },
+      {
+        "period": "2019-11",
+        "forecast": 23441.99,
+        "lower_90": 12345.34,
+        "upper_90": 44512.09
+      },
+      {
+        "period": "2019-12",
+        "forecast": 20734.62,
+        "lower_90": 10612.67,
+        "upper_90": 40509.58
+      }
+    ],
+    "East": [
+      {
+        "period": "2019-01",
+        "forecast": 4677.08,
+        "lower_90": 2606.42,
+        "upper_90": 8392.11
+      },
+      {
+        "period": "2019-02",
+        "forecast": 3730.71,
+        "lower_90": 1983.92,
+        "upper_90": 7014.72
+      },
+      {
+        "period": "2019-03",
+        "forecast": 13108.05,
+        "lower_90": 6653.24,
+        "upper_90": 25824.2
+      },
+      {
+        "period": "2019-04",
+        "forecast": 10393.92,
+        "lower_90": 5034.47,
+        "upper_90": 21457.64
+      },
+      {
+        "period": "2019-05",
+        "forecast": 16750.21,
+        "lower_90": 7742.85,
+        "upper_90": 36234.61
+      },
+      {
+        "period": "2019-06",
+        "forecast": 9926.39,
+        "lower_90": 4378.63,
+        "upper_90": 22501.62
+      },
+      {
+        "period": "2019-07",
+        "forecast": 9013.35,
+        "lower_90": 3794.14,
+        "upper_90": 21410.19
+      },
+      {
+        "period": "2019-08",
+        "forecast": 8971.05,
+        "lower_90": 3603.76,
+        "upper_90": 22329.9
+      },
+      {
+        "period": "2019-09",
+        "forecast": 24492.9,
+        "lower_90": 9390.5,
+        "upper_90": 63881.38
+      },
+      {
+        "period": "2019-10",
+        "forecast": 20433.89,
+        "lower_90": 7476.23,
+        "upper_90": 55846.51
+      },
+      {
+        "period": "2019-11",
+        "forecast": 24660.66,
+        "lower_90": 8610.57,
+        "upper_90": 70624.64
+      },
+      {
+        "period": "2019-12",
+        "forecast": 18661.08,
+        "lower_90": 6217.87,
+        "upper_90": 56001.63
+      }
+    ],
+    "South": [
+      {
+        "period": "2019-01",
+        "forecast": 3400.89,
+        "lower_90": 1901.16,
+        "upper_90": 6083.05
+      },
+      {
+        "period": "2019-02",
+        "forecast": 4385.86,
+        "lower_90": 2340.44,
+        "upper_90": 8218.1
+      },
+      {
+        "period": "2019-03",
+        "forecast": 8724.59,
+        "lower_90": 4444.56,
+        "upper_90": 17125.31
+      },
+      {
+        "period": "2019-04",
+        "forecast": 12178.9,
+        "lower_90": 5922.48,
+        "upper_90": 25043.37
+      },
+      {
+        "period": "2019-05",
+        "forecast": 3768.52,
+        "lower_90": 1748.93,
+        "upper_90": 8118.9
+      },
+      {
+        "period": "2019-06",
+        "forecast": 4482.34,
+        "lower_90": 1985.73,
+        "upper_90": 10116.28
+      },
+      {
+        "period": "2019-07",
+        "forecast": 2687.35,
+        "lower_90": 1136.17,
+        "upper_90": 6354.44
+      },
+      {
+        "period": "2019-08",
+        "forecast": 11657.69,
+        "lower_90": 4706.52,
+        "upper_90": 28873.04
+      },
+      {
+        "period": "2019-09",
+        "forecast": 4065.89,
+        "lower_90": 1566.5,
+        "upper_90": 10550.59
+      },
+      {
+        "period": "2019-10",
+        "forecast": 5294.64,
+        "lower_90": 1947.34,
+        "upper_90": 14392.69
+      },
+      {
+        "period": "2019-11",
+        "forecast": 9664.43,
+        "lower_90": 3393.45,
+        "upper_90": 27520.54
+      },
+      {
+        "period": "2019-12",
+        "forecast": 8135.61,
+        "lower_90": 2726.68,
+        "upper_90": 24270.28
+      }
+    ],
+    "West": [
+      {
+        "period": "2019-01",
+        "forecast": 9894.57,
+        "lower_90": 8041.6,
+        "upper_90": 12174.46
+      },
+      {
+        "period": "2019-02",
+        "forecast": 9753.87,
+        "lower_90": 7796.82,
+        "upper_90": 12202.08
+      },
+      {
+        "period": "2019-03",
+        "forecast": 21854.15,
+        "lower_90": 17182.13,
+        "upper_90": 27796.49
+      },
+      {
+        "period": "2019-04",
+        "forecast": 14809.52,
+        "lower_90": 11451.89,
+        "upper_90": 19151.51
+      },
+      {
+        "period": "2019-05",
+        "forecast": 14653.51,
+        "lower_90": 11144.83,
+        "upper_90": 19266.72
+      },
+      {
+        "period": "2019-06",
+        "forecast": 16381.71,
+        "lower_90": 12254.29,
+        "upper_90": 21899.21
+      },
+      {
+        "period": "2019-07",
+        "forecast": 21959.84,
+        "lower_90": 16156.83,
+        "upper_90": 29846.98
+      },
+      {
+        "period": "2019-08",
+        "forecast": 14211.8,
+        "lower_90": 10284.13,
+        "upper_90": 19639.34
+      },
+      {
+        "period": "2019-09",
+        "forecast": 21694.89,
+        "lower_90": 15441.03,
+        "upper_90": 30481.5
+      },
+      {
+        "period": "2019-10",
+        "forecast": 14392.87,
+        "lower_90": 10075.3,
+        "upper_90": 20560.47
+      },
+      {
+        "period": "2019-11",
+        "forecast": 23997.6,
+        "lower_90": 16522.64,
+        "upper_90": 34854.08
+      },
+      {
+        "period": "2019-12",
+        "forecast": 28912.11,
+        "lower_90": 19578.93,
+        "upper_90": 42694.16
+      }
+    ]
+  },
+  "feature_importance": [
+    {
+      "feature": "stl_seasonal_feat",
+      "importance": 0.285303
+    },
+    {
+      "feature": "yoy_lag12",
+      "importance": 0.175016
+    },
+    {
+      "feature": "month",
+      "importance": 0.168388
+    },
+    {
+      "feature": "trend_idx",
+      "importance": 0.040785
+    },
+    {
+      "feature": "lag_2",
+      "importance": 0.038221
+    },
+    {
+      "feature": "roll6_mean",
+      "importance": 0.037857
+    },
+    {
+      "feature": "roll3_mean",
+      "importance": 0.02569
+    },
+    {
+      "feature": "stl_trend_feat",
+      "importance": 0.023904
+    },
+    {
+      "feature": "stl_trend_lag1",
+      "importance": 0.022924
+    },
+    {
+      "feature": "roll3_max",
+      "importance": 0.019341
+    },
+    {
+      "feature": "mom1",
+      "importance": 0.01544
+    },
+    {
+      "feature": "quarter",
+      "importance": 0.014066
+    },
+    {
+      "feature": "txn_avg_txn_sale",
+      "importance": 0.009489
+    },
+    {
+      "feature": "month_cos",
+      "importance": 0.008808
+    },
+    {
+      "feature": "ema6",
+      "importance": 0.007973
+    },
+    {
+      "feature": "yoy_growth",
+      "importance": 0.00765
+    },
+    {
+      "feature": "roll3_min",
+      "importance": 0.007329
+    },
+    {
+      "feature": "txn_n_products",
+      "importance": 0.006809
+    },
+    {
+      "feature": "roll12_mean",
+      "importance": 0.006426
+    },
+    {
+      "feature": "mom3",
+      "importance": 0.006322
+    },
+    {
+      "feature": "month_sin",
+      "importance": 0.005742
+    },
+    {
+      "feature": "roll3_std",
+      "importance": 0.005638
+    },
+    {
+      "feature": "lag_6",
+      "importance": 0.005516
+    },
+    {
+      "feature": "lag_5",
+      "importance": 0.00551
+    },
+    {
+      "feature": "lag_1",
+      "importance": 0.005422
+    },
+    {
+      "feature": "lag_4",
+      "importance": 0.00541
+    },
+    {
+      "feature": "roll6_max",
+      "importance": 0.005227
+    },
+    {
+      "feature": "txn_n_orders",
+      "importance": 0.005091
+    },
+    {
+      "feature": "quarter_cos",
+      "importance": 0.004903
+    },
+    {
+      "feature": "lag_3",
+      "importance": 0.004696
+    },
+    {
+      "feature": "ema3",
+      "importance": 0.004197
+    },
+    {
+      "feature": "quarter_sin",
+      "importance": 0.004193
+    },
+    {
+      "feature": "ema12",
+      "importance": 0.003706
+    },
+    {
+      "feature": "roll6_std",
+      "importance": 0.002869
+    },
+    {
+      "feature": "txn_n_customers",
+      "importance": 0.002279
+    },
+    {
+      "feature": "year",
+      "importance": 0.001857
+    }
+  ],
+  "config": {
+    "n_features": 36,
+    "holdout_months": 12,
+    "n_future": 12,
+    "model_description": "Ensemble (HistGBR + RF), recursive lag features, log-transformed, STL decomposition",
+    "training_months": 24,
+    "test_months": 12
+  }
+}
