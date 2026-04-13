@@ -12,7 +12,7 @@ from pydantic import BaseModel
 from typing import List
 
 # ── CONFIG ─────────────────────────────────────────────────────────────────────
-OPENROUTER_API_KEY = "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"
+OPENROUTER_API_KEY = "sk-or-xxxxxxxx"
 MODEL = "nvidia/nemotron-3-super-120b-a12b:free"
 PORT  = 8000
 # ───────────────────────────────────────────────────────────────────────────────
