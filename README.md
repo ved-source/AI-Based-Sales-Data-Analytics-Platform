@@ -656,8 +656,8 @@ Hyderabad, India
 
 Built as a placement project demonstrating end-to-end data science, ML engineering, and full-stack deployment skills.
 
-- GitHub: [github.com/YOUR_USERNAME](https://github.com/YOUR_USERNAME)
-- LinkedIn: [linkedin.com/in/YOUR_PROFILE](https://linkedin.com/in/YOUR_PROFILE)
+- GitHub: [github.com/VED-SOURCE](https://github.com/ved-source)
+- LinkedIn: [linkedin.com/in/SAI-VED](https://www.linkedin.com/in/sai-ved-713176315)
 
 ---
 
