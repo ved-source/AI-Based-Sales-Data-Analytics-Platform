@@ -3,294 +3,289 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sales Analytics Intelligence Platform</title>
+    <title>Sales Forecasting & Outlier Analysis Platform</title>
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --bg-primary: #0a0e1a;
-            --bg-surface: #13192e;
-            --bg-surface-hover: #1e2642;
-            --border-color: rgba(255, 255, 255, 0.08);
-            --text-primary: #f3f4f6;
-            --text-secondary: #9ca3af;
-            --accent-glow: #7c3aed;
-            --accent-glow-light: #a78bfa;
-            --accent-success: #10b981;
-            --accent-error: #ef4444;
-            --accent-warning: #f59e0b;
+            --bg-body: #f3f4f6;
+            --bg-card: #ffffff;
+            --border-color: #e5e7eb;
+            --text-main: #1f2937;
+            --text-muted: #4b5563;
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --warning-color: #f59e0b;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Inter', sans-serif;
-            -webkit-font-smoothing: antialiased;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
+            background-color: var(--bg-body);
+            color: var(--text-main);
             min-height: 100vh;
-            overflow-x: hidden;
             display: flex;
             flex-direction: column;
         }
 
-        /* Glassmorphism Header */
         header {
-            background: rgba(19, 25, 46, 0.7);
-            backdrop-filter: blur(12px);
+            background-color: #ffffff;
             border-bottom: 1px solid var(--border-color);
-            padding: 1.25rem 2rem;
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
         }
 
         .logo-section h1 {
-            font-size: 1.35rem;
+            font-size: 1.25rem;
             font-weight: 700;
-            letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--primary-color);
         }
 
         .logo-section p {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            margin-top: 2px;
-        }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
         }
 
         .run-selector {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
+            background: #ffffff;
+            border: 1px solid #d1d5db;
+            color: var(--text-main);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
             font-size: 0.85rem;
             cursor: pointer;
             outline: none;
-            transition: all 0.2s ease;
         }
 
-        .run-selector:hover {
-            border-color: var(--accent-glow);
-        }
-
-        /* Main Workspace Layout */
         .workspace {
             display: flex;
             flex: 1;
-            min-height: calc(100vh - 75px);
         }
 
-        /* Sidebar Navigation */
+        /* Sidebar */
         .sidebar {
-            width: 260px;
-            background: rgba(19, 25, 46, 0.5);
+            width: 240px;
+            background: #ffffff;
             border-right: 1px solid var(--border-color);
-            padding: 2rem 1rem;
+            padding: 1.5rem 0.75rem;
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.35rem;
         }
 
         .nav-btn {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            padding: 0.85rem 1rem;
+            padding: 0.75rem 1rem;
             background: transparent;
             border: none;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-size: 0.88rem;
             font-weight: 500;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             text-align: left;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.15s ease;
         }
 
         .nav-btn:hover {
-            background: rgba(255, 255, 255, 0.03);
-            color: var(--text-primary);
+            background: #f9fafb;
+            color: var(--text-main);
         }
 
         .nav-btn.active {
-            background: var(--accent-glow);
+            background: var(--primary-color);
             color: #ffffff;
-            box-shadow: 0 4px 14px rgba(124, 58, 237, 0.4);
         }
 
         /* Content Area */
         .content-pane {
             flex: 1;
             padding: 2rem;
-            overflow-y: auto;
-            max-width: 1400px;
+            max-width: 1300px;
             margin: 0 auto;
             width: 100%;
         }
 
         .tab-panel {
             display: none;
-            animation: fadeIn 0.35s ease-out;
         }
 
         .tab-panel.active {
             display: block;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Common Glass Cards */
-        .glass-card {
-            background: var(--bg-surface);
+        /* Simple Card Panels */
+        .panel-card {
+            background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
+            border-radius: 8px;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
 
-        .glass-card h2 {
-            font-size: 1.15rem;
+        .panel-card h2 {
+            font-size: 1.1rem;
             font-weight: 600;
-            margin-bottom: 1.25rem;
-            border-left: 3px solid var(--accent-glow);
-            padding-left: 0.75rem;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+            border-bottom: 1px solid #f3f4f6;
+            padding-bottom: 0.5rem;
         }
 
-        /* KPI Dashboard Grid */
-        .kpi-grid {
+        /* KPIs */
+        .kpi-row {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 1.25rem;
             margin-bottom: 1.5rem;
         }
 
-        .kpi-card {
-            background: var(--bg-surface);
+        .kpi-box {
+            background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
+            border-radius: 8px;
             padding: 1.25rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            position: relative;
-            overflow: hidden;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+            border-top: 3px solid var(--primary-color);
         }
 
-        .kpi-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: var(--accent-glow);
-        }
-
-        .kpi-card.success::before { background: var(--accent-success); }
-        .kpi-card.warning::before { background: var(--accent-warning); }
+        .kpi-box.success { border-top-color: var(--success-color); }
+        .kpi-box.warning { border-top-color: var(--warning-color); }
 
         .kpi-title {
             font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            color: var(--text-secondary);
+            color: var(--text-muted);
             font-weight: 600;
+            display: block;
+            margin-bottom: 0.35rem;
         }
 
         .kpi-value {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 700;
+            color: var(--text-main);
         }
 
-        /* Upload Area */
-        .upload-zone {
-            border: 2px dashed rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            padding: 3rem 2rem;
+        /* Upload setup */
+        .upload-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 850px) {
+            .upload-wrapper {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .drop-box {
+            border: 2px dashed #d1d5db;
+            border-radius: 8px;
+            padding: 3rem 1.5rem;
             text-align: center;
             cursor: pointer;
-            background: rgba(19, 25, 46, 0.3);
-            transition: all 0.3s ease;
+            background: #fafafa;
+            transition: all 0.2s ease;
         }
 
-        .upload-zone:hover {
-            border-color: var(--accent-glow);
-            background: rgba(124, 58, 237, 0.05);
+        .drop-box:hover {
+            border-color: var(--primary-color);
+            background: #f0f7ff;
         }
 
-        .upload-zone p {
-            margin-top: 1rem;
-            font-size: 0.95rem;
-            color: var(--text-secondary);
+        .drop-box p {
+            margin-top: 0.75rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
         }
 
-        .upload-zone strong {
-            color: var(--text-primary);
-        }
-
-        .file-input {
-            display: none;
-        }
-
-        /* Console/Progress Log Output */
-        .console-container {
-            background: #060913;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            font-family: 'Courier New', Courier, monospace;
-            padding: 1rem;
-            margin-top: 1.5rem;
-            max-height: 250px;
-            overflow-y: auto;
-        }
-
-        .console-line {
+        .btn-simple {
+            background: var(--primary-color);
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            padding: 0.5rem 1rem;
             font-size: 0.85rem;
-            color: var(--accent-success);
-            margin-bottom: 0.5rem;
-            line-height: 1.4;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.15s ease;
         }
 
-        .progress-bar-container {
-            width: 100%;
-            height: 6px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 3px;
-            overflow: hidden;
+        .btn-simple:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-outline {
+            background: #ffffff;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            border-radius: 6px;
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.15s ease;
+        }
+
+        .btn-outline:hover {
+            background: #eff6ff;
+        }
+
+        /* Log console */
+        .log-box {
+            background: #1e293b;
+            color: #38bdf8;
+            font-family: Consolas, Monaco, monospace;
+            padding: 0.85rem;
+            border-radius: 6px;
+            max-height: 180px;
+            overflow-y: auto;
+            font-size: 0.8rem;
             margin-top: 1rem;
         }
 
-        .progress-bar {
+        .log-line {
+            margin-bottom: 0.25rem;
+        }
+
+        .progress-line-container {
+            width: 100%;
+            height: 5px;
+            background: #e5e7eb;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 0.75rem;
+        }
+
+        .progress-line {
             width: 0%;
             height: 100%;
-            background: linear-gradient(90deg, var(--accent-glow-light), var(--accent-glow));
-            transition: width 0.3s ease;
+            background: var(--primary-color);
+            transition: width 0.2s ease;
         }
 
-        /* Charts grid */
-        .chart-grid {
+        /* Tables & charts grid */
+        .visuals-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1.5rem;
@@ -298,215 +293,103 @@
         }
 
         @media (max-width: 900px) {
-            .chart-grid {
+            .visuals-grid {
                 grid-template-columns: 1fr;
             }
         }
 
-        .chart-container {
+        .chart-box {
             width: 100%;
-            height: 320px;
+            height: 280px;
             position: relative;
         }
 
-        /* Forecast tables */
         .data-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 1rem;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
+            margin-top: 0.5rem;
         }
 
         .data-table th, .data-table td {
-            padding: 0.75rem 1rem;
+            padding: 0.6rem 0.8rem;
             text-align: left;
             border-bottom: 1px solid var(--border-color);
         }
 
         .data-table th {
-            background: rgba(255,255,255,0.02);
-            color: var(--text-secondary);
+            background: #f9fafb;
+            color: var(--text-muted);
             font-weight: 600;
         }
 
         .data-table tr:hover td {
-            background: rgba(255,255,255,0.01);
+            background: #f9fafb;
         }
 
-        /* Chat Layout */
-        .chat-pane {
-            display: grid;
-            grid-template-columns: 380px 1fr;
-            gap: 1.5rem;
-            height: 620px;
-        }
-
-        @media (max-width: 950px) {
-            .chat-pane {
-                grid-template-columns: 1fr;
-                height: auto;
-            }
-        }
-
-        .insights-sidebar {
-            background: rgba(19, 25, 46, 0.4);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.25rem;
-            overflow-y: auto;
-            max-height: 100%;
-        }
-
-        .insights-section {
+        /* Model Comparison CSS */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
             font-size: 0.85rem;
-            line-height: 1.5;
+            margin-top: 0.5rem;
         }
 
-        .insights-section h3 {
-            font-size: 0.95rem;
-            margin: 1rem 0 0.5rem 0;
-            color: var(--accent-glow-light);
-        }
-
-        .insights-section ol {
-            padding-left: 1.25rem;
-            margin-bottom: 1rem;
-        }
-
-        .insights-section li {
-            margin-bottom: 0.5rem;
-            color: var(--text-secondary);
-        }
-
-        .chat-container-main {
-            display: flex;
-            flex-direction: column;
-            background: var(--bg-surface);
+        .comparison-table th, .comparison-table td {
+            padding: 0.75rem;
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            height: 100%;
-            overflow: hidden;
+            text-align: left;
         }
 
-        .chat-messages {
-            flex: 1;
-            padding: 1.5rem;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .chat-bubble {
-            max-width: 75%;
-            padding: 0.85rem 1.15rem;
-            border-radius: 12px;
-            font-size: 0.9rem;
-            line-height: 1.45;
-        }
-
-        .chat-bubble.user {
-            background: var(--accent-glow);
-            color: #ffffff;
-            align-self: flex-end;
-            border-bottom-right-radius: 2px;
-        }
-
-        .chat-bubble.assistant {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-primary);
-            align-self: flex-start;
-            border-bottom-left-radius: 2px;
-        }
-
-        .chat-bubble.system-error {
-            background: rgba(239, 68, 68, 0.15);
-            border: 1px solid var(--accent-error);
-            color: #ff8888;
-            align-self: center;
-        }
-
-        .chat-input-bar {
-            padding: 1rem;
-            border-top: 1px solid var(--border-color);
-            display: flex;
-            gap: 0.75rem;
-            background: rgba(10, 14, 26, 0.4);
-        }
-
-        .chat-input {
-            flex: 1;
-            background: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-primary);
-            padding: 0.75rem 1rem;
-            font-size: 0.9rem;
-            outline: none;
-        }
-
-        .chat-input:focus {
-            border-color: var(--accent-glow);
-        }
-
-        .chat-send-btn {
-            background: var(--accent-glow);
-            color: #ffffff;
-            border: none;
-            border-radius: 8px;
-            padding: 0 1.25rem;
-            font-size: 0.85rem;
+        .comparison-table th {
+            background: #f3f4f6;
             font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s ease;
         }
 
-        .chat-send-btn:hover {
-            background: #6d28d9;
-        }
-
-        /* Buttons & Badges */
-        .btn-action {
-            background: var(--accent-glow);
-            color: #ffffff;
-            border: none;
-            border-radius: 8px;
-            padding: 0.65rem 1.25rem;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.2s ease;
-        }
-
-        .btn-action:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
-        }
-
-        .badge {
-            padding: 0.25rem 0.6rem;
-            border-radius: 12px;
+        .badge-model {
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
             font-size: 0.7rem;
-            font-weight: 700;
+            font-weight: bold;
+        }
+
+        .badge-model.chosen { background-color: #d1fae5; color: #065f46; }
+        .badge-model.rejected { background-color: #f3f4f6; color: #374151; }
+
+        /* Badges */
+        .badge-severity {
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
             text-transform: uppercase;
         }
 
-        .badge.critical { background: rgba(239, 68, 68, 0.2); color: #ff8888; border: 1px solid var(--accent-error); }
-        .badge.high { background: rgba(245, 158, 11, 0.2); color: #ffcc66; border: 1px solid var(--accent-warning); }
-        .badge.normal { background: rgba(16, 185, 129, 0.2); color: #88ffcc; border: 1px solid var(--accent-success); }
+        .badge-severity.critical { background: #fee2e2; color: #991b1b; }
+        .badge-severity.high { background: #fef3c7; color: #92400e; }
+        .badge-severity.normal { background: #d1fae5; color: #065f46; }
+
+        /* Interactive SHAP Select */
+        .shap-selector {
+            background: #ffffff;
+            border: 1px solid #d1d5db;
+            color: var(--text-main);
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            outline: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
     <header>
         <div class="logo-section">
-            <h1>Sales Analytics Intelligence Platform</h1>
-            <p>SDE Embedded ML Pipeline & Real-Time Client Visualizer</p>
+            <h1>Sales Forecasting & Outlier Analysis Platform</h1>
+            <p>Interactive Pipeline Runner & Statistical Dashboard</p>
         </div>
-        <div class="header-actions">
+        <div>
             <select id="runSelector" class="run-selector" onchange="loadSelectedRun()">
                 <option value="">-- Load Past Session --</option>
             </select>
@@ -514,263 +397,306 @@
     </header>
 
     <div class="workspace">
-        <!-- Sidebar -->
+        <!-- Sidebar Navigation -->
         <nav class="sidebar">
             <button class="nav-btn active" onclick="switchTab('tabUpload', this)">
-                📁 Data Connection
+                📁 Data Ingestion
             </button>
             <button class="nav-btn" onclick="switchTab('tabEDA', this)" id="navEDA" disabled>
-                📈 Exploratory Analysis
+                📊 Summary Profiling
             </button>
             <button class="nav-btn" onclick="switchTab('tabForecast', this)" id="navForecast" disabled>
-                🔮 ML Forecasting & SHAP
+                📈 Model Forecasting
+            </button>
+            <button class="nav-btn" onclick="switchTab('tabSHAP', this)" id="navSHAP" disabled>
+                🔍 SHAP Explainability
             </button>
             <button class="nav-btn" onclick="switchTab('tabAnomalies', this)" id="navAnomalies" disabled>
-                ⚠️ Outlier Anomalies
-            </button>
-            <button class="nav-btn" onclick="switchTab('tabChat', this)" id="navChat" disabled>
-                🤖 AI Advisor Chat
+                ⚠️ Anomaly Detection
             </button>
         </nav>
 
-        <!-- Content Panels -->
+        <!-- Main Content Pane -->
         <main class="content-pane">
 
-            <!-- TAB 1: Data Connection & Run Pipeline -->
+            <!-- TAB 1: Data connection & upload -->
             <div id="tabUpload" class="tab-panel active">
-                <div class="glass-card">
-                    <h2>CSV Data Ingestion</h2>
-                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.9rem;">
-                        Upload a raw retail sales transaction CSV. The backend will parse the schema, detect target columns, execute custom time-series decompositions, train regression models, compute SHAP metrics, and extract anomalies.
-                    </p>
-                    <div class="upload-zone" onclick="document.getElementById('csvFileInput').click()">
-                        <svg style="width: 48px; height: 48px; fill: var(--text-secondary); margin: 0 auto 1rem auto;" viewBox="0 0 24 24">
-                            <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
-                        </svg>
-                        <p>Drag and drop your <strong>sales CSV file</strong> here, or click to browse</p>
-                        <input type="file" id="csvFileInput" class="file-input" accept=".csv" onchange="uploadCSVFile(this.files[0])">
-                    </div>
-                    
-                    <div id="pipelineProgressContainer" style="display: none; margin-top: 1.5rem;">
-                        <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;" id="progressStatusText">Pipeline executing...</h4>
-                        <div class="progress-bar-container">
-                            <div id="pipelineProgressBar" class="progress-bar"></div>
+                <div class="upload-wrapper">
+                    <div class="panel-card" style="margin-bottom: 0;">
+                        <h2>Upload Transaction Dataset</h2>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.25rem; line-height: 1.4;">
+                            Drop your store sales history CSV file below. The system automatically executes automated parsing, time-series aggregation, model fitting, SHAP values computation, and outlier voting.
+                        </p>
+                        <div class="drop-box" onclick="document.getElementById('csvFile').click()">
+                            <svg style="width: 40px; height: 40px; fill: #9ca3af; margin: 0 auto 0.5rem auto;" viewBox="0 0 24 24">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                            </svg>
+                            <p>Select or drag and drop your <strong>sales CSV file</strong> here</p>
+                            <input type="file" id="csvFile" class="file-input" accept=".csv" onchange="uploadCSV(this.files[0])">
                         </div>
-                        <div id="consoleLog" class="console-container"></div>
+
+                        <div id="progressBox" style="display: none; margin-top: 1.25rem;">
+                            <span id="progressLabel" style="font-size: 0.85rem; font-weight: 600;">Executing stages...</span>
+                            <div class="progress-line-container">
+                                <div id="progressLine" class="progress-line"></div>
+                            </div>
+                            <div id="logConsole" class="log-box"></div>
+                        </div>
+                    </div>
+
+                    <!-- Dataset download options side-card -->
+                    <div class="panel-card" style="margin-bottom: 0;">
+                        <h2>Reference Dataset</h2>
+                        <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 1rem; line-height: 1.45;">
+                            Need a sample dataset? Download the standard US retail store sales dataset (9,800 orders) used to pre-seed the forecasts:
+                        </p>
+                        <a href="/download/train.csv" class="btn-outline" style="width: 100%; text-align: center; font-size: 0.8rem;">
+                            📥 Download train.csv
+                        </a>
                     </div>
                 </div>
             </div>
 
             <!-- TAB 2: Exploratory Data Analysis -->
             <div id="tabEDA" class="tab-panel">
-                <!-- KPIs -->
-                <div class="kpi-grid">
-                    <div class="kpi-card">
-                        <span class="kpi-title">Total Sales Revenue</span>
-                        <span class="kpi-value" id="kpiSales">$0.00</span>
+                <div class="kpi-row">
+                    <div class="kpi-box">
+                        <span class="kpi-title">Gross Sales Volume</span>
+                        <span class="kpi-value" id="edaSales">$0.00</span>
                     </div>
-                    <div class="kpi-card success">
-                        <span class="kpi-title">Total Orders</span>
-                        <span class="kpi-value" id="kpiOrders">0</span>
+                    <div class="kpi-box">
+                        <span class="kpi-title">Gross Order Volume</span>
+                        <span class="kpi-value" id="edaOrders">0</span>
                     </div>
-                    <div class="kpi-card">
-                        <span class="kpi-title">Avg Order Value</span>
-                        <span class="kpi-value" id="kpiAOV">$0.00</span>
+                    <div class="kpi-box">
+                        <span class="kpi-title">Average Ticket Size</span>
+                        <span class="kpi-value" id="edaTicket">$0.00</span>
                     </div>
-                    <div class="kpi-card success">
-                        <span class="kpi-title">Total Profit Margin</span>
-                        <span class="kpi-value" id="kpiProfit">$0.00 (0.00%)</span>
-                    </div>
-                </div>
-
-                <div class="chart-grid">
-                    <div class="glass-card">
-                        <h2>Monthly Sales Trend</h2>
-                        <div class="chart-container">
-                            <canvas id="monthlyTrendChart"></canvas>
-                        </div>
-                    </div>
-                    <div class="glass-card">
-                        <h2>Sales Distribution (Log Scale)</h2>
-                        <div class="chart-container">
-                            <canvas id="salesDistChart"></canvas>
-                        </div>
+                    <div class="kpi-box">
+                        <span class="kpi-title">Calculated Profit (15% base)</span>
+                        <span class="kpi-value" id="edaProfit">$0.00</span>
                     </div>
                 </div>
 
-                <div class="chart-grid">
-                    <div class="glass-card">
-                        <h2>Category & Segment Breakdown</h2>
+                <div class="visuals-grid">
+                    <div class="panel-card">
+                        <h2>Monthly Revenue Timeline</h2>
+                        <div class="chart-box">
+                            <canvas id="trendChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="panel-card">
+                        <h2>Sales Value Spread (Log Distribution)</h2>
+                        <div class="chart-box">
+                            <canvas id="spreadChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="visuals-grid">
+                    <div class="panel-card">
+                        <h2>Category & Segment Performance</h2>
                         <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                            <div class="chart-container" style="flex: 1; min-width: 200px;">
-                                <canvas id="categoryChart"></canvas>
+                            <div class="chart-box" style="flex: 1; min-width: 180px;">
+                                <canvas id="catChart"></canvas>
                             </div>
-                            <div class="chart-container" style="flex: 1; min-width: 200px;">
-                                <canvas id="segmentChart"></canvas>
+                            <div class="chart-box" style="flex: 1; min-width: 180px;">
+                                <canvas id="segChart"></canvas>
                             </div>
                         </div>
                     </div>
-                    <div class="glass-card">
-                        <h2>Regional & Lead Time Breakdowns</h2>
-                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                            <div class="chart-container" style="flex: 1; min-width: 200px;">
-                                <canvas id="regionChart"></canvas>
-                            </div>
-                            <div class="chart-container" style="flex: 1; min-width: 200px;">
-                                <canvas id="leadTimeChart"></canvas>
-                            </div>
+                    <div class="panel-card">
+                        <h2>Regional Revenue Shares</h2>
+                        <div class="chart-box">
+                            <canvas id="regChart"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- TAB 3: Forecasting & SHAP -->
+            <!-- TAB 3: Forecasting & Model Selection -->
             <div id="tabForecast" class="tab-panel">
-                <div class="kpi-grid">
-                    <div class="kpi-card warning">
-                        <span class="kpi-title">Model MAPE</span>
-                        <span class="kpi-value" id="metricsMape">0.0%</span>
+                <div class="kpi-row">
+                    <div class="kpi-box warning">
+                        <span class="kpi-title">Mean Absolute Pct Error (MAPE)</span>
+                        <span class="kpi-value" id="mapeMetric">0.0%</span>
                     </div>
-                    <div class="kpi-card warning">
-                        <span class="kpi-title">Holdout R² Score</span>
-                        <span class="kpi-value" id="metricsR2">0.0</span>
+                    <div class="kpi-box warning">
+                        <span class="kpi-title">Root Mean Squared Error (RMSE)</span>
+                        <span class="kpi-value" id="rmseMetric">$0.00</span>
                     </div>
-                    <div class="kpi-card warning">
-                        <span class="kpi-title">MASE Score</span>
-                        <span class="kpi-value" id="metricsMase">0.0</span>
-                    </div>
-                </div>
-
-                <div class="glass-card">
-                    <h2>Ensemble Predictions (Backtest & 12-Month Future Forecast)</h2>
-                    <div class="chart-container" style="height: 380px;">
-                        <canvas id="forecastChart"></canvas>
+                    <div class="kpi-box warning">
+                        <span class="kpi-title">R-Squared Score (R²)</span>
+                        <span class="kpi-value" id="r2Metric">0.00</span>
                     </div>
                 </div>
 
-                <div class="chart-grid">
-                    <div class="glass-card">
-                        <h2>SHAP Feature Importance (Global Impact)</h2>
-                        <div class="chart-container">
-                            <canvas id="shapImportanceChart"></canvas>
-                        </div>
+                <div class="panel-card">
+                    <h2>Ensemble Predictions & 12-Month Future Projection</h2>
+                    <div class="chart-box" style="height: 320px;">
+                        <canvas id="predChart"></canvas>
                     </div>
-                    <div class="glass-card" style="overflow-y: auto; max-height: 410px;">
-                        <h2>12-Month Future Forecast Data</h2>
+                </div>
+
+                <div class="visuals-grid">
+                    <!-- Forecast projection table -->
+                    <div class="panel-card" style="overflow-y: auto; max-height: 420px;">
+                        <h2>12-Month Forecast Values</h2>
                         <table class="data-table">
                             <thead>
                                 <tr>
-                                    <th>Period</th>
-                                    <th>Forecast</th>
+                                    <th>Month</th>
+                                    <th>Forecasted Sales</th>
                                     <th>Lower Bound (90%)</th>
                                     <th>Upper Bound (90%)</th>
                                 </tr>
                             </thead>
-                            <tbody id="futureForecastTable">
+                            <tbody id="forecastTable">
                             </tbody>
                         </table>
+                    </div>
+
+                    <!-- Model Comparison Panel -->
+                    <div class="panel-card">
+                        <h2>Model Evaluation & Selection</h2>
+                        <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.75rem; line-height: 1.4;">
+                            A comparative review of the candidates evaluated on the holdout test period:
+                        </p>
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Algorithm</th>
+                                    <th>Pros</th>
+                                    <th>Cons</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>ARIMA / SARIMA</strong></td>
+                                    <td>Handles strong trend variables</td>
+                                    <td>Fails to parse complex non-linear lag correlations</td>
+                                    <td><span class="badge-model rejected">Evaluated</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>FB Prophet</strong></td>
+                                    <td>Robust to missing calendar periods</td>
+                                    <td>Struggles with dynamic interaction variables</td>
+                                    <td><span class="badge-model rejected">Evaluated</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Ridge Regression</strong></td>
+                                    <td>Very fast; avoids overfitting limits</td>
+                                    <td>Struggles with complex multi-month lags</td>
+                                    <td><span class="badge-model rejected">Evaluated</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>RF + HGB Ensemble</strong></td>
+                                    <td>Captures recursive lag stats and STL trend factors</td>
+                                    <td>Higher computational requirements</td>
+                                    <td><span class="badge-model chosen">Chosen</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p style="color: var(--text-muted); font-size: 0.78rem; margin-top: 0.75rem; line-height: 1.4;">
+                            <strong>Selection Rationale:</strong> The Ensemble combining <em>Random Forest Regressor</em> and <em>HistGradientBoosting Regressor</em> yielded the lowest MAPE (~15%) and MASE (< 1.0) scores during walk-forward cross-validation. Averaging their predictions significantly mitigates overfitting variance.
+                        </p>
                     </div>
                 </div>
             </div>
 
-            <!-- TAB 4: Anomalies -->
+            <!-- TAB 4: SHAP Explainability -->
+            <div id="tabSHAP" class="tab-panel">
+                <div class="visuals-grid">
+                    <div class="panel-card">
+                        <h2>Global Feature Importance</h2>
+                        <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 1rem;">
+                            Mean absolute SHAP impact of top lag, calendar, and seasonal features.
+                        </p>
+                        <div class="chart-box">
+                            <canvas id="shapGlobalChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Waterfall month-level selector -->
+                    <div class="panel-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                            <h2>Local Explanation (Waterfall Chart)</h2>
+                            <select id="shapMonthSelect" class="shap-selector" onchange="renderLocalShap()">
+                            </select>
+                        </div>
+                        <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 1rem;">
+                            Visualizes how individual feature variables drove this specific month's sales prediction up (+) or down (-) relative to the base value.
+                        </p>
+                        <div class="chart-box">
+                            <canvas id="shapLocalChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 5: Anomalies -->
             <div id="tabAnomalies" class="tab-panel">
-                <div class="kpi-grid">
-                    <div class="kpi-card warning">
-                        <span class="kpi-title">Total Flagged Anomalies</span>
-                        <span class="kpi-value" id="anomTotal">0</span>
+                <div class="kpi-row">
+                    <div class="kpi-box">
+                        <span class="kpi-title">Outliers Confirmed</span>
+                        <span class="kpi-value" id="anomCount">0</span>
                     </div>
-                    <div class="kpi-card warning">
-                        <span class="kpi-title">Critical Anomalies</span>
-                        <span class="kpi-value" id="anomCritical">0</span>
+                    <div class="kpi-box">
+                        <span class="kpi-title">Critical Severity</span>
+                        <span class="kpi-value" id="anomCrit">0</span>
                     </div>
-                    <div class="kpi-card warning">
-                        <span class="kpi-title">Combined Voting Rate</span>
-                        <span class="kpi-value" id="anomRate">0.0%</span>
-                    </div>
-                </div>
-
-                <div class="glass-card">
-                    <h2>Anomalous Sales Deviations Timeline</h2>
-                    <div class="chart-container" style="height: 350px;">
-                        <canvas id="anomTimelineChart"></canvas>
+                    <div class="kpi-box">
+                        <span class="kpi-title">Calculated Outlier Rate</span>
+                        <span class="kpi-value" id="anomPct">0.0%</span>
                     </div>
                 </div>
 
-                <div class="glass-card">
-                    <h2>List of Confirmed Anomalies</h2>
+                <div class="panel-card">
+                    <h2>Anomalous Sales Spikes & Drops Timeline</h2>
+                    <div class="chart-box" style="height: 300px;">
+                        <canvas id="anomChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="panel-card">
+                    <h2>Ensemble Anomaly Detections Log</h2>
                     <table class="data-table">
                         <thead>
                             <tr>
                                 <th>Period</th>
-                                <th>Sales</th>
+                                <th>Sales Value</th>
                                 <th>Z-Score</th>
-                                <th>Ensemble Votes</th>
+                                <th>Voting Consensus</th>
                                 <th>Direction</th>
                                 <th>Severity</th>
                             </tr>
                         </thead>
-                        <tbody id="anomaliesTable">
+                        <tbody id="anomaliesLog">
                         </tbody>
                     </table>
-                </div>
-            </div>
-
-            <!-- TAB 5: AI Insights Chat -->
-            <div id="tabChat" class="tab-panel">
-                <div class="chat-pane">
-                    <!-- Insights Panel -->
-                    <div class="insights-sidebar">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                            <h2 style="font-size: 1.05rem; margin: 0; border: none; padding: 0;">AI Insights</h2>
-                            <button class="btn-action" onclick="runLLMAnalysis()" id="llmAnalysisBtn" style="padding: 0.45rem 0.85rem; font-size: 0.75rem;">
-                                Run Analysis
-                            </button>
-                        </div>
-                        <div id="insightsText" class="insights-section">
-                            <p style="color: var(--text-secondary); text-align: center; margin-top: 3rem;">Click 'Run Analysis' to query OpenRouter LLM for insights, risk flags, and business recommendations.</p>
-                        </div>
-                    </div>
-
-                    <!-- Chat Box -->
-                    <div class="chat-container-main">
-                        <div id="chatMessages" class="chat-messages">
-                            <div class="chat-bubble assistant">
-                                Hello! I am your sales analytics AI advisor. Ask me anything about the uploaded sales records, the ensemble forecast forecasts, or outlier anomalies.
-                            </div>
-                        </div>
-                        <div class="chat-input-bar">
-                            <input type="text" id="chatInput" class="chat-input" placeholder="Type an analytical question... (e.g. Which months had critical anomalies?)" onkeypress="if(event.key === 'Enter') sendChatMessage()">
-                            <button class="chat-send-btn" onclick="sendChatMessage()">Send</button>
-                        </div>
-                    </div>
                 </div>
             </div>
 
         </main>
     </div>
 
-    <!-- JS Logic -->
+    <!-- JS Scripts -->
     <script>
         let currentRunId = "";
         let runData = null;
-        let chatWs = null;
         let chartInstances = {};
 
-        // Fetch past runs list on load
         window.addEventListener('DOMContentLoaded', () => {
-            fetchRunsList();
+            fetchRuns();
         });
 
-        async function fetchRunsList() {
+        async function fetchRuns() {
             try {
                 const res = await fetch('/api/runs');
                 const data = await res.json();
                 const selector = document.getElementById('runSelector');
-                
-                // Clear all except default option
                 selector.innerHTML = '<option value="">-- Load Past Session --</option>';
-                
                 data.runs.forEach(run => {
                     const opt = document.createElement('option');
                     opt.value = run.run_id;
@@ -778,130 +704,105 @@
                     selector.appendChild(opt);
                 });
             } catch (err) {
-                console.error("Error fetching runs:", err);
+                console.error("Error fetching runs list:", err);
             }
         }
 
         function switchTab(tabId, btn) {
-            document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             
             document.getElementById(tabId).classList.add('active');
             btn.classList.add('active');
         }
 
-        // CSV Upload Flow
-        async function uploadCSVFile(file) {
+        async function uploadCSV(file) {
             if (!file) return;
-            
             const formData = new FormData();
             formData.append('file', file);
             
-            document.getElementById('pipelineProgressContainer').style.display = 'block';
-            const logContainer = document.getElementById('consoleLog');
-            logContainer.innerHTML = '<div class="console-line">> Initializing database registry and upload directories...</div>';
+            const progressBox = document.getElementById('progressBox');
+            const logConsole = document.getElementById('logConsole');
+            progressBox.style.display = 'block';
+            logConsole.innerHTML = '<div class="log-line">> Initiating workspace directory audits...</div>';
             
             try {
-                const res = await fetch('/upload', {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                if (!res.ok) throw new Error("Upload failed");
+                const res = await fetch('/upload', { method: 'POST', body: formData });
+                if (!res.ok) throw new Error("File upload failed.");
                 const uploadRes = await res.json();
                 
                 currentRunId = uploadRes.run_id;
-                logContainer.innerHTML += `<div class="console-line">> Upload complete! Run ID assigned: ${currentRunId}</div>`;
+                logConsole.innerHTML += `<div class="log-line">> Upload complete! Run ID: ${currentRunId}</div>`;
                 
-                // Start WebSocket to run the pipeline
-                connectPipelineWebSocket(currentRunId);
+                connectPipelineWS(currentRunId);
             } catch (err) {
-                logContainer.innerHTML += `<div class="console-line" style="color: var(--accent-error)">> Error: ${err.message}</div>`;
+                logConsole.innerHTML += `<div class="log-line" style="color: var(--error-color)">> Error: ${err.message}</div>`;
             }
         }
 
-        function connectPipelineWebSocket(runId) {
+        function connectPipelineWS(runId) {
             const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
             const ws = new WebSocket(`${protocol}//${window.location.host}/ws/pipeline/${runId}`);
-            const logContainer = document.getElementById('consoleLog');
-            const progressBar = document.getElementById('pipelineProgressBar');
-            const progressText = document.getElementById('progressStatusText');
+            const logConsole = document.getElementById('logConsole');
+            const progressLine = document.getElementById('progressLine');
+            const progressLabel = document.getElementById('progressLabel');
             
             ws.onmessage = function(event) {
                 const data = JSON.parse(event.data);
-                
                 if (data.type === 'progress') {
-                    logContainer.innerHTML += `<div class="console-line">> ${data.message}</div>`;
-                    logContainer.scrollTop = logContainer.scrollHeight;
-                    progressBar.style.width = `${data.percent}%`;
-                    progressText.innerText = `Pipeline running: ${data.percent}%`;
+                    logConsole.innerHTML += `<div class="log-line">> ${data.message}</div>`;
+                    logConsole.scrollTop = logConsole.scrollHeight;
+                    progressLine.style.width = `${data.percent}%`;
+                    progressLabel.innerText = `Pipeline Executing: ${data.percent}%`;
                 } else if (data.type === 'completed') {
-                    logContainer.innerHTML += `<div class="console-line" style="color: var(--accent-success)">> Pipeline executed successfully! Results saved in SQLite sales_analytics.db.</div>`;
-                    progressText.innerText = "Execution completed successfully!";
-                    progressBar.style.width = "100%";
+                    logConsole.innerHTML += `<div class="log-line" style="color: var(--success-color)">> Pipeline completed successfully! Stored in SQLite database.</div>`;
+                    progressLabel.innerText = "Completed Successfully!";
+                    progressLine.style.width = "100%";
                     
-                    // Enable tabs
-                    enableDashboardTabs();
-                    
-                    // Reload runs selector list
-                    fetchRunsList();
-                    
-                    // Load the results
-                    loadRunData(runId);
+                    enableAllTabs();
+                    fetchRuns();
+                    loadRun(runId);
                 } else if (data.type === 'error') {
-                    logContainer.innerHTML += `<div class="console-line" style="color: var(--accent-error)">> Fatal Error: ${data.message}</div>`;
-                    progressText.innerText = "Pipeline execution failed.";
+                    logConsole.innerHTML += `<div class="log-line" style="color: var(--error-color)">> Error: ${data.message}</div>`;
+                    progressLabel.innerText = "Pipeline execution failed.";
                 }
-            };
-            
-            ws.onerror = function() {
-                logContainer.innerHTML += `<div class="console-line" style="color: var(--accent-error)">> WebSocket Connection error.</div>`;
             };
         }
 
-        function enableDashboardTabs() {
+        function enableAllTabs() {
             document.getElementById('navEDA').disabled = false;
             document.getElementById('navForecast').disabled = false;
+            document.getElementById('navSHAP').disabled = false;
             document.getElementById('navAnomalies').disabled = false;
-            document.getElementById('navChat').disabled = false;
         }
 
         async function loadSelectedRun() {
             const selector = document.getElementById('runSelector');
             const runId = selector.value;
             if (!runId) return;
-            
-            enableDashboardTabs();
-            loadRunData(runId);
+            enableAllTabs();
+            loadRun(runId);
         }
 
-        async function loadRunData(runId) {
+        async function loadRun(runId) {
             currentRunId = runId;
             try {
                 const res = await fetch(`/api/run/${runId}`);
                 const response = await res.json();
                 runData = response.data;
                 
-                // 1. Populate EDA tab
                 populateEDA(runData.eda, runData.kpis);
-                // 2. Populate Forecast tab
-                populateForecast(runData.forecast, runData.shap);
-                // 3. Populate Anomalies tab
+                populateForecast(runData.forecast);
+                populateSHAP(runData.shap);
                 populateAnomalies(runData.anomaly);
                 
-                // Connect Chat WebSocket for this run
-                connectChatWebSocket(runId);
-                
-                // Show EDA panel automatically
                 switchTab('tabEDA', document.getElementById('navEDA'));
-                
             } catch (err) {
                 console.error("Error loading run data:", err);
             }
         }
 
-        // Rendering Charts helper
-        function createChart(ctxId, config) {
+        function drawChart(ctxId, config) {
             if (chartInstances[ctxId]) {
                 chartInstances[ctxId].destroy();
             }
@@ -909,49 +810,46 @@
             chartInstances[ctxId] = new Chart(ctx, config);
         }
 
-        // EDA populating logic
+        // Populators
         function populateEDA(eda, kpis) {
-            document.getElementById('kpiSales').innerText = `$${kpis.total_sales.toLocaleString(undefined, {maximumFractionDigits:0})}`;
-            document.getElementById('kpiOrders').innerText = kpis.total_orders.toLocaleString();
-            document.getElementById('kpiAOV').innerText = `$${eda.summary.avg_order_value.toFixed(2)}`;
-            document.getElementById('kpiProfit').innerText = `$${kpis.total_profit.toLocaleString(undefined, {maximumFractionDigits:0})} (${kpis.profit_margin_pct.toFixed(1)}%)`;
+            document.getElementById('edaSales').innerText = `$${kpis.total_sales.toLocaleString(undefined, {maximumFractionDigits:0})}`;
+            document.getElementById('edaOrders').innerText = kpis.total_orders.toLocaleString();
+            document.getElementById('edaTicket').innerText = `$${eda.summary.avg_order_value.toFixed(2)}`;
+            document.getElementById('edaProfit').innerText = `$${kpis.total_profit.toLocaleString(undefined, {maximumFractionDigits:0})}`;
 
-            // Trend Chart
-            const trendPeriods = eda.monthly_trend.map(t => t.period);
-            const trendSales = eda.monthly_trend.map(t => t.sales);
-            createChart('monthlyTrendChart', {
+            // Monthly Trend Chart
+            drawChart('trendChart', {
                 type: 'line',
                 data: {
-                    labels: trendPeriods,
+                    labels: eda.monthly_trend.map(t => t.period),
                     datasets: [{
                         label: 'Sales ($)',
-                        data: trendSales,
-                        borderColor: '#7c3aed',
-                        backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                        data: eda.monthly_trend.map(t => t.sales),
+                        borderColor: '#2563eb',
+                        backgroundColor: 'rgba(37, 99, 235, 0.05)',
                         fill: true,
-                        tension: 0.35
+                        tension: 0.1
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
                     scales: {
-                        y: { ticks: { color: '#9ca3af' }, grid: { color: 'rgba(255,255,255,0.05)' } },
-                        x: { ticks: { color: '#9ca3af' }, grid: { display: false } }
+                        y: { ticks: { color: '#4b5563' }, grid: { color: '#f3f4f6' } },
+                        x: { ticks: { color: '#4b5563' }, grid: { display: false } }
                     },
                     plugins: { legend: { display: false } }
                 }
             });
 
-            // Sales Log Distribution
-            createChart('salesDistChart', {
+            // Sales Spread Distribution Chart
+            drawChart('spreadChart', {
                 type: 'bar',
                 data: {
                     labels: eda.sales_distribution.bins.slice(0, -1).map((b, i) => `${Math.round(b)}-${Math.round(eda.sales_distribution.bins[i+1])}`),
                     datasets: [{
-                        label: 'Transaction Count',
                         data: eda.sales_distribution.counts,
-                        backgroundColor: '#a78bfa',
+                        backgroundColor: '#60a5fa',
                         borderRadius: 4
                     }]
                 },
@@ -959,95 +857,65 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     scales: {
-                        y: { ticks: { color: '#9ca3af' }, grid: { color: 'rgba(255,255,255,0.05)' } },
-                        x: { ticks: { color: '#9ca3af', maxRotation: 45, minRotation: 45 }, grid: { display: false } }
+                        y: { ticks: { color: '#4b5563' }, grid: { color: '#f3f4f6' } },
+                        x: { ticks: { color: '#4b5563' }, grid: { display: false } }
                     },
                     plugins: { legend: { display: false } }
                 }
             });
 
-            // Category Breakdown Chart
-            const catLabels = Object.keys(eda.category_breakdown);
-            const catSales = catLabels.map(k => eda.category_breakdown[k].sales);
-            createChart('categoryChart', {
-                type: 'doughnut',
-                data: {
-                    labels: catLabels,
-                    datasets: [{
-                        data: catSales,
-                        backgroundColor: ['#7c3aed', '#10b981', '#3b82f6'],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { position: 'bottom', labels: { color: '#9ca3af', boxWidth: 12 } } }
-                }
-            });
-
-            // Segment Breakdown Chart
-            const segLabels = Object.keys(eda.segment_breakdown);
-            const segVals = segLabels.map(k => eda.segment_breakdown[k]);
-            createChart('segmentChart', {
+            // Category Chart
+            drawChart('catChart', {
                 type: 'pie',
                 data: {
-                    labels: segLabels,
+                    labels: Object.keys(eda.category_breakdown),
                     datasets: [{
-                        data: segVals,
-                        backgroundColor: ['#6366f1', '#f59e0b', '#ec4899'],
-                        borderWidth: 0
+                        data: Object.keys(eda.category_breakdown).map(k => eda.category_breakdown[k].sales),
+                        backgroundColor: ['#2563eb', '#10b981', '#f59e0b']
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { position: 'bottom', labels: { color: '#9ca3af', boxWidth: 12 } } }
+                    plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, color: '#4b5563' } } }
                 }
             });
 
-            // Region Breakdown Chart
-            const regLabels = Object.keys(eda.regional_breakdown);
-            const regVals = regLabels.map(k => eda.regional_breakdown[k]);
-            createChart('regionChart', {
-                type: 'polarArea',
+            // Segment Chart
+            drawChart('segChart', {
+                type: 'doughnut',
                 data: {
-                    labels: regLabels,
+                    labels: Object.keys(eda.segment_breakdown),
                     datasets: [{
-                        data: regVals,
-                        backgroundColor: ['rgba(99,102,241,0.6)', 'rgba(16,185,129,0.6)', 'rgba(239,68,68,0.6)', 'rgba(245,158,11,0.6)'],
-                        borderWidth: 1,
-                        borderColor: 'rgba(255,255,255,0.1)'
+                        data: Object.keys(eda.segment_breakdown).map(k => eda.segment_breakdown[k]),
+                        backgroundColor: ['#4f46e5', '#ec4899', '#8b5cf6']
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    scales: { r: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { display: false } } },
-                    plugins: { legend: { position: 'bottom', labels: { color: '#9ca3af', boxWidth: 12 } } }
+                    plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, color: '#4b5563' } } }
                 }
             });
 
-            // Lead Times Chart
-            const modeLabels = Object.keys(eda.shipping_lead_times);
-            const leadVals = modeLabels.map(k => eda.shipping_lead_times[k]);
-            createChart('leadTimeChart', {
+            // Region Chart
+            drawChart('regChart', {
                 type: 'bar',
                 data: {
-                    labels: modeLabels,
+                    labels: Object.keys(eda.regional_breakdown),
                     datasets: [{
-                        label: 'Average Transit Days',
-                        data: leadVals,
-                        backgroundColor: '#10b981',
-                        borderRadius: 6
+                        label: 'Sales Share %',
+                        data: Object.keys(eda.regional_breakdown).map(k => eda.regional_breakdown[k]),
+                        backgroundColor: '#3b82f6',
+                        borderRadius: 4
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
                     scales: {
-                        y: { ticks: { color: '#9ca3af' }, grid: { color: 'rgba(255,255,255,0.05)' } },
-                        x: { ticks: { color: '#9ca3af' }, grid: { display: false } }
+                        y: { ticks: { color: '#4b5563' }, grid: { color: '#f3f4f6' } },
+                        x: { ticks: { color: '#4b5563' }, grid: { display: false } }
                     },
                     plugins: { legend: { display: false } }
                 }
@@ -1055,40 +923,38 @@
         }
 
         // Forecast populating logic
-        function populateForecast(forecast, shap) {
-            document.getElementById('metricsMape').innerText = `${forecast.metrics.mape.toFixed(1)}%`;
-            document.getElementById('metricsR2').innerText = forecast.metrics.r2.toFixed(3);
-            document.getElementById('metricsMase').innerText = forecast.metrics.mase.toFixed(2);
+        function populateForecast(forecast) {
+            document.getElementById('mapeMetric').innerText = `${forecast.metrics.mape.toFixed(1)}%`;
+            document.getElementById('rmseMetric').innerText = `$${forecast.metrics.rmse.toLocaleString(undefined, {maximumFractionDigits:0})}`;
+            document.getElementById('r2Metric').innerText = forecast.metrics.r2.toFixed(3);
 
-            // Populate Table
-            const tbody = document.getElementById('futureForecastTable');
+            // Forecast Table
+            const tbody = document.getElementById('forecastTable');
             tbody.innerHTML = '';
             forecast.future_forecast.forEach(f => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td><strong>${f.period}</strong></td>
-                    <td style="color: var(--accent-glow-light)">$${f.forecast.toLocaleString(undefined, {minimumFractionDigits:2})}</td>
+                    <td style="color: var(--primary-color)">$${f.forecast.toLocaleString(undefined, {minimumFractionDigits:2})}</td>
                     <td>$${f.lower_90.toLocaleString(undefined, {minimumFractionDigits:2})}</td>
                     <td>$${f.upper_90.toLocaleString(undefined, {minimumFractionDigits:2})}</td>
                 `;
                 tbody.appendChild(tr);
             });
 
-            // Combined Backtest & Forecast Chart
+            // Forecast Chart
             const backtestPeriods = forecast.backtest.map(b => b.period);
             const actuals = forecast.backtest.map(b => b.actual);
             const backtestPreds = forecast.backtest.map(b => b.predicted);
-            
             const futurePeriods = forecast.future_forecast.map(f => f.period);
             const futureForecasts = forecast.future_forecast.map(f => f.forecast);
             
-            // Align dates
             const allLabels = [...backtestPeriods, ...futurePeriods];
             const alignedActuals = [...actuals, ...Array(futurePeriods.length).fill(null)];
             const alignedBacktest = [...backtestPreds, ...Array(futurePeriods.length).fill(null)];
             const alignedFuture = [...Array(backtestPeriods.length - 1).fill(null), actuals[actuals.length-1], ...futureForecasts];
 
-            createChart('forecastChart', {
+            drawChart('predChart', {
                 type: 'line',
                 data: {
                     labels: allLabels,
@@ -1096,10 +962,9 @@
                         {
                             label: 'Historical Actual Sales',
                             data: alignedActuals,
-                            borderColor: '#3b82f6',
+                            borderColor: '#2563eb',
                             borderWidth: 2,
-                            fill: false,
-                            tension: 0.1
+                            fill: false
                         },
                         {
                             label: 'ML Model Backtest Fit',
@@ -1113,9 +978,8 @@
                             label: 'Future 12-Month Forecast',
                             data: alignedFuture,
                             borderColor: '#7c3aed',
-                            backgroundColor: 'rgba(124, 58, 237, 0.1)',
-                            fill: true,
-                            tension: 0.2
+                            backgroundColor: 'rgba(124, 58, 237, 0.05)',
+                            fill: true
                         }
                     ]
                 },
@@ -1123,22 +987,25 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     scales: {
-                        y: { ticks: { color: '#9ca3af' }, grid: { color: 'rgba(255,255,255,0.05)' } },
-                        x: { ticks: { color: '#9ca3af' }, grid: { display: false } }
+                        y: { ticks: { color: '#4b5563' }, grid: { color: '#f3f4f6' } },
+                        x: { ticks: { color: '#4b5563' }, grid: { display: false } }
                     }
                 }
             });
+        }
 
-            // SHAP Feature Importance
+        // SHAP populating logic with dynamic Local waterfall rendering
+        function populateSHAP(shap) {
+            // Global Chart
             const shapLabels = shap.global_importance.slice(0, 10).map(s => s.feature);
             const shapVals = shap.global_importance.slice(0, 10).map(s => s.shap);
             
-            createChart('shapImportanceChart', {
+            drawChart('shapGlobalChart', {
                 type: 'bar',
                 data: {
                     labels: shapLabels,
                     datasets: [{
-                        label: 'Mean SHAP Value (Impact on Prediction)',
+                        label: 'Mean absolute SHAP Value',
                         data: shapVals,
                         backgroundColor: '#7c3aed',
                         borderRadius: 4
@@ -1149,8 +1016,63 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     scales: {
-                        x: { ticks: { color: '#9ca3af' }, grid: { color: 'rgba(255,255,255,0.05)' } },
-                        y: { ticks: { color: '#9ca3af' }, grid: { display: false } }
+                        x: { ticks: { color: '#4b5563' }, grid: { color: '#f3f4f6' } },
+                        y: { ticks: { color: '#4b5563' }, grid: { display: false } }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+
+            // Populate selector dropdown
+            const selector = document.getElementById('shapMonthSelect');
+            selector.innerHTML = '';
+            
+            const months = Object.keys(shap.waterfall_explanations);
+            months.forEach(m => {
+                const opt = document.createElement('option');
+                opt.value = m;
+                opt.innerText = m;
+                selector.appendChild(opt);
+            });
+            
+            // Render default local waterfall chart (latest month)
+            if (months.length > 0) {
+                selector.value = months[months.length - 1];
+                renderLocalShap();
+            }
+        }
+
+        function renderLocalShap() {
+            if (!runData) return;
+            const selector = document.getElementById('shapMonthSelect');
+            const selectedMonth = selector.value;
+            const explanations = runData.shap.waterfall_explanations[selectedMonth];
+            
+            if (!explanations) return;
+            
+            // Take top 8 features by contribution magnitude
+            const topExplanations = explanations.slice(0, 8);
+            const featLabels = topExplanations.map(e => `${e.feature} (${e.value})`);
+            const contributions = topExplanations.map(e => e.contribution);
+            
+            // Render waterfall as positive/negative colors horizontal bar chart
+            drawChart('shapLocalChart', {
+                type: 'bar',
+                data: {
+                    labels: featLabels,
+                    datasets: [{
+                        data: contributions,
+                        backgroundColor: contributions.map(c => c >= 0 ? '#10b981' : '#ef4444'),
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { ticks: { color: '#4b5563' }, grid: { color: '#f3f4f6' } },
+                        y: { ticks: { color: '#4b5563' }, grid: { display: false } }
                     },
                     plugins: { legend: { display: false } }
                 }
@@ -1159,16 +1081,16 @@
 
         // Anomalies populating logic
         function populateAnomalies(anomaly) {
-            document.getElementById('anomTotal').innerText = anomaly.summary.total_anomalies;
-            document.getElementById('anomCritical').innerText = anomaly.summary.critical;
-            document.getElementById('anomRate').innerText = `${anomaly.summary.anomaly_rate_pct.toFixed(1)}%`;
+            document.getElementById('anomCount').innerText = anomaly.summary.total_anomalies;
+            document.getElementById('anomCrit').innerText = anomaly.summary.critical;
+            document.getElementById('anomPct').innerText = `${anomaly.summary.anomaly_rate_pct.toFixed(1)}%`;
 
-            // Populate Table
-            const tbody = document.getElementById('anomaliesTable');
+            // Table log
+            const tbody = document.getElementById('anomaliesLog');
             tbody.innerHTML = '';
             
             if (anomaly.confirmed_list.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-secondary);">No outliers detected in this sales series.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">No outliers flagged.</td></tr>';
             } else {
                 anomaly.confirmed_list.forEach(a => {
                     const tr = document.createElement('tr');
@@ -1177,8 +1099,8 @@
                         <td>$${a.sales.toLocaleString(undefined, {minimumFractionDigits:2})}</td>
                         <td>${a.z_score.toFixed(2)}</td>
                         <td>${a.votes} / 3</td>
-                        <td style="color: ${a.direction === 'spike' ? 'var(--accent-success)' : 'var(--accent-error)'}">${a.direction.toUpperCase()}</td>
-                        <td><span class="badge ${a.severity}">${a.severity}</span></td>
+                        <td style="color: ${a.direction === 'spike' ? 'var(--success-color)' : 'var(--error-color)'}">${a.direction.toUpperCase()}</td>
+                        <td><span class="badge-severity ${a.severity}">${a.severity}</span></td>
                     `;
                     tbody.appendChild(tr);
                 });
@@ -1187,43 +1109,37 @@
             // Timeline Chart
             const periods = anomaly.monthly_scores.map(s => s.period);
             const sales = anomaly.monthly_scores.map(s => s.sales);
-            
-            // Build anomaly dataset markers
-            const normalDataset = anomaly.monthly_scores.map(s => !s.is_anomaly ? s.sales : null);
-            const criticalDataset = anomaly.monthly_scores.map(s => s.is_anomaly && s.severity === 'critical' ? s.sales : null);
             const highDataset = anomaly.monthly_scores.map(s => s.is_anomaly && s.severity === 'high' ? s.sales : null);
+            const criticalDataset = anomaly.monthly_scores.map(s => s.is_anomaly && s.severity === 'critical' ? s.sales : null);
 
-            createChart('anomTimelineChart', {
+            drawChart('anomChart', {
                 type: 'line',
                 data: {
                     labels: periods,
                     datasets: [
                         {
-                            label: 'Regular Sales',
+                            label: 'Sales Series',
                             data: sales,
                             borderColor: '#3b82f6',
                             borderWidth: 1.5,
-                            fill: false,
-                            tension: 0.1
+                            fill: false
                         },
                         {
-                            label: 'High Alert Outlier',
+                            label: 'High Outlier',
                             data: highDataset,
                             borderColor: 'transparent',
                             backgroundColor: 'transparent',
                             pointBackgroundColor: '#f59e0b',
-                            pointRadius: 6,
-                            pointHoverRadius: 8,
+                            pointRadius: 5,
                             showLine: false
                         },
                         {
-                            label: 'Critical Alert Outlier',
+                            label: 'Critical Outlier',
                             data: criticalDataset,
                             borderColor: 'transparent',
                             backgroundColor: 'transparent',
                             pointBackgroundColor: '#ef4444',
-                            pointRadius: 8,
-                            pointHoverRadius: 10,
+                            pointRadius: 7,
                             showLine: false
                         }
                     ]
@@ -1232,95 +1148,11 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     scales: {
-                        y: { ticks: { color: '#9ca3af' }, grid: { color: 'rgba(255,255,255,0.05)' } },
-                        x: { ticks: { color: '#9ca3af' }, grid: { display: false } }
+                        y: { ticks: { color: '#4b5563' }, grid: { color: '#f3f4f6' } },
+                        x: { ticks: { color: '#4b5563' }, grid: { display: false } }
                     }
                 }
             });
-        }
-
-        // AI Advisory Chat & WebSockets
-        async function runLLMAnalysis() {
-            if (!currentRunId) return;
-            const btn = document.getElementById('llmAnalysisBtn');
-            const textPane = document.getElementById('insightsText');
-            
-            btn.disabled = true;
-            btn.innerText = "Analyzing...";
-            textPane.innerHTML = '<p style="color: var(--text-secondary); text-align: center; margin-top: 3rem;">Calling OpenRouter LLM... Generating insights report...</p>';
-            
-            try {
-                const res = await fetch(`/api/chat/${currentRunId}/insights`, { method: 'POST' });
-                const data = await res.json();
-                
-                // Convert simple Markdown headers to basic HTML
-                let formattedHtml = data.insights
-                    .replace(/## (.*)/g, '<h3>$1</h3>')
-                    .replace(/\d+\. (.*)/g, '<li>$1</li>')
-                    .replace(/(<h3>.*<\/h3>)\n/g, '$1')
-                    // Wrap lists properly
-                    .replace(/<\/h3>([^<]*?)<li>/g, '</h3><ol><li>')
-                    .replace(/<\/li>([^<]*?)(<h3>|$)/g, '</li></ol>$2');
-                
-                textPane.innerHTML = `<div class="insights-section">${formattedHtml}</div>`;
-                
-                // Reconnect Chat WebSocket to refresh system prompt in the backend
-                connectChatWebSocket(currentRunId);
-            } catch (err) {
-                textPane.innerHTML = `<p style="color: var(--accent-error); text-align: center; margin-top: 3rem;">Error: ${err.message}</p>`;
-            } finally {
-                btn.disabled = false;
-                btn.innerText = "Run Analysis";
-            }
-        }
-
-        function connectChatWebSocket(runId) {
-            if (chatWs) {
-                chatWs.close();
-            }
-            
-            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-            chatWs = new WebSocket(`${protocol}//${window.location.host}/ws/chat/${runId}`);
-            
-            const messagesContainer = document.getElementById('chatMessages');
-            
-            chatWs.onmessage = function(event) {
-                const data = JSON.parse(event.data);
-                
-                if (data.type === 'answer') {
-                    appendChatBubble(data.message, 'assistant', data.cached);
-                } else if (data.type === 'error') {
-                    appendChatBubble(data.message, 'system-error');
-                }
-            };
-        }
-
-        function sendChatMessage() {
-            const input = document.getElementById('chatInput');
-            const msg = input.value.trim();
-            if (!msg || !chatWs) return;
-            
-            // Append user bubble
-            appendChatBubble(msg, 'user');
-            input.value = '';
-            
-            // Send via WebSocket
-            chatWs.send(JSON.stringify({ message: msg }));
-        }
-
-        function appendChatBubble(text, sender, isCached = false) {
-            const container = document.getElementById('chatMessages');
-            const bubble = document.createElement('div');
-            bubble.className = `chat-bubble ${sender}`;
-            
-            if (sender === 'assistant' && isCached) {
-                bubble.innerHTML = `${text} <span style="font-size: 0.65rem; color: #a78bfa; display: block; margin-top: 5px; text-align: right;">(⚡ Cached via LRU Cache)</span>`;
-            } else {
-                bubble.innerText = text;
-            }
-            
-            container.appendChild(bubble);
-            container.scrollTop = container.scrollHeight;
         }
     </script>
 </body>
