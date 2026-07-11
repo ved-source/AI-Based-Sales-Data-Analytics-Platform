@@ -15,7 +15,7 @@ from pipeline_engine import PipelineEngine
 from sde_components import LRUCache, TokenBucketRateLimiter
 
 # ── CONFIG ─────────────────────────────────────────────────────────────────────
-PORT = 8000
+PORT = int(os.getenv("PORT", 8000))
 DATA_DIR = "uploaded_data"
 os.makedirs(DATA_DIR, exist_ok=True)
 
