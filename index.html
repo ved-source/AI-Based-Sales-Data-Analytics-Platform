@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Analytics Intelligence Platform</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-primary: #0a0e1a;
+            --bg-surface: #13192e;
+            --bg-surface-hover: #1e2642;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --accent-glow: #7c3aed;
+            --accent-glow-light: #a78bfa;
+            --accent-success: #10b981;
+            --accent-error: #ef4444;
+            --accent-warning: #f59e0b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Glassmorphism Header */
+        header {
+            background: rgba(19, 25, 46, 0.7);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-section h1 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-section p {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .run-selector {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .run-selector:hover {
+            border-color: var(--accent-glow);
+        }
+
+        /* Main Workspace Layout */
+        .workspace {
+            display: flex;
+            flex: 1;
+            min-height: calc(100vh - 75px);
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 260px;
+            background: rgba(19, 25, 46, 0.5);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.85rem 1rem;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-primary);
+        }
+
+        .nav-btn.active {
+            background: var(--accent-glow);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(124, 58, 237, 0.4);
+        }
+
+        /* Content Area */
+        .content-pane {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .tab-panel {
+            display: none;
+            animation: fadeIn 0.35s ease-out;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Common Glass Cards */
+        .glass-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .glass-card h2 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            border-left: 3px solid var(--accent-glow);
+            padding-left: 0.75rem;
+        }
+
+        /* KPI Dashboard Grid */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .kpi-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent-glow);
+        }
+
+        .kpi-card.success::before { background: var(--accent-success); }
+        .kpi-card.warning::before { background: var(--accent-warning); }
+
+        .kpi-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .kpi-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        /* Upload Area */
+        .upload-zone {
+            border: 2px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            background: rgba(19, 25, 46, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .upload-zone:hover {
+            border-color: var(--accent-glow);
+            background: rgba(124, 58, 237, 0.05);
+        }
+
+        .upload-zone p {
+            margin-top: 1rem;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .upload-zone strong {
+            color: var(--text-primary);
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        /* Console/Progress Log Output */
+        .console-container {
+            background: #060913;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .console-line {
+            font-size: 0.85rem;
+            color: var(--accent-success);
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-glow-light), var(--accent-glow));
+            transition: width 0.3s ease;
+        }
+
+        /* Charts grid */
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 900px) {
+            .chart-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 320px;
+            position: relative;
+        }
+
+        /* Forecast tables */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+        }
+
+        .data-table th, .data-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table th {
+            background: rgba(255,255,255,0.02);
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .data-table tr:hover td {
+            background: rgba(255,255,255,0.01);
+        }
+
+        /* Chat Layout */
+        .chat-pane {
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 1.5rem;
+            height: 620px;
+        }
+
+        @media (max-width: 950px) {
+            .chat-pane {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+        }
+
+        .insights-sidebar {
+            background: rgba(19, 25, 46, 0.4);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            overflow-y: auto;
+            max-height: 100%;
+        }
+
+        .insights-section {
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .insights-section h3 {
+            font-size: 0.95rem;
+            margin: 1rem 0 0.5rem 0;
+            color: var(--accent-glow-light);
+        }
+
+        .insights-section ol {
+            padding-left: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .insights-section li {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .chat-container-main {
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .chat-bubble {
+            max-width: 75%;
+            padding: 0.85rem 1.15rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            line-height: 1.45;
+        }
+
+        .chat-bubble.user {
+            background: var(--accent-glow);
+            color: #ffffff;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+
+        .chat-bubble.assistant {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+        }
+
+        .chat-bubble.system-error {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid var(--accent-error);
+            color: #ff8888;
+            align-self: center;
+        }
+
+        .chat-input-bar {
+            padding: 1rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 0.75rem;
+            background: rgba(10, 14, 26, 0.4);
+        }
+
+        .chat-input {
+            flex: 1;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            padding: 0.75rem 1rem;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .chat-input:focus {
+            border-color: var(--accent-glow);
+        }
+
+        .chat-send-btn {
+            background: var(--accent-glow);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 0 1.25rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .chat-send-btn:hover {
+            background: #6d28d9;
+        }
+
+        /* Buttons & Badges */
+        .btn-action {
+            background: var(--accent-glow);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 0.65rem 1.25rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-action:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+        }
+
+        .badge {
+            padding: 0.25rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge.critical { background: rgba(239, 68, 68, 0.2); color: #ff8888; border: 1px solid var(--accent-error); }
+        .badge.high { background: rgba(245, 158, 11, 0.2); color: #ffcc66; border: 1px solid var(--accent-warning); }
+        .badge.normal { background: rgba(16, 185, 129, 0.2); color: #88ffcc; border: 1px solid var(--accent-success); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-section">
+            <h1>Sales Analytics Intelligence Platform</h1>
+            <p>SDE Embedded ML Pipeline & Real-Time Client Visualizer</p>
+        </div>
+        <div class="header-actions">
+            <select id="runSelector" class="run-selector" onchange="loadSelectedRun()">
+                <option value="">-- Load Past Session --</option>
+            </select>
+        </div>
+    </header>
+
+    <div class="workspace">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <button class="nav-btn active" onclick="switchTab('tabUpload', this)">
+                📁 Data Connection
+            </button>
+            <button class="nav-btn" onclick="switchTab('tabEDA', this)" id="navEDA" disabled>
+                📈 Exploratory Analysis
+            </button>
+            <button class="nav-btn" onclick="switchTab('tabForecast', this)" id="navForecast" disabled>
+                🔮 ML Forecasting & SHAP
+            </button>
+            <button class="nav-btn" onclick="switchTab('tabAnomalies', this)" id="navAnomalies" disabled>
+                ⚠️ Outlier Anomalies
+            </button>
+            <button class="nav-btn" onclick="switchTab('tabChat', this)" id="navChat" disabled>
+                🤖 AI Advisor Chat
+            </button>
+        </nav>
+
+        <!-- Content Panels -->
+        <main class="content-pane">
+
+            <!-- TAB 1: Data Connection & Run Pipeline -->
+            <div id="tabUpload" class="tab-panel active">
+                <div class="glass-card">
+                    <h2>CSV Data Ingestion</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.9rem;">
+                        Upload a raw retail sales transaction CSV. The backend will parse the schema, detect target columns, execute custom time-series decompositions, train regression models, compute SHAP metrics, and extract anomalies.
+                    </p>
+                    <div class="upload-zone" onclick="document.getElementById('csvFileInput').click()">
+                        <svg style="width: 48px; height: 48px; fill: var(--text-secondary); margin: 0 auto 1rem auto;" viewBox="0 0 24 24">
+                            <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
+                        </svg>
+                        <p>Drag and drop your <strong>sales CSV file</strong> here, or click to browse</p>
+                        <input type="file" id="csvFileInput" class="file-input" accept=".csv" onchange="uploadCSVFile(this.files[0])">
+                    </div>
+                    
+                    <div id="pipelineProgressContainer" style="display: none; margin-top: 1.5rem;">
+                        <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;" id="progressStatusText">Pipeline executing...</h4>
+                        <div class="progress-bar-container">
+                            <div id="pipelineProgressBar" class="progress-bar"></div>
+                        </div>
+                        <div id="consoleLog" class="console-container"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: Exploratory Data Analysis -->
+            <div id="tabEDA" class="tab-panel">
+                <!-- KPIs -->
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <span class="kpi-title">Total Sales Revenue</span>
+                        <span class="kpi-value" id="kpiSales">$0.00</span>
+                    </div>
+                    <div class="kpi-card success">
+                        <span class="kpi-title">Total Orders</span>
+                        <span class="kpi-value" id="kpiOrders">0</span>
+                    </div>
+                    <div class="kpi-card">
+                        <span class="kpi-title">Avg Order Value</span>
+                        <span class="kpi-value" id="kpiAOV">$0.00</span>
+                    </div>
+                    <div class="kpi-card success">
+                        <span class="kpi-title">Total Profit Margin</span>
+                        <span class="kpi-value" id="kpiProfit">$0.00 (0.00%)</span>
+                    </div>
+                </div>
+
+                <div class="chart-grid">
+                    <div class="glass-card">
+                        <h2>Monthly Sales Trend</h2>
+                        <div class="chart-container">
+                            <canvas id="monthlyTrendChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="glass-card">
+                        <h2>Sales Distribution (Log Scale)</h2>
+                        <div class="chart-container">
+                            <canvas id="salesDistChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-grid">
+                    <div class="glass-card">
+                        <h2>Category & Segment Breakdown</h2>
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                            <div class="chart-container" style="flex: 1; min-width: 200px;">
+                                <canvas id="categoryChart"></canvas>
+                            </div>
+                            <div class="chart-container" style="flex: 1; min-width: 200px;">
+                                <canvas id="segmentChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-card">
+                        <h2>Regional & Lead Time Breakdowns</h2>
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                            <div class="chart-container" style="flex: 1; min-width: 200px;">
+                                <canvas id="regionChart"></canvas>
+                            </div>
+                            <div class="chart-container" style="flex: 1; min-width: 200px;">
+                                <canvas id="leadTimeChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: Forecasting & SHAP -->
+            <div id="tabForecast" class="tab-panel">
+                <div class="kpi-grid">
+                    <div class="kpi-card warning">
+                        <span class="kpi-title">Model MAPE</span>
+                        <span class="kpi-value" id="metricsMape">0.0%</span>
+                    </div>
+                    <div class="kpi-card warning">
+                        <span class="kpi-title">Holdout R² Score</span>
+                        <span class="kpi-value" id="metricsR2">0.0</span>
+                    </div>
+                    <div class="kpi-card warning">
+                        <span class="kpi-title">MASE Score</span>
+                        <span class="kpi-value" id="metricsMase">0.0</span>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <h2>Ensemble Predictions (Backtest & 12-Month Future Forecast)</h2>
+                    <div class="chart-container" style="height: 380px;">
+                        <canvas id="forecastChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-grid">
+                    <div class="glass-card">
+                        <h2>SHAP Feature Importance (Global Impact)</h2>
+                        <div class="chart-container">
+                            <canvas id="shapImportanceChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="glass-card" style="overflow-y: auto; max-height: 410px;">
+                        <h2>12-Month Future Forecast Data</h2>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Period</th>
+                                    <th>Forecast</th>
+                                    <th>Lower Bound (90%)</th>
+                                    <th>Upper Bound (90%)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="futureForecastTable">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: Anomalies -->
+            <div id="tabAnomalies" class="tab-panel">
+                <div class="kpi-grid">
+                    <div class="kpi-card warning">
+                        <span class="kpi-title">Total Flagged Anomalies</span>
+                        <span class="kpi-value" id="anomTotal">0</span>
+                    </div>
+                    <div class="kpi-card warning">
+                        <span class="kpi-title">Critical Anomalies</span>
+                        <span class="kpi-value" id="anomCritical">0</span>
+                    </div>
+                    <div class="kpi-card warning">
+                        <span class="kpi-title">Combined Voting Rate</span>
+                        <span class="kpi-value" id="anomRate">0.0%</span>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <h2>Anomalous Sales Deviations Timeline</h2>
+                    <div class="chart-container" style="height: 350px;">
+                        <canvas id="anomTimelineChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <h2>List of Confirmed Anomalies</h2>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Period</th>
+                                <th>Sales</th>
+                                <th>Z-Score</th>
+                                <th>Ensemble Votes</th>
+                                <th>Direction</th>
+                                <th>Severity</th>
+                            </tr>
+                        </thead>
+                        <tbody id="anomaliesTable">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TAB 5: AI Insights Chat -->
+            <div id="tabChat" class="tab-panel">
+                <div class="chat-pane">
+                    <!-- Insights Panel -->
+                    <div class="insights-sidebar">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h2 style="font-size: 1.05rem; margin: 0; border: none; padding: 0;">AI Insights</h2>
+                            <button class="btn-action" onclick="runLLMAnalysis()" id="llmAnalysisBtn" style="padding: 0.45rem 0.85rem; font-size: 0.75rem;">
+                                Run Analysis
+                            </button>
+                        </div>
+                        <div id="insightsText" class="insights-section">
+                            <p style="color: var(--text-secondary); text-align: center; margin-top: 3rem;">Click 'Run Analysis' to query OpenRouter LLM for insights, risk flags, and business recommendations.</p>
+                        </div>
+                    </div>
+
+                    <!-- Chat Box -->
+                    <div class="chat-container-main">
+                        <div id="chatMessages" class="chat-messages">
+                            <div class="chat-bubble assistant">
+                                Hello! I am your sales analytics AI advisor. Ask me anything about the uploaded sales records, the ensemble forecast forecasts, or outlier anomalies.
+                            </div>
+                        </div>
+                        <div class="chat-input-bar">
+                            <input type="text" id="chatInput" class="chat-input" placeholder="Type an analytical question... (e.g. Which months had critical anomalies?)" onkeypress="if(event.key === 'Enter') sendChatMessage()">
+                            <button class="chat-send-btn" onclick="sendChatMessage()">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- JS Logic -->
+    <script>
+        let currentRunId = "";
+        let runData = null;
+        let chatWs = null;
+        let chartInstances = {};
+
+        // Fetch past runs list on load
+        window.addEventListener('DOMContentLoaded', () => {
+            fetchRunsList();
+        });
+
+        async function fetchRunsList() {
+            try {
+                const res = await fetch('/api/runs');
+                const data = await res.json();
+                const selector = document.getElementById('runSelector');
+                
+                // Clear all except default option
+                selector.innerHTML = '<option value="">-- Load Past Session --</option>';
+                
+                data.runs.forEach(run => {
+                    const opt = document.createElement('option');
+                    opt.value = run.run_id;
+                    opt.innerText = `${run.file_name} (${new Date(run.timestamp).toLocaleDateString()})`;
+                    selector.appendChild(opt);
+                });
+            } catch (err) {
+                console.error("Error fetching runs:", err);
+            }
+        }
+
+        function switchTab(tabId, btn) {
+            document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        // CSV Upload Flow
+        async function uploadCSVFile(file) {
+            if (!file) return;
+            
+            const formData = new FormData();
+            formData.append('file', file);
+            
+            document.getElementById('pipelineProgressContainer').style.display = 'block';
+            const logContainer = document.getElementById('consoleLog');
+            logContainer.innerHTML = '<div class="console-line">> Initializing database registry and upload directories...</div>';
+            
+            try {
+                const res = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (!res.ok) throw new Error("Upload failed");
+                const uploadRes = await res.json();
+                
+                currentRunId = uploadRes.run_id;
+                logContainer.innerHTML += `<div class="console-line">> Upload complete! Run ID assigned: ${currentRunId}</div>`;
+                
+                // Start WebSocket to run the pipeline
+                connectPipelineWebSocket(currentRunId);
+            } catch (err) {
+                logContainer.innerHTML += `<div class="console-line" style="color: var(--accent-error)">> Error: ${err.message}</div>`;
+            }
+        }
+
+        function connectPipelineWebSocket(runId) {
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const ws = new WebSocket(`${protocol}//${window.location.host}/ws/pipeline/${runId}`);
+            const logContainer = document.getElementById('consoleLog');
+            const progressBar = document.getElementById('pipelineProgressBar');
+            const progressText = document.getElementById('progressStatusText');
+            
+            ws.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                
+                if (data.type === 'progress') {
+                    logContainer.innerHTML += `<div class="console-line">> ${data.message}</div>`;
+                    logContainer.scrollTop = logContainer.scrollHeight;
+                    progressBar.style.width = `${data.percent}%`;
+                    progressText.innerText = `Pipeline running: ${data.percent}%`;
+                } else if (data.type === 'completed') {
+                    logContainer.innerHTML += `<div class="console-line" style="color: var(--accent-success)">> Pipeline executed successfully! Results saved in SQLite sales_analytics.db.</div>`;
+                    progressText.innerText = "Execution completed successfully!";
+                    progressBar.style.width = "100%";
+                    
+                    // Enable tabs
+                    enableDashboardTabs();
+                    
+                    // Reload runs selector list
+                    fetchRunsList();
+                    
+                    // Load the results
+                    loadRunData(runId);
+                } else if (data.type === 'error') {
+                    logContainer.innerHTML += `<div class="console-line" style="color: var(--accent-error)">> Fatal Error: ${data.message}</div>`;
+                    progressText.innerText = "Pipeline execution failed.";
+                }
+            };
+            
+            ws.onerror = function() {
+                logContainer.innerHTML += `<div class="console-line" style="color: var(--accent-error)">> WebSocket Connection error.</div>`;
+            };
+        }
+
+        function enableDashboardTabs() {
+            document.getElementById('navEDA').disabled = false;
+            document.getElementById('navForecast').disabled = false;
+            document.getElementById('navAnomalies').disabled = false;
+            document.getElementById('navChat').disabled = false;
+        }
+
+        async function loadSelectedRun() {
+            const selector = document.getElementById('runSelector');
+            const runId = selector.value;
+            if (!runId) return;
+            
+            enableDashboardTabs();
+            loadRunData(runId);
+        }
+
+        async function loadRunData(runId) {
+            currentRunId = runId;
+            try {
+                const res = await fetch(`/api/run/${runId}`);
+                const response = await res.json();
+                runData = response.data;
+                
+                // 1. Populate EDA tab
+                populateEDA(runData.eda, runData.kpis);
+                // 2. Populate Forecast tab
+                populateForecast(runData.forecast, runData.shap);
+                // 3. Populate Anomalies tab
+                populateAnomalies(runData.anomaly);
+                
+                // Connect Chat WebSocket for this run
+                connectChatWebSocket(runId);
+                
+                // Show EDA panel automatically
+                switchTab('tabEDA', document.getElementById('navEDA'));
+                
+            } catch (err) {
+                console.error("Error loading run data:", err);
+            }
+        }
+
+        // Rendering Charts helper
+        function createChart(ctxId, config) {
+            if (chartInstances[ctxId]) {
+                chartInstances[ctxId].destroy();
+            }
+            const ctx = document.getElementById(ctxId).getContext('2d');
+            chartInstances[ctxId] = new Chart(ctx, config);
+        }
+
+        // EDA populating logic
+        function populateEDA(eda, kpis) {
+            document.getElementById('kpiSales').innerText = `$${kpis.total_sales.toLocaleString(undefined, {maximumFractionDigits:0})}`;
+            document.getElementById('kpiOrders').innerText = kpis.total_orders.toLocaleString();
+            document.getElementById('kpiAOV').innerText = `$${eda.summary.avg_order_value.toFixed(2)}`;
+            document.getElementById('kpiProfit').innerText = `$${kpis.total_profit.toLocaleString(undefined, {maximumFractionDigits:0})} (${kpis.profit_margin_pct.toFixed(1)}%)`;
+
+            // Trend Chart
+            const trendPeriods = eda.monthly_trend.map(t => t.period);
+            const trendSales = eda.monthly_trend.map(t => t.sales);
+            createChart('monthlyTrendChart', {
+                type: 'line',
+                data: {
+                    labels: trendPeriods,
+                    datasets: [{
+                        label: 'Sales ($)',
+                        data: trendSales,
+                        borderColor: '#7c3aed',
+                        backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                        fill: true,
+                        tension: 0.35
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { ticks: { color: '#9ca3af' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                        x: { ticks: { color: '#9ca3af' }, grid: { display: false } }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+
+            // Sales Log Distribution
+            createChart('salesDistChart', {
+                type: 'bar',
+                data: {
+                    labels: eda.sales_distribution.bins.slice(0, -1).map((b, i) => `${Math.round(b)}-${Math.round(eda.sales_distribution.bins[i+1])}`),
+                    datasets: [{
+                        label: 'Transaction Count',
+                        data: eda.sales_distribution.counts,
+                        backgroundColor: '#a78bfa',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { ticks: { color: '#9ca3af' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                        x: { ticks: { color: '#9ca3af', maxRotation: 45, minRotation: 45 }, grid: { display: false } }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+
+            // Category Breakdown Chart
+            const catLabels = Object.keys(eda.category_breakdown);
+            const catSales = catLabels.map(k => eda.category_breakdown[k].sales);
+            createChart('categoryChart', {
+                type: 'doughnut',
+                data: {
+                    labels: catLabels,
+                    datasets: [{
+                        data: catSales,
+                        backgroundColor: ['#7c3aed', '#10b981', '#3b82f6'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom', labels: { color: '#9ca3af', boxWidth: 12 } } }
+                }
+            });
+
+            // Segment Breakdown Chart
+            const segLabels = Object.keys(eda.segment_breakdown);
+            const segVals = segLabels.map(k => eda.segment_breakdown[k]);
+            createChart('segmentChart', {
+                type: 'pie',
+                data: {
+                    labels: segLabels,
+                    datasets: [{
+                        data: segVals,
+                        backgroundColor: ['#6366f1', '#f59e0b', '#ec4899'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom', labels: { color: '#9ca3af', boxWidth: 12 } } }
+                }
+            });
+
+            // Region Breakdown Chart
+            const regLabels = Object.keys(eda.regional_breakdown);
+            const regVals = regLabels.map(k => eda.regional_breakdown[k]);
+            createChart('regionChart', {
+                type: 'polarArea',
+                data: {
+                    labels: regLabels,
+                    datasets: [{
+                        data: regVals,
+                        backgroundColor: ['rgba(99,102,241,0.6)', 'rgba(16,185,129,0.6)', 'rgba(239,68,68,0.6)', 'rgba(245,158,11,0.6)'],
+                        borderWidth: 1,
+                        borderColor: 'rgba(255,255,255,0.1)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { r: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { display: false } } },
+                    plugins: { legend: { position: 'bottom', labels: { color: '#9ca3af', boxWidth: 12 } } }
+                }
+            });
+
+            // Lead Times Chart
+            const modeLabels = Object.keys(eda.shipping_lead_times);
+            const leadVals = modeLabels.map(k => eda.shipping_lead_times[k]);
+            createChart('leadTimeChart', {
+                type: 'bar',
+                data: {
+                    labels: modeLabels,
+                    datasets: [{
+                        label: 'Average Transit Days',
+                        data: leadVals,
+                        backgroundColor: '#10b981',
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { ticks: { color: '#9ca3af' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                        x: { ticks: { color: '#9ca3af' }, grid: { display: false } }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        // Forecast populating logic
+        function populateForecast(forecast, shap) {
+            document.getElementById('metricsMape').innerText = `${forecast.metrics.mape.toFixed(1)}%`;
+            document.getElementById('metricsR2').innerText = forecast.metrics.r2.toFixed(3);
+            document.getElementById('metricsMase').innerText = forecast.metrics.mase.toFixed(2);
+
+            // Populate Table
+            const tbody = document.getElementById('futureForecastTable');
+            tbody.innerHTML = '';
+            forecast.future_forecast.forEach(f => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${f.period}</strong></td>
+                    <td style="color: var(--accent-glow-light)">$${f.forecast.toLocaleString(undefined, {minimumFractionDigits:2})}</td>
+                    <td>$${f.lower_90.toLocaleString(undefined, {minimumFractionDigits:2})}</td>
+                    <td>$${f.upper_90.toLocaleString(undefined, {minimumFractionDigits:2})}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            // Combined Backtest & Forecast Chart
+            const backtestPeriods = forecast.backtest.map(b => b.period);
+            const actuals = forecast.backtest.map(b => b.actual);
+            const backtestPreds = forecast.backtest.map(b => b.predicted);
+            
+            const futurePeriods = forecast.future_forecast.map(f => f.period);
+            const futureForecasts = forecast.future_forecast.map(f => f.forecast);
+            
+            // Align dates
+            const allLabels = [...backtestPeriods, ...futurePeriods];
+            const alignedActuals = [...actuals, ...Array(futurePeriods.length).fill(null)];
+            const alignedBacktest = [...backtestPreds, ...Array(futurePeriods.length).fill(null)];
+            const alignedFuture = [...Array(backtestPeriods.length - 1).fill(null), actuals[actuals.length-1], ...futureForecasts];
+
+            createChart('forecastChart', {
+                type: 'line',
+                data: {
+                    labels: allLabels,
+                    datasets: [
+                        {
+                            label: 'Historical Actual Sales',
+                            data: alignedActuals,
+                            borderColor: '#3b82f6',
+                            borderWidth: 2,
+                            fill: false,
+                            tension: 0.1
+                        },
+                        {
+                            label: 'ML Model Backtest Fit',
+                            data: alignedBacktest,
+                            borderColor: '#10b981',
+                            borderDash: [5, 5],
+                            borderWidth: 1.5,
+                            fill: false
+                        },
+                        {
+                            label: 'Future 12-Month Forecast',
+                            data: alignedFuture,
+                            borderColor: '#7c3aed',
+                            backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                            fill: true,
+                            tension: 0.2
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { ticks: { color: '#9ca3af' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                        x: { ticks: { color: '#9ca3af' }, grid: { display: false } }
+                    }
+                }
+            });
+
+            // SHAP Feature Importance
+            const shapLabels = shap.global_importance.slice(0, 10).map(s => s.feature);
+            const shapVals = shap.global_importance.slice(0, 10).map(s => s.shap);
+            
+            createChart('shapImportanceChart', {
+                type: 'bar',
+                data: {
+                    labels: shapLabels,
+                    datasets: [{
+                        label: 'Mean SHAP Value (Impact on Prediction)',
+                        data: shapVals,
+                        backgroundColor: '#7c3aed',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { ticks: { color: '#9ca3af' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                        y: { ticks: { color: '#9ca3af' }, grid: { display: false } }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        // Anomalies populating logic
+        function populateAnomalies(anomaly) {
+            document.getElementById('anomTotal').innerText = anomaly.summary.total_anomalies;
+            document.getElementById('anomCritical').innerText = anomaly.summary.critical;
+            document.getElementById('anomRate').innerText = `${anomaly.summary.anomaly_rate_pct.toFixed(1)}%`;
+
+            // Populate Table
+            const tbody = document.getElementById('anomaliesTable');
+            tbody.innerHTML = '';
+            
+            if (anomaly.confirmed_list.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-secondary);">No outliers detected in this sales series.</td></tr>';
+            } else {
+                anomaly.confirmed_list.forEach(a => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><strong>${a.period}</strong></td>
+                        <td>$${a.sales.toLocaleString(undefined, {minimumFractionDigits:2})}</td>
+                        <td>${a.z_score.toFixed(2)}</td>
+                        <td>${a.votes} / 3</td>
+                        <td style="color: ${a.direction === 'spike' ? 'var(--accent-success)' : 'var(--accent-error)'}">${a.direction.toUpperCase()}</td>
+                        <td><span class="badge ${a.severity}">${a.severity}</span></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+
+            // Timeline Chart
+            const periods = anomaly.monthly_scores.map(s => s.period);
+            const sales = anomaly.monthly_scores.map(s => s.sales);
+            
+            // Build anomaly dataset markers
+            const normalDataset = anomaly.monthly_scores.map(s => !s.is_anomaly ? s.sales : null);
+            const criticalDataset = anomaly.monthly_scores.map(s => s.is_anomaly && s.severity === 'critical' ? s.sales : null);
+            const highDataset = anomaly.monthly_scores.map(s => s.is_anomaly && s.severity === 'high' ? s.sales : null);
+
+            createChart('anomTimelineChart', {
+                type: 'line',
+                data: {
+                    labels: periods,
+                    datasets: [
+                        {
+                            label: 'Regular Sales',
+                            data: sales,
+                            borderColor: '#3b82f6',
+                            borderWidth: 1.5,
+                            fill: false,
+                            tension: 0.1
+                        },
+                        {
+                            label: 'High Alert Outlier',
+                            data: highDataset,
+                            borderColor: 'transparent',
+                            backgroundColor: 'transparent',
+                            pointBackgroundColor: '#f59e0b',
+                            pointRadius: 6,
+                            pointHoverRadius: 8,
+                            showLine: false
+                        },
+                        {
+                            label: 'Critical Alert Outlier',
+                            data: criticalDataset,
+                            borderColor: 'transparent',
+                            backgroundColor: 'transparent',
+                            pointBackgroundColor: '#ef4444',
+                            pointRadius: 8,
+                            pointHoverRadius: 10,
+                            showLine: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { ticks: { color: '#9ca3af' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                        x: { ticks: { color: '#9ca3af' }, grid: { display: false } }
+                    }
+                }
+            });
+        }
+
+        // AI Advisory Chat & WebSockets
+        async function runLLMAnalysis() {
+            if (!currentRunId) return;
+            const btn = document.getElementById('llmAnalysisBtn');
+            const textPane = document.getElementById('insightsText');
+            
+            btn.disabled = true;
+            btn.innerText = "Analyzing...";
+            textPane.innerHTML = '<p style="color: var(--text-secondary); text-align: center; margin-top: 3rem;">Calling OpenRouter LLM... Generating insights report...</p>';
+            
+            try {
+                const res = await fetch(`/api/chat/${currentRunId}/insights`, { method: 'POST' });
+                const data = await res.json();
+                
+                // Convert simple Markdown headers to basic HTML
+                let formattedHtml = data.insights
+                    .replace(/## (.*)/g, '<h3>$1</h3>')
+                    .replace(/\d+\. (.*)/g, '<li>$1</li>')
+                    .replace(/(<h3>.*<\/h3>)\n/g, '$1')
+                    // Wrap lists properly
+                    .replace(/<\/h3>([^<]*?)<li>/g, '</h3><ol><li>')
+                    .replace(/<\/li>([^<]*?)(<h3>|$)/g, '</li></ol>$2');
+                
+                textPane.innerHTML = `<div class="insights-section">${formattedHtml}</div>`;
+                
+                // Reconnect Chat WebSocket to refresh system prompt in the backend
+                connectChatWebSocket(currentRunId);
+            } catch (err) {
+                textPane.innerHTML = `<p style="color: var(--accent-error); text-align: center; margin-top: 3rem;">Error: ${err.message}</p>`;
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Run Analysis";
+            }
+        }
+
+        function connectChatWebSocket(runId) {
+            if (chatWs) {
+                chatWs.close();
+            }
+            
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            chatWs = new WebSocket(`${protocol}//${window.location.host}/ws/chat/${runId}`);
+            
+            const messagesContainer = document.getElementById('chatMessages');
+            
+            chatWs.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                
+                if (data.type === 'answer') {
+                    appendChatBubble(data.message, 'assistant', data.cached);
+                } else if (data.type === 'error') {
+                    appendChatBubble(data.message, 'system-error');
+                }
+            };
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const msg = input.value.trim();
+            if (!msg || !chatWs) return;
+            
+            // Append user bubble
+            appendChatBubble(msg, 'user');
+            input.value = '';
+            
+            // Send via WebSocket
+            chatWs.send(JSON.stringify({ message: msg }));
+        }
+
+        function appendChatBubble(text, sender, isCached = false) {
+            const container = document.getElementById('chatMessages');
+            const bubble = document.createElement('div');
+            bubble.className = `chat-bubble ${sender}`;
+            
+            if (sender === 'assistant' && isCached) {
+                bubble.innerHTML = `${text} <span style="font-size: 0.65rem; color: #a78bfa; display: block; margin-top: 5px; text-align: right;">(⚡ Cached via LRU Cache)</span>`;
+            } else {
+                bubble.innerText = text;
+            }
+            
+            container.appendChild(bubble);
+            container.scrollTop = container.scrollHeight;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+# Databases & Session States
+sales_analytics.db
+sales_analytics.db-journal
+sales_analytics.db-wal
+
+# Ingested uploads folder
+uploaded_data/
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# OS Files
+.DS_Store
+Thumbs.db
