@@ -9,6 +9,7 @@ warnings.filterwarnings("ignore")
 
 from sklearn.ensemble import HistGradientBoostingRegressor, RandomForestRegressor, IsolationForest
 from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import r2_score
 from statsmodels.tsa.seasonal import STL
 
 class PipelineEngine:
